@@ -2,12 +2,29 @@
 <configurationDescriptor version="80">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df name="icp_pn" root=".">
+      <df name="design">
+      </df>
       <df name="doc">
       </df>
       <df name="examples">
       </df>
       <df name="src">
         <df name="pn">
+          <df name="pn2012">
+            <in>diagramitem.cpp</in>
+            <in>diagramitem.h</in>
+            <in>diagramscene.cpp</in>
+            <in>diagramscene.h</in>
+            <in>main.cpp</in>
+            <in>mainwindow.cpp</in>
+            <in>mainwindow.h</in>
+          </df>
+          <df name="pn2012-build-desktop-Desktop_Qt_4_7_4_for_GCC__Qt_SDK__Release">
+            <in>moc_diagramscene.cpp</in>
+            <in>moc_mainwindow.cpp</in>
+            <in>ui_mainwindow.h</in>
+          </df>
+          <in>main.cpp</in>
         </df>
         <df name="server">
         </df>
@@ -36,7 +53,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f Makefile</buildCommand>
           <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>src/pn/pn2012-build-desktop-Desktop_Qt_4_7_4_for_GCC__Qt_SDK__Release/pn2012</executablePath>
         </makeTool>
       </makefileType>
     </conf>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>737</width>
+    <height>461</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QGraphicsView" name="graphicsView"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>737</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuSoubor">
+    <property name="title">
+     <string>Soubor</string>
+    </property>
+    <addaction name="actionNov"/>
+    <addaction name="actionNov_karta"/>
+    <addaction name="separator"/>
+    <addaction name="actionOtev_t_lok_ln"/>
+    <addaction name="actionUlo_it_lok_ln"/>
+    <addaction name="separator"/>
+    <addaction name="actionOtev_t_ze_serveru"/>
+    <addaction name="actionUlo_it_na_server"/>
+    <addaction name="separator"/>
+    <addaction name="actionKonec"/>
+   </widget>
+   <addaction name="menuSoubor"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionMouse"/>
+   <addaction name="actionPlace"/>
+   <addaction name="actionTransition"/>
+   <addaction name="actionArc"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionOtev_t_lok_ln">
+   <property name="text">
+    <string>Otevřít lokálně</string>
+   </property>
+  </action>
+  <action name="actionUlo_it_lok_ln">
+   <property name="text">
+    <string>Uložit lokálně</string>
+   </property>
+  </action>
+  <action name="actionOtev_t_ze_serveru">
+   <property name="text">
+    <string>Otevřít ze serveru</string>
+   </property>
+  </action>
+  <action name="actionUlo_it_na_server">
+   <property name="text">
+    <string>Uložit na server</string>
+   </property>
+  </action>
+  <action name="actionMouse">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Mouse</string>
+   </property>
+  </action>
+  <action name="actionPlace">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Place</string>
+   </property>
+  </action>
+  <action name="actionTransition">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Transition</string>
+   </property>
+  </action>
+  <action name="actionArc">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Arc</string>
+   </property>
+  </action>
+  <action name="actionNov">
+   <property name="text">
+    <string>&amp;Nový</string>
+   </property>
+  </action>
+  <action name="actionNov_karta">
+   <property name="text">
+    <string>Nová &amp;karta</string>
+   </property>
+  </action>
+  <action name="actionKonec">
+   <property name="text">
+    <string>&amp;Konec</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>graphicsView</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
