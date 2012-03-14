@@ -1,20 +1,17 @@
-/* 
- * File:   main.cpp
- * Author: petr
- *
- * Created on 6. březen 2012, 15:29
- */
+/**
+  * @file main.cpp
+  * @author xsebek02 xsimon14
+  * @brief Tento soubor spouští aplikaci Qt a předává jí řízení
+  */
 
-#include <cstdlib>
+#include <QtGui/QApplication>
+#include "mainwindow.h"
 
-using namespace std;
-
-/*
- * 
- */
-int main(int argc, char** argv)
+int main(int argc, char *argv[])
 {
-
-    return 0;
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    
+    return a.exec();
 }
-
