@@ -18,18 +18,8 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>-1</number>
       </property>
-      <widget class="QWidget" name="tab_3">
-       <attribute name="title">
-        <string>Tab 1</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QGraphicsView" name="graphicsView"/>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </item>
    </layout>
@@ -48,13 +38,13 @@
      <string>Soubor</string>
     </property>
     <addaction name="actionNov"/>
-    <addaction name="actionNov_karta"/>
+    <addaction name="actionNovakarta"/>
     <addaction name="separator"/>
-    <addaction name="actionOtev_t_lok_ln"/>
-    <addaction name="actionUlo_it_lok_ln"/>
+    <addaction name="actionOtevrit_lokalne"/>
+    <addaction name="actionUlozit_lokalne"/>
     <addaction name="separator"/>
-    <addaction name="actionOtev_t_ze_serveru"/>
-    <addaction name="actionUlo_it_na_server"/>
+    <addaction name="actionOtevrit_ze_serveru"/>
+    <addaction name="actionUlozit_na_server"/>
     <addaction name="separator"/>
     <addaction name="actionKonec"/>
    </widget>
@@ -85,22 +75,22 @@
    <addaction name="actionArc"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionOtev_t_lok_ln">
+  <action name="actionOtevrit_lokalne">
    <property name="text">
     <string>Otevřít lokálně</string>
    </property>
   </action>
-  <action name="actionUlo_it_lok_ln">
+  <action name="actionUlozit_lokalne">
    <property name="text">
     <string>Uložit lokálně</string>
    </property>
   </action>
-  <action name="actionOtev_t_ze_serveru">
+  <action name="actionOtevrit_ze_serveru">
    <property name="text">
     <string>Otevřít ze serveru</string>
    </property>
   </action>
-  <action name="actionUlo_it_na_server">
+  <action name="actionUlozit_na_server">
    <property name="text">
     <string>Uložit na server</string>
    </property>
@@ -142,7 +132,7 @@
     <string>&amp;Nový</string>
    </property>
   </action>
-  <action name="actionNov_karta">
+  <action name="actionNovakarta">
    <property name="text">
     <string>Nová &amp;karta</string>
    </property>
@@ -154,9 +144,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <tabstops>
-  <tabstop>graphicsView</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

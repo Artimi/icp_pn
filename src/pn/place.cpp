@@ -9,7 +9,7 @@
 Place::Place(QGraphicsItem *parent) :
     DiagramItem(DiagramItem::Place,parent)
 {
-    rectangle.setRect(0,0,250,250);
+    rectangle.setRect(0,0,50,50);
 }
 
 /**

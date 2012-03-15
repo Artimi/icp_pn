@@ -13,6 +13,7 @@
 #include <QLineF>
 #include "diagramitem.h"
 #include "place.h"
+#include "transition.h"
 
 
 class QGraphicSceneMouseEvent;
@@ -41,10 +42,10 @@ signals:
     void itemSelected(QGraphicsItem *item);
 
 protected:
-/*    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-*/
+//    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+
 private:
     bool isItemChange(int type);
 

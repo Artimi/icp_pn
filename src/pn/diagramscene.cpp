@@ -15,11 +15,19 @@ DiagramScene::DiagramScene()
     line = 0;
 }
 
+/**
+  * Nastaví mod práce ve scene
+  * @param mode mod práce InsertItem|InsertLine|MoveItem
+  */
 void DiagramScene::setMode(Mode mode)
 {
     myMode = mode;
 }
 
+/**
+  * Nastavuje typ vkládaného objektu
+  * @param type typ vkládáného objektu DiagramItem::Place|DiagramItem::Transition
+  */
 void DiagramScene::setItemType(DiagramItem::DiagramType type)
 {
     myItemType = type;
@@ -27,7 +35,13 @@ void DiagramScene::setItemType(DiagramItem::DiagramType type)
 
 //TODO: editorLostFocus
 
-/*void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+/**
+  * Vyvoláno při zmáčknutí tlačítka myši, podle nastaveného modu a ItemType se
+  * provede akce
+  *
+  * @param mouseEvent událost myši
+  */
+void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (mouseEvent->button() != Qt::LeftButton)
        return;
@@ -42,7 +56,7 @@ void DiagramScene::setItemType(DiagramItem::DiagramType type)
         }
         else if (myItemType == DiagramItem::Transition)
         {
-            //TODO konstruktor Transition
+            item = new Transition();
         }
         addItem(item);
         item->setPos(mouseEvent->scenePos());
@@ -50,16 +64,23 @@ void DiagramScene::setItemType(DiagramItem::DiagramType type)
         break;
 
     case InsertLine:
-        line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(), mouseEvent->scenePos()));
+/*        line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(), mouseEvent->scenePos()));
         line->setPen(QPen(Qt::black));
         addItem(line);
+        */
         break;
     default:
         ;
     }
-    QGraphicsScene::mousePressEvent(mouseEvent); //?
+    QGraphicsScene::mousePressEvent(mouseEvent);
 
 }
+
+/**
+  * Vyvoláno při pohnutí myší
+  *
+  * @param mouseEvent událost myši
+  */
 
 void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
@@ -74,4 +95,4 @@ void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-*/
+

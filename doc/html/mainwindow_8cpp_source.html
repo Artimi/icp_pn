@@ -86,12 +86,93 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 <a name="l00016"></a>00016 {
 <a name="l00017"></a>00017     ui-&gt;setupUi(<span class="keyword">this</span>);
 <a name="l00018"></a>00018     connect(ui-&gt;actionKonec,SIGNAL(triggered()), qApp, SLOT(quit()));
-<a name="l00019"></a>00019 }
-<a name="l00020"></a>00020 
-<a name="l00021"></a>00021 MainWindow::~MainWindow()
-<a name="l00022"></a>00022 {
-<a name="l00023"></a>00023     <span class="keyword">delete</span> ui;
-<a name="l00024"></a>00024 }
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020     <span class="comment">//výlučnost při vybírání kresleného předmětu z toolbaru</span>
+<a name="l00021"></a>00021     actionGroup = <span class="keyword">new</span> QActionGroup(<span class="keyword">this</span>);
+<a name="l00022"></a>00022     actionGroup-&gt;setExclusive(<span class="keyword">true</span>);
+<a name="l00023"></a>00023     actionGroup-&gt;addAction(ui-&gt;actionMouse);
+<a name="l00024"></a>00024     actionGroup-&gt;addAction(ui-&gt;actionArc);
+<a name="l00025"></a>00025     actionGroup-&gt;addAction(ui-&gt;actionTransition);
+<a name="l00026"></a>00026     actionGroup-&gt;addAction(ui-&gt;actionPlace);
+<a name="l00027"></a>00027     ui-&gt;actionMouse-&gt;setChecked(<span class="keyword">true</span>);
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029     connect(ui-&gt;actionMouse,SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(selectMouse()));
+<a name="l00030"></a>00030     connect(ui-&gt;actionArc,SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(selectArc()));
+<a name="l00031"></a>00031     connect(ui-&gt;actionPlace,SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(selectPlace()));
+<a name="l00032"></a>00032     connect(ui-&gt;actionTransition,SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(selectTransition()));
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034     ui-&gt;mainToolBar-&gt;setMovable(<span class="keyword">false</span>);
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036     ui-&gt;tabWidget-&gt;setTabsClosable(<span class="keyword">true</span>);
+<a name="l00037"></a>00037     connect(ui-&gt;tabWidget,SIGNAL(tabCloseRequested(<span class="keywordtype">int</span>)),<span class="keyword">this</span>,SLOT(closeTab(<span class="keywordtype">int</span>)));
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039     tabCount = 0;
+<a name="l00040"></a>00040     addTab();
+<a name="l00041"></a>00041     connect(ui-&gt;actionNovakarta,SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(addTab()));
+<a name="l00042"></a>00042 }
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 MainWindow::~MainWindow()
+<a name="l00045"></a>00045 {
+<a name="l00046"></a>00046     <span class="keyword">delete</span> ui;
+<a name="l00047"></a>00047     QGraphicsView *view;
+<a name="l00048"></a>00048     <span class="keywordflow">foreach</span>(view,views)
+<a name="l00049"></a>00049     {
+<a name="l00050"></a>00050         <span class="keyword">delete</span> view;
+<a name="l00051"></a>00051     }
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053     <a class="code" href="class_diagram_scene.html">DiagramScene</a> *scene;
+<a name="l00054"></a>00054     <span class="keywordflow">foreach</span> (scene, scenes)
+<a name="l00055"></a>00055     {
+<a name="l00056"></a>00056         <span class="keyword">delete</span> scene;
+<a name="l00057"></a>00057     }
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059 }
+<a name="l00060"></a>00060 
+<a name="l00068"></a><a class="code" href="class_main_window.html#a2abbb26a49a2e6be4a580225124aab96">00068</a> <span class="keywordtype">int</span> <a class="code" href="class_main_window.html#a2abbb26a49a2e6be4a580225124aab96">MainWindow::addTab</a>()
+<a name="l00069"></a>00069 {
+<a name="l00070"></a>00070     tabCount++;
+<a name="l00071"></a>00071     <a class="code" href="class_diagram_scene.html">DiagramScene</a> *scene = <span class="keyword">new</span> <a class="code" href="class_diagram_scene.html">DiagramScene</a>;
+<a name="l00072"></a>00072     scenes.append(scene);
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074     QGraphicsView *view = <span class="keyword">new</span> QGraphicsView(scene);
+<a name="l00075"></a>00075     views.append(view);
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077     <span class="keywordflow">return</span> ui-&gt;tabWidget-&gt;addTab(view, QString(<span class="stringliteral">&quot;unnamed %1&quot;</span>).arg(tabCount));
+<a name="l00078"></a>00078 }
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080 
+<a name="l00089"></a><a class="code" href="class_main_window.html#aa872e5655ad537a37de696713b1bff5c">00089</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#aa872e5655ad537a37de696713b1bff5c">MainWindow::closeTab</a>(<span class="keywordtype">int</span> tab)
+<a name="l00090"></a>00090 {
+<a name="l00091"></a>00091     QGraphicsView *view = views.at(tab);
+<a name="l00092"></a>00092     <a class="code" href="class_diagram_scene.html">DiagramScene</a> *scene = scenes.at(tab);
+<a name="l00093"></a>00093     ui-&gt;tabWidget-&gt;removeTab(tab);
+<a name="l00094"></a>00094     views.removeAt(tab);
+<a name="l00095"></a>00095     scenes.removeAt(tab);
+<a name="l00096"></a>00096     <span class="keyword">delete</span> scene;
+<a name="l00097"></a>00097     <span class="keyword">delete</span> view;
+<a name="l00098"></a>00098 }
+<a name="l00099"></a>00099 
+<a name="l00103"></a><a class="code" href="class_main_window.html#a42b431d6bb55966f679ee7c288742c7a">00103</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a42b431d6bb55966f679ee7c288742c7a">MainWindow::selectMouse</a>()
+<a name="l00104"></a>00104 {
+<a name="l00105"></a>00105     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::MoveItem);
+<a name="l00106"></a>00106 }
+<a name="l00107"></a>00107 
+<a name="l00111"></a><a class="code" href="class_main_window.html#acd38e1baf286e8f37ac086988567712d">00111</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#acd38e1baf286e8f37ac086988567712d">MainWindow::selectArc</a>()
+<a name="l00112"></a>00112 {
+<a name="l00113"></a>00113     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::InsertLine);
+<a name="l00114"></a>00114 }
+<a name="l00115"></a>00115 
+<a name="l00119"></a><a class="code" href="class_main_window.html#ab1ac7b74e439eb30b9a36f2b74534f95">00119</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#ab1ac7b74e439eb30b9a36f2b74534f95">MainWindow::selectPlace</a>()
+<a name="l00120"></a>00120 {
+<a name="l00121"></a>00121     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::InsertItem);
+<a name="l00122"></a>00122     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setItemType(DiagramItem::Place);
+<a name="l00123"></a>00123 }
+<a name="l00124"></a>00124 
+<a name="l00128"></a><a class="code" href="class_main_window.html#ac29d5848738c17b1e2044c932d696252">00128</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#ac29d5848738c17b1e2044c932d696252">MainWindow::selectTransition</a>()
+<a name="l00129"></a>00129 {
+<a name="l00130"></a>00130     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::InsertItem);
+<a name="l00131"></a>00131     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setItemType(DiagramItem::Transition);
+<a name="l00132"></a>00132 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -111,7 +192,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno st 14. bře 2012 14.37:35 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno čt 15. bře 2012 16.53:24 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>

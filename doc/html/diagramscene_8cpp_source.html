@@ -85,65 +85,67 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 <a name="l00015"></a>00015     line = 0;
 <a name="l00016"></a>00016 }
 <a name="l00017"></a>00017 
-<a name="l00018"></a>00018 <span class="keywordtype">void</span> DiagramScene::setMode(Mode mode)
-<a name="l00019"></a>00019 {
-<a name="l00020"></a>00020     myMode = mode;
-<a name="l00021"></a>00021 }
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023 <span class="keywordtype">void</span> DiagramScene::setItemType(DiagramItem::DiagramType type)
-<a name="l00024"></a>00024 {
-<a name="l00025"></a>00025     myItemType = type;
-<a name="l00026"></a>00026 }
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="comment">//TODO: editorLostFocus</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="keywordtype">void</span> DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
-<a name="l00031"></a>00031 {
-<a name="l00032"></a>00032     <span class="keywordflow">if</span> (mouseEvent-&gt;button() != Qt::LeftButton)
-<a name="l00033"></a>00033        <span class="keywordflow">return</span>;
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035     <a class="code" href="class_diagram_item.html">DiagramItem</a> *item;
-<a name="l00036"></a>00036     <span class="keywordflow">switch</span>(myMode)
-<a name="l00037"></a>00037     {
-<a name="l00038"></a>00038     <span class="keywordflow">case</span> InsertItem:
-<a name="l00039"></a>00039         <span class="keywordflow">if</span>(myItemType == DiagramItem::Place)
-<a name="l00040"></a>00040         {
-<a name="l00041"></a>00041             item = <span class="keyword">new</span> <a class="code" href="class_place.html">Place</a>();
-<a name="l00042"></a>00042         }
-<a name="l00043"></a>00043         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (myItemType == DiagramItem::Transition)
-<a name="l00044"></a>00044         {
-<a name="l00045"></a>00045             <span class="comment">//TODO konstruktor Transition</span>
-<a name="l00046"></a>00046         }
-<a name="l00047"></a>00047         addItem(item);
-<a name="l00048"></a>00048         item-&gt;setPos(mouseEvent-&gt;scenePos());
-<a name="l00049"></a>00049         emit itemInserted(item);
-<a name="l00050"></a>00050         <span class="keywordflow">break</span>;
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052     <span class="keywordflow">case</span> InsertLine:
-<a name="l00053"></a>00053         line = <span class="keyword">new</span> QGraphicsLineItem(QLineF(mouseEvent-&gt;scenePos(), mouseEvent-&gt;scenePos()));
-<a name="l00054"></a>00054         line-&gt;setPen(QPen(Qt::black));
-<a name="l00055"></a>00055         addItem(line);
-<a name="l00056"></a>00056         <span class="keywordflow">break</span>;
-<a name="l00057"></a>00057     <span class="keywordflow">default</span>:
-<a name="l00058"></a>00058         ;
-<a name="l00059"></a>00059     }
-<a name="l00060"></a>00060     QGraphicsScene::mousePressEvent(mouseEvent); <span class="comment">//?</span>
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062 }
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064 <span class="keywordtype">void</span> DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
-<a name="l00065"></a>00065 {
-<a name="l00066"></a>00066     <span class="keywordflow">if</span>(myMode == InsertLine &amp;&amp; line != 0)
-<a name="l00067"></a>00067     {
-<a name="l00068"></a>00068 <span class="comment">//     /   QLineF newLine(line-&gt;line().pl(), mouseEvent-&gt;scenePos());</span>
-<a name="l00069"></a>00069         <span class="comment">//line-&gt;setLine(newLine);</span>
-<a name="l00070"></a>00070     }
-<a name="l00071"></a>00071     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (myMode == MoveItem)
-<a name="l00072"></a>00072     {
-<a name="l00073"></a>00073         QGraphicsScene::mouseMoveEvent(mouseEvent);
+<a name="l00022"></a><a class="code" href="class_diagram_scene.html#a744ea6890f2e562192a4d3cb913c9766">00022</a> <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a744ea6890f2e562192a4d3cb913c9766">DiagramScene::setMode</a>(Mode mode)
+<a name="l00023"></a>00023 {
+<a name="l00024"></a>00024     myMode = mode;
+<a name="l00025"></a>00025 }
+<a name="l00026"></a>00026 
+<a name="l00031"></a><a class="code" href="class_diagram_scene.html#a59a2ab949930f51e4db292aed2e770cd">00031</a> <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a59a2ab949930f51e4db292aed2e770cd">DiagramScene::setItemType</a>(DiagramItem::DiagramType type)
+<a name="l00032"></a>00032 {
+<a name="l00033"></a>00033     myItemType = type;
+<a name="l00034"></a>00034 }
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 <span class="comment">//TODO: editorLostFocus</span>
+<a name="l00037"></a>00037 
+<a name="l00044"></a><a class="code" href="class_diagram_scene.html#a56249136dab559afa4f840a5c92acf73">00044</a> <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a56249136dab559afa4f840a5c92acf73">DiagramScene::mousePressEvent</a>(QGraphicsSceneMouseEvent *mouseEvent)
+<a name="l00045"></a>00045 {
+<a name="l00046"></a>00046     <span class="keywordflow">if</span> (mouseEvent-&gt;button() != Qt::LeftButton)
+<a name="l00047"></a>00047        <span class="keywordflow">return</span>;
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049     <a class="code" href="class_diagram_item.html">DiagramItem</a> *item;
+<a name="l00050"></a>00050     <span class="keywordflow">switch</span>(myMode)
+<a name="l00051"></a>00051     {
+<a name="l00052"></a>00052     <span class="keywordflow">case</span> InsertItem:
+<a name="l00053"></a>00053         <span class="keywordflow">if</span>(myItemType == DiagramItem::Place)
+<a name="l00054"></a>00054         {
+<a name="l00055"></a>00055             item = <span class="keyword">new</span> <a class="code" href="class_place.html">Place</a>();
+<a name="l00056"></a>00056         }
+<a name="l00057"></a>00057         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (myItemType == DiagramItem::Transition)
+<a name="l00058"></a>00058         {
+<a name="l00059"></a>00059             item = <span class="keyword">new</span> <a class="code" href="class_transition.html">Transition</a>();
+<a name="l00060"></a>00060         }
+<a name="l00061"></a>00061         addItem(item);
+<a name="l00062"></a>00062         item-&gt;setPos(mouseEvent-&gt;scenePos());
+<a name="l00063"></a>00063         emit itemInserted(item);
+<a name="l00064"></a>00064         <span class="keywordflow">break</span>;
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066     <span class="keywordflow">case</span> InsertLine:
+<a name="l00067"></a>00067 <span class="comment">/*        line = new QGraphicsLineItem(QLineF(mouseEvent-&gt;scenePos(), mouseEvent-&gt;scenePos()));</span>
+<a name="l00068"></a>00068 <span class="comment">        line-&gt;setPen(QPen(Qt::black));</span>
+<a name="l00069"></a>00069 <span class="comment">        addItem(line);</span>
+<a name="l00070"></a>00070 <span class="comment">        */</span>
+<a name="l00071"></a>00071         <span class="keywordflow">break</span>;
+<a name="l00072"></a>00072     <span class="keywordflow">default</span>:
+<a name="l00073"></a>00073         ;
 <a name="l00074"></a>00074     }
-<a name="l00075"></a>00075 }
+<a name="l00075"></a>00075     <a class="code" href="class_diagram_scene.html#a56249136dab559afa4f840a5c92acf73">QGraphicsScene::mousePressEvent</a>(mouseEvent);
 <a name="l00076"></a>00076 
+<a name="l00077"></a>00077 }
+<a name="l00078"></a>00078 
+<a name="l00085"></a><a class="code" href="class_diagram_scene.html#a4c0f6af69a806c55da083a110a4eb820">00085</a> <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a4c0f6af69a806c55da083a110a4eb820">DiagramScene::mouseMoveEvent</a>(QGraphicsSceneMouseEvent *mouseEvent)
+<a name="l00086"></a>00086 {
+<a name="l00087"></a>00087     <span class="keywordflow">if</span>(myMode == InsertLine &amp;&amp; line != 0)
+<a name="l00088"></a>00088     {
+<a name="l00089"></a>00089 <span class="comment">//        QLineF newLine(line-&gt;line().pl(), mouseEvent-&gt;scenePos());</span>
+<a name="l00090"></a>00090         <span class="comment">//line-&gt;setLine(newLine);</span>
+<a name="l00091"></a>00091     }
+<a name="l00092"></a>00092     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (myMode == MoveItem)
+<a name="l00093"></a>00093     {
+<a name="l00094"></a>00094         <a class="code" href="class_diagram_scene.html#a4c0f6af69a806c55da083a110a4eb820">QGraphicsScene::mouseMoveEvent</a>(mouseEvent);
+<a name="l00095"></a>00095     }
+<a name="l00096"></a>00096 }
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098 
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -163,7 +165,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno st 14. bře 2012 14.37:35 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno čt 15. bře 2012 16.53:24 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>
