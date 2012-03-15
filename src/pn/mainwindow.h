@@ -9,14 +9,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QActionGroup>
-#include <QGraphicsView>
-#include <QtGui/QMessageBox>
 #include "diagramscene.h"
-
-class QActionGroup;
-class QGraphicsView;
-
 
 namespace Ui {
 class MainWindow;
@@ -32,13 +25,8 @@ public:
     
 private:
     Ui::MainWindow *ui;
-    QList<DiagramScene*> scenes;
-    QList<QGraphicsView*> views;
-    QActionGroup *actionGroup;
+    //DiagramScene *scene;
 
-public slots:
-    void addTab();
-    void closeTab(int tab);
 
 };
 

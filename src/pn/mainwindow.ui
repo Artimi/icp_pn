@@ -18,8 +18,18 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>-1</number>
+       <number>0</number>
       </property>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QGraphicsView" name="graphicsView"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -69,9 +79,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionAddTab"/>
-   <addaction name="actionCloseTab"/>
-   <addaction name="separator"/>
    <addaction name="actionMouse"/>
    <addaction name="actionPlace"/>
    <addaction name="actionTransition"/>
@@ -145,18 +152,11 @@
     <string>&amp;Konec</string>
    </property>
   </action>
-  <action name="actionAddTab">
-   <property name="text">
-    <string>AddTab</string>
-   </property>
-  </action>
-  <action name="actionCloseTab">
-   <property name="text">
-    <string>CloseTab</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>graphicsView</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
