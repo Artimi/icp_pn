@@ -25,12 +25,29 @@ void DiagramScene::setMode(Mode mode)
 }
 
 /**
+  * @return Mode současný mod scene
+  */
+
+DiagramScene::Mode DiagramScene::getMode()
+{
+    return myMode;
+}
+
+/**
   * Nastavuje typ vkládaného objektu
   * @param type typ vkládáného objektu DiagramItem::Place|DiagramItem::Transition
   */
 void DiagramScene::setItemType(DiagramItem::DiagramType type)
 {
     myItemType = type;
+}
+
+/**
+  * @return DiagramType současný vkládaný objekt
+  */
+DiagramItem::DiagramType DiagramScene::getItemType()
+{
+    return myItemType;
 }
 
 //TODO: editorLostFocus

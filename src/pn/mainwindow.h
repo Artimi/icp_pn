@@ -46,6 +46,7 @@ public slots:
     void selectArc();
     void selectPlace();
     void selectTransition();
+    void updateToolBar(int tab);
 
 };
 

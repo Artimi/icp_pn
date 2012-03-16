@@ -33,6 +33,9 @@ public:
     enum Mode {InsertItem, InsertLine, MoveItem};
     DiagramScene();
 
+    Mode getMode();
+    DiagramItem::DiagramType getItemType();
+
 public slots:
     void setMode(Mode mode);
     void setItemType(DiagramItem::DiagramType type);

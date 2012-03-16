@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tabWidget->setTabsClosable(true);
     connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
+    connect(ui->tabWidget,SIGNAL(currentChanged(int)), this, SLOT(updateToolBar(int)));
 
     tabCount = 0;
     addTab();
@@ -130,3 +131,57 @@ void MainWindow::selectTransition()
     scenes.at(ui->tabWidget->currentIndex())->setMode(DiagramScene::InsertItem);
     scenes.at(ui->tabWidget->currentIndex())->setItemType(DiagramItem::Transition);
 }
+
+/**
+  * Nastavuje správné zaškrtnutí v toolbaru podle scene
+  *
+  *
+  */
+void MainWindow::updateToolBar(int tab)
+{
+    if (tab == -1)
+        return;
+
+    DiagramScene::Mode mode;
+
+    mode = scenes.at(tab)->getMode();
+    if (mode == DiagramScene::MoveItem)
+    {
+        ui->actionMouse->setChecked(true);
+    }
+    else if (mode == DiagramScene::InsertLine)
+    {
+        ui->actionArc->setChecked(true);
+    }
+    else if (mode == DiagramScene::InsertItem)
+    {
+        DiagramItem::DiagramType item = scenes.at(tab)->getItemType();
+
+        if(item == DiagramItem::Place)
+        {
+            ui->actionPlace->setChecked(true);
+        }
+        else if (item == DiagramItem::Transition)
+        {
+            ui->actionTransition->setChecked(true);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -105,31 +105,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 <a name="l00033"></a>00033     <span class="keyword">enum</span> Mode {InsertItem, InsertLine, MoveItem};
 <a name="l00034"></a>00034     <a class="code" href="class_diagram_scene.html">DiagramScene</a>();
 <a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="keyword">public</span> slots:
-<a name="l00037"></a>00037     <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a744ea6890f2e562192a4d3cb913c9766">setMode</a>(Mode mode);
-<a name="l00038"></a>00038     <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a59a2ab949930f51e4db292aed2e770cd">setItemType</a>(DiagramItem::DiagramType type);
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040 signals:
-<a name="l00041"></a>00041     <span class="keywordtype">void</span> itemInserted(<a class="code" href="class_diagram_item.html">DiagramItem</a> *item);
-<a name="l00042"></a>00042     <span class="keywordtype">void</span> itemSelected(QGraphicsItem *item);
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044 <span class="keyword">protected</span>:
-<a name="l00045"></a>00045     <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a56249136dab559afa4f840a5c92acf73">mousePressEvent</a>(QGraphicsSceneMouseEvent *mouseEvent);
-<a name="l00046"></a>00046     <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a4c0f6af69a806c55da083a110a4eb820">mouseMoveEvent</a>(QGraphicsSceneMouseEvent *mouseEvent);
-<a name="l00047"></a>00047 <span class="comment">//    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);</span>
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049 <span class="keyword">private</span>:
-<a name="l00050"></a>00050     <span class="keywordtype">bool</span> isItemChange(<span class="keywordtype">int</span> type);
+<a name="l00036"></a>00036     Mode <a class="code" href="class_diagram_scene.html#a461ff24d2686bb075d82417dbd09f93d">getMode</a>();
+<a name="l00037"></a>00037     <a class="code" href="class_diagram_item.html">DiagramItem</a>::DiagramType <a class="code" href="class_diagram_scene.html#ac721a062e8605ab22e1df379c4a97191">getItemType</a>();
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039 <span class="keyword">public</span> slots:
+<a name="l00040"></a>00040     <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a744ea6890f2e562192a4d3cb913c9766">setMode</a>(Mode mode);
+<a name="l00041"></a>00041     <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a59a2ab949930f51e4db292aed2e770cd">setItemType</a>(DiagramItem::DiagramType type);
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043 signals:
+<a name="l00044"></a>00044     <span class="keywordtype">void</span> itemInserted(<a class="code" href="class_diagram_item.html">DiagramItem</a> *item);
+<a name="l00045"></a>00045     <span class="keywordtype">void</span> itemSelected(QGraphicsItem *item);
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047 <span class="keyword">protected</span>:
+<a name="l00048"></a>00048     <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a56249136dab559afa4f840a5c92acf73">mousePressEvent</a>(QGraphicsSceneMouseEvent *mouseEvent);
+<a name="l00049"></a>00049     <span class="keywordtype">void</span> <a class="code" href="class_diagram_scene.html#a4c0f6af69a806c55da083a110a4eb820">mouseMoveEvent</a>(QGraphicsSceneMouseEvent *mouseEvent);
+<a name="l00050"></a>00050 <span class="comment">//    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);</span>
 <a name="l00051"></a>00051 
-<a name="l00052"></a>00052     <a class="code" href="class_diagram_item.html">DiagramItem</a>::DiagramType myItemType;
-<a name="l00053"></a>00053     Mode myMode;
-<a name="l00054"></a>00054     <span class="keywordtype">bool</span> leftButtonDown;
-<a name="l00055"></a>00055     QPointF startPoint;
-<a name="l00056"></a>00056     QGraphicsLineItem *line;
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058 };
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060 <span class="preprocessor">#endif // DIAGRAMSCENE_H</span>
+<a name="l00052"></a>00052 <span class="keyword">private</span>:
+<a name="l00053"></a>00053     <span class="keywordtype">bool</span> isItemChange(<span class="keywordtype">int</span> type);
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055     <a class="code" href="class_diagram_item.html">DiagramItem</a>::DiagramType myItemType;
+<a name="l00056"></a>00056     Mode myMode;
+<a name="l00057"></a>00057     <span class="keywordtype">bool</span> leftButtonDown;
+<a name="l00058"></a>00058     QPointF startPoint;
+<a name="l00059"></a>00059     QGraphicsLineItem *line;
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061 };
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063 <span class="preprocessor">#endif // DIAGRAMSCENE_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -149,7 +152,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno čt 15. bře 2012 16.53:24 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno pá 16. bře 2012 12.40:46 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>
