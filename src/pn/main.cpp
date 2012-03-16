@@ -4,6 +4,13 @@
   * @brief Tento soubor spouští aplikaci Qt a předává jí řízení
   */
 
+/**
+  * @mainpage Dokumentace k editoru a simulátoru vysokoúrovňových Petriho sítí
+  *
+  * \section intro_sec Úvod
+  *
+  * \section use_sec Použití
+  */
 #include <QtGui/QApplication>
 #include "mainwindow.h"
 
