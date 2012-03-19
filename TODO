@@ -2,7 +2,9 @@
 Klient:
 
 při prvním kliknutí se vykresluje do středu plátna - OPRAVIT
+    - DONE přidáno scene->setSceneRect() do MainWindow::addTab()
 přidání hran
+    - PARTLY přidána třída Arrow, teď ji ještě pochopit a napasovat do systému
 označování objektů na plátně, označit vše
 zoom in/out
 místo nápisů v toolbaru dát ikonky
@@ -31,6 +33,7 @@ Petri Net -> XML
 simulace po kroku, do konce
 správa verzí
 logování přístupu na server a spouštění simulací atd.
+autentizace a autorizace uživatelů
 
 
 Makefile:

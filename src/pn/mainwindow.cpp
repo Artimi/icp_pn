@@ -70,6 +70,7 @@ int MainWindow::addTab()
 {
     tabCount++;
     DiagramScene *scene = new DiagramScene;
+    scene->setSceneRect(QRectF(0,0,500,500));
     scenes.append(scene);
 
     QGraphicsView *view = new QGraphicsView(scene);

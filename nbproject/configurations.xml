@@ -5,28 +5,29 @@
       <df name="design">
       </df>
       <df name="doc">
+        <df name="html">
+          <df name="search">
+          </df>
+        </df>
       </df>
       <df name="examples">
       </df>
       <df name="src">
         <df name="pn">
-          <df name="pn2012">
-            <in>diagramitem.cpp</in>
-            <in>diagramitem.h</in>
-            <in>diagramscene.cpp</in>
-            <in>diagramscene.h</in>
-            <in>main.cpp</in>
-            <in>mainwindow.cpp</in>
-            <in>mainwindow.h</in>
-            <in>moc_mainwindow.cpp</in>
-            <in>ui_mainwindow.h</in>
-          </df>
-          <df name="pn2012-build-desktop-Desktop_Qt_4_7_4_for_GCC__Qt_SDK__Release">
-            <in>moc_diagramscene.cpp</in>
-            <in>moc_mainwindow.cpp</in>
-            <in>ui_mainwindow.h</in>
-          </df>
+          <in>diagramitem.cpp</in>
+          <in>diagramitem.h</in>
+          <in>diagramscene.cpp</in>
+          <in>diagramscene.h</in>
           <in>main.cpp</in>
+          <in>mainwindow.cpp</in>
+          <in>mainwindow.h</in>
+          <in>moc_diagramscene.cpp</in>
+          <in>moc_mainwindow.cpp</in>
+          <in>place.cpp</in>
+          <in>place.h</in>
+          <in>transition.cpp</in>
+          <in>transition.h</in>
+          <in>ui_mainwindow.h</in>
         </df>
         <df name="server">
         </df>

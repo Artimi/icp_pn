@@ -20,10 +20,12 @@ public:
 
     DiagramType diagramType()
     {return myDiagramType;}
-
+    QPolygonF polygon() const
+        { return myPolygon; }
 
 private:
     DiagramType myDiagramType;
+    QPolygonF myPolygon;
 };
 
 #endif // DIAGRAMITEM_H
