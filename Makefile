@@ -7,8 +7,11 @@ all:
 	make -C $(PN_PATH)
 
 run:
+	./$(PN_PATH)pn2012
 
-server:
+runserver:
+	./$(PN_PATH)server2012
+
 
 doxygen: Doxyfile
 	doxygen Doxyfile

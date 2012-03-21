@@ -40,10 +40,8 @@ Makefile:
 
 clean
 pack
-run
-runserver
-
-FIXME!! Makefile mi nefunguje, vsecko probehne v poradku, ale pri vytvareni binarky se snazi vytvorit binarku pn2012, stejneho nazvu je tam ale slozka!!
+run FIXED
+runserver FIXED
 
 
 Obecně:
