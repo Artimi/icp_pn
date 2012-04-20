@@ -14,7 +14,10 @@ DiagramItem::DiagramItem(DiagramType diagramType, QGraphicsItem *parent, QGraphi
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges,true);
 }
-
+/**
+  * Vymaže ze seznamu napojených hran hranu arrow
+  * @param  arrow   mazaná hrana
+  */
 void DiagramItem::removeArrow(Arrow *arrow)
 {
     int index = arrows.indexOf(arrow);
@@ -23,6 +26,9 @@ void DiagramItem::removeArrow(Arrow *arrow)
         arrows.removeAt(index);
 }
 
+/**
+  * Smaže všechny hrany napojené na item
+  */
 void DiagramItem::removeArrows()
 {
     foreach(Arrow *arrow, arrows)
@@ -34,12 +40,21 @@ void DiagramItem::removeArrows()
     }
 }
 
+/**
+  * Připojí hranu do seznamu připojených hran
+  * @param  arrow   připojovaná hrana
+  */
 void DiagramItem::addArrow(Arrow *arrow)
 {
     arrows.append(arrow);
 }
 
-
+/**
+  * Volán v případě změny pozice itemu, reimplementovaná metoda
+  * @param  change  charakter změny itemu
+  * @param  value   nová hodnota po změně (nepoužito)
+  * @return value   nepoužito
+  */
 QVariant DiagramItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     if (change == QGraphicsItem::ItemPositionChange)

@@ -22,13 +22,15 @@ class Transition : public DiagramItem
 {
 
 public:
+    enum {Type = UserType + 17};
     Transition(QGraphicsItem *parent =0);
-
     QRectF boundingRect() const
     {
         return rectangle;
     }
 
+    int type() const
+    {return Type;}
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 

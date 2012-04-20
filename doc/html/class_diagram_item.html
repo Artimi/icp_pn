@@ -78,7 +78,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Veřejné typy</a> &#124;
-<a href="#pub-methods">Veřejné metody</a>  </div>
+<a href="#pub-methods">Veřejné metody</a> &#124;
+<a href="#pro-methods">Chráněné metody</a> &#124;
+<a href="#pro-attribs">Chráněné atributy</a>  </div>
   <div class="headertitle">
 <div class="title">Dokumentace třídy DiagramItem</div>  </div>
 </div>
@@ -98,6 +100,8 @@ Diagram dědičnosti pro třídu DiagramItem</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Veřejné typy</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>Type</b> =  UserType + 15
+ }</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>DiagramType</b> { <b>Place</b>, 
 <b>Transition</b>
  }</td></tr>
@@ -107,7 +111,135 @@ Veřejné metody</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>DiagramItem</b> (DiagramType diagramType, QGraphicsItem *parent=0, QGraphicsScene *scene=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf6697ccb85fedb55832cae32e235110"></a><!-- doxytag: member="DiagramItem::diagramType" ref="aaf6697ccb85fedb55832cae32e235110" args="()" -->
 DiagramType&#160;</td><td class="memItemRight" valign="bottom"><b>diagramType</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a483cb2a13c9035090ef55bfa148fc93c"></a><!-- doxytag: member="DiagramItem::polygon" ref="a483cb2a13c9035090ef55bfa148fc93c" args="() const " -->
+QPolygonF&#160;</td><td class="memItemRight" valign="bottom"><b>polygon</b> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4851c7c4ea5fbb3e137c074082ebf84b"></a><!-- doxytag: member="DiagramItem::type" ref="a4851c7c4ea5fbb3e137c074082ebf84b" args="() const " -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item.html#af85bfb4edd1f641fae6b605e4bb529b4">removeArrow</a> (<a class="el" href="class_arrow.html">Arrow</a> *arrow)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item.html#ade8fc7eb5fc8795ed32088b9d84d8e79">removeArrows</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item.html#a7eea98dfc6ec8956e0fb0e6e440fdcb0">addArrow</a> (<a class="el" href="class_arrow.html">Arrow</a> *arrow)</td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Chráněné metody</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item.html#ada966349ddc26ea7b0c04f4f756d9fc3">itemChange</a> (GraphicsItemChange change, const QVariant &amp;value)</td></tr>
+<tr><td colspan="2"><h2><a name="pro-attribs"></a>
+Chráněné atributy</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad51c9b0800c39af0a455a4777f9b4280"></a><!-- doxytag: member="DiagramItem::myDiagramType" ref="ad51c9b0800c39af0a455a4777f9b4280" args="" -->
+DiagramType&#160;</td><td class="memItemRight" valign="bottom"><b>myDiagramType</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bce90ce5d10a4a29ed67782636cc7dd"></a><!-- doxytag: member="DiagramItem::myPolygon" ref="a6bce90ce5d10a4a29ed67782636cc7dd" args="" -->
+QPolygonF&#160;</td><td class="memItemRight" valign="bottom"><b>myPolygon</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aafa6da7a3aa2fdd51f4517bf9c963181"></a><!-- doxytag: member="DiagramItem::arrows" ref="aafa6da7a3aa2fdd51f4517bf9c963181" args="" -->
+QList&lt; <a class="el" href="class_arrow.html">Arrow</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>arrows</b></td></tr>
 </table>
+<hr/><h2>Dokumentace k metodám</h2>
+<a class="anchor" id="a7eea98dfc6ec8956e0fb0e6e440fdcb0"></a><!-- doxytag: member="DiagramItem::addArrow" ref="a7eea98dfc6ec8956e0fb0e6e440fdcb0" args="(Arrow *arrow)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DiagramItem::addArrow </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_arrow.html">Arrow</a> *&#160;</td>
+          <td class="paramname"><em>arrow</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Připojí hranu do seznamu připojených hran </p>
+<dl><dt><b>Parametry:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arrow</td><td>připojovaná hrana </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00047">47</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ada966349ddc26ea7b0c04f4f756d9fc3"></a><!-- doxytag: member="DiagramItem::itemChange" ref="ada966349ddc26ea7b0c04f4f756d9fc3" args="(GraphicsItemChange change, const QVariant &amp;value)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QVariant DiagramItem::itemChange </td>
+          <td>(</td>
+          <td class="paramtype">GraphicsItemChange&#160;</td>
+          <td class="paramname"><em>change</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Volán v případě změny pozice itemu, reimplementovaná metoda </p>
+<dl><dt><b>Parametry:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">change</td><td>charakter změny itemu </td></tr>
+    <tr><td class="paramname">value</td><td>nová hodnota po změně (nepoužito) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Návratová hodnota:</b></dt><dd>value nepoužito </dd></dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00058">58</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af85bfb4edd1f641fae6b605e4bb529b4"></a><!-- doxytag: member="DiagramItem::removeArrow" ref="af85bfb4edd1f641fae6b605e4bb529b4" args="(Arrow *arrow)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DiagramItem::removeArrow </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_arrow.html">Arrow</a> *&#160;</td>
+          <td class="paramname"><em>arrow</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Vymaže ze seznamu napojených hran hranu arrow </p>
+<dl><dt><b>Parametry:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arrow</td><td>mazaná hrana </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00021">21</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ade8fc7eb5fc8795ed32088b9d84d8e79"></a><!-- doxytag: member="DiagramItem::removeArrows" ref="ade8fc7eb5fc8795ed32088b9d84d8e79" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DiagramItem::removeArrows </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Smaže všechny hrany napojené na item </p>
+
+<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00032">32</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
+
+</div>
+</div>
 <hr/>Dokumentace pro tuto třídu byla generována z následujících souborů:<ul>
 <li><a class="el" href="diagramitem_8h_source.html">diagramitem.h</a></li>
 <li><a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a></li>
@@ -130,7 +262,7 @@ DiagramType&#160;</td><td class="memItemRight" valign="bottom"><b>diagramType</b
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno pá 16. bře 2012 12.50:05 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno pá 20. dub 2012 21.59:11 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>

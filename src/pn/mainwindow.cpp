@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     tabCount = 0;
     addTab();
     connect(ui->actionNovakarta,SIGNAL(triggered()), this, SLOT(addTab()));
+
 }
 
 MainWindow::~MainWindow()
@@ -135,8 +136,7 @@ void MainWindow::selectTransition()
 
 /**
   * Nastavuje správné zaškrtnutí v toolbaru podle scene
-  *
-  *
+  * @param  tab tab, který je aktivní
   */
 void MainWindow::updateToolBar(int tab)
 {

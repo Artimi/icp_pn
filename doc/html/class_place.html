@@ -77,7 +77,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Veřejné metody</a>  </div>
+<a href="#pub-types">Veřejné typy</a> &#124;
+<a href="#pub-methods">Veřejné metody</a> &#124;
+<a href="#pub-attribs">Veřejné atributy</a>  </div>
   <div class="headertitle">
 <div class="title">Dokumentace třídy Place</div>  </div>
 </div>
@@ -94,14 +96,25 @@ Diagram dědičnosti pro třídu Place</div>
 
 <p><a href="class_place-members.html">Seznam všech členů.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-types"></a>
+Veřejné typy</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>Type</b> =  UserType + 16
+ }</td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Veřejné metody</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9101829b4602b0bde138d8d9d7733e6f"></a><!-- doxytag: member="Place::Place" ref="a9101829b4602b0bde138d8d9d7733e6f" args="(QGraphicsItem *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>Place</b> (QGraphicsItem *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0391a2939039a6f93329a99e43e3a374"></a><!-- doxytag: member="Place::type" ref="a0391a2939039a6f93329a99e43e3a374" args="() const " -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17e807e64c6711aeb6f027f3d44f40c5"></a><!-- doxytag: member="Place::boundingRect" ref="a17e807e64c6711aeb6f027f3d44f40c5" args="() const " -->
 QRectF&#160;</td><td class="memItemRight" valign="bottom"><b>boundingRect</b> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QPainterPath&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_place.html#a4713e2e8c6e472bc6143cbbf506e46b3">shape</a> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_place.html#a289ff180bf4b32bd0ff780aaa9bf7524">paint</a> (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_place.html#a8f6d7e0a10bc695f77a411c95b79e159">addToken</a> (int token)</td></tr>
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Veřejné atributy</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd5b99b2a9d6d0e1007e344324544781"></a><!-- doxytag: member="Place::size" ref="abd5b99b2a9d6d0e1007e344324544781" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>size</b></td></tr>
 </table>
 <hr/><h2>Dokumentace k metodám</h2>
 <a class="anchor" id="a8f6d7e0a10bc695f77a411c95b79e159"></a><!-- doxytag: member="Place::addToken" ref="a8f6d7e0a10bc695f77a411c95b79e159" args="(int token)" -->
@@ -126,7 +139,7 @@ QRectF&#160;</td><td class="memItemRight" valign="bottom"><b>boundingRect</b> ()
   </dd>
 </dl>
 
-<p>Definice je uvedena na řádku <a class="el" href="place_8cpp_source.html#l00030">30</a> v souboru <a class="el" href="place_8cpp_source.html">place.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="place_8cpp_source.html#l00036">36</a> v souboru <a class="el" href="place_8cpp_source.html">place.cpp</a>.</p>
 
 </div>
 </div>
@@ -160,9 +173,29 @@ QRectF&#160;</td><td class="memItemRight" valign="bottom"><b>boundingRect</b> ()
       </table>
 </div>
 <div class="memdoc">
-<p>metoda vykresluje objekt </p>
+<p>metoda vykresluje objekt, reimplementovaná metoda </p>
 
-<p>Definice je uvedena na řádku <a class="el" href="place_8cpp_source.html#l00019">19</a> v souboru <a class="el" href="place_8cpp_source.html">place.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="place_8cpp_source.html#l00021">21</a> v souboru <a class="el" href="place_8cpp_source.html">place.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4713e2e8c6e472bc6143cbbf506e46b3"></a><!-- doxytag: member="Place::shape" ref="a4713e2e8c6e472bc6143cbbf506e46b3" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QPainterPath Place::shape </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Metoda pro zjištění přesného tvaru itemu </p>
+<dl class="return"><dt><b>Návratová hodnota:</b></dt><dd>přesný tvar itemu </dd></dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="place_8cpp_source.html#l00059">59</a> v souboru <a class="el" href="place_8cpp_source.html">place.cpp</a>.</p>
 
 </div>
 </div>
@@ -188,7 +221,7 @@ QRectF&#160;</td><td class="memItemRight" valign="bottom"><b>boundingRect</b> ()
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno pá 16. bře 2012 12.50:05 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno pá 20. dub 2012 21.59:11 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>

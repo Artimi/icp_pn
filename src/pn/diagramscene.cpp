@@ -9,6 +9,7 @@
 
 #include "diagramscene.h"
 #include "arrow.h"
+#include <QMessageBox>
 
 DiagramScene::DiagramScene()
 {
@@ -85,11 +86,11 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(), mouseEvent->scenePos()));
         line->setPen(QPen(Qt::black));
         addItem(line);
-
         break;
-    default:
-        ;
+
+
     }
+    update();
     QGraphicsScene::mousePressEvent(mouseEvent);
 
 }
@@ -109,8 +110,10 @@ void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
     else if (myMode == MoveItem)
     {
+
         QGraphicsScene::mouseMoveEvent(mouseEvent);
     }
+    update();
 }
 
 
@@ -121,35 +124,72 @@ void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
   */
 void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if (line != 0 && myMode == InsertLine)
+    switch(myMode)
     {
-            QList<QGraphicsItem *> startItems = items(line->line().p1());
-            if (startItems.count() && startItems.first() == line)
-                startItems.removeFirst();
-
-            QList<QGraphicsItem *> endItems = items(line->line().p2());
-            if (endItems.count() && endItems.first() == line)
-                endItems.removeFirst();
-
-            removeItem(line);
-            delete line;
-
-            if (startItems.count() > 0 && endItems.count() > 0 &&
-                    startItems.first()->type() == DiagramItem::Type &&
-                    endItems.first()->type() == DiagramItem::Type &&
-                    startItems.first() != endItems.first())
+        case InsertLine:
+            if (line != 0)
             {
-                DiagramItem *startItem = qgraphicsitem_cast<DiagramItem *>(startItems.first());
-                DiagramItem *endItem = qgraphicsitem_cast<DiagramItem *> (endItems.first());
-                Arrow *arrow = new Arrow(startItem, endItem);
-                startItem->addArrow(arrow);
-                endItem->addArrow(arrow);
-                arrow->setZValue(-1000.0);
-                addItem(arrow);
-                arrow->updatePosition();
+                    QMessageBox msg;
+                    QList<QGraphicsItem *> startItems = items(line->line().p1());
+                    if (startItems.count() && startItems.first() == line)
+                        startItems.removeFirst();
+
+                    QList<QGraphicsItem *> endItems = items(line->line().p2());
+                    if (endItems.count() && endItems.first() == line)
+                        endItems.removeFirst();
+
+                    removeItem(line);
+                    delete line;
+
+                    if (startItems.count() > 0 && endItems.count() > 0 &&
+                            startItems.first() != endItems.first())
+                    {
+                        DiagramItem *startItem;
+                        DiagramItem *endItem;
+
+                        if(startItems.first()->type() == Place::Type &&
+                                endItems.first()->type() == Transition::Type)
+                        {
+                            startItem = qgraphicsitem_cast<Place *>(startItems.first());
+                            endItem = qgraphicsitem_cast<Transition *> (endItems.first());
+                        }
+                        else if(startItems.first()->type() == Transition::Type &&
+                               endItems.first()->type() == Place::Type)
+                        {
+                            startItem = qgraphicsitem_cast<Transition *>(startItems.first());
+                            endItem = qgraphicsitem_cast<Place *> (endItems.first());
+                        }
+                        else
+                        {
+                          line = 0;
+                          break;
+                        }
+                        Arrow *arrow = new Arrow(startItem, endItem);
+                        startItem->addArrow(arrow);
+                        endItem->addArrow(arrow);
+                        addItem(arrow);
+                        arrow->updatePosition();
+                    }
             }
+            line = 0;
+        case MoveItem:
+        QGraphicsItem * itemUnderMouse = itemAt(mouseEvent->scenePos().x(),
+                                                mouseEvent->scenePos().y());
+
+        if(itemUnderMouse &&
+           itemUnderMouse->isEnabled() &&
+           itemUnderMouse->flags() & QGraphicsItem::ItemIsSelectable)
+        {
+            itemUnderMouse->setSelected(!itemUnderMouse->isSelected());
+        }
+        else if (!itemUnderMouse)
+        {
+            clearSelection();
+        }
+        break;
     }
-    line = 0;
+    update();
+
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
 
 }

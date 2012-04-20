@@ -110,102 +110,103 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 <a name="l00040"></a>00040     tabCount = 0;
 <a name="l00041"></a>00041     addTab();
 <a name="l00042"></a>00042     connect(ui-&gt;actionNovakarta,SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(addTab()));
-<a name="l00043"></a>00043 }
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045 MainWindow::~MainWindow()
-<a name="l00046"></a>00046 {
-<a name="l00047"></a>00047     <span class="keyword">delete</span> ui;
-<a name="l00048"></a>00048     QGraphicsView *view;
-<a name="l00049"></a>00049     <span class="keywordflow">foreach</span>(view,views)
-<a name="l00050"></a>00050     {
-<a name="l00051"></a>00051         <span class="keyword">delete</span> view;
-<a name="l00052"></a>00052     }
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054     <a class="code" href="class_diagram_scene.html">DiagramScene</a> *scene;
-<a name="l00055"></a>00055     <span class="keywordflow">foreach</span> (scene, scenes)
-<a name="l00056"></a>00056     {
-<a name="l00057"></a>00057         <span class="keyword">delete</span> scene;
-<a name="l00058"></a>00058     }
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060 }
-<a name="l00061"></a>00061 
-<a name="l00069"></a><a class="code" href="class_main_window.html#a2abbb26a49a2e6be4a580225124aab96">00069</a> <span class="keywordtype">int</span> <a class="code" href="class_main_window.html#a2abbb26a49a2e6be4a580225124aab96">MainWindow::addTab</a>()
-<a name="l00070"></a>00070 {
-<a name="l00071"></a>00071     tabCount++;
-<a name="l00072"></a>00072     <a class="code" href="class_diagram_scene.html">DiagramScene</a> *scene = <span class="keyword">new</span> <a class="code" href="class_diagram_scene.html">DiagramScene</a>;
-<a name="l00073"></a>00073     scenes.append(scene);
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075     QGraphicsView *view = <span class="keyword">new</span> QGraphicsView(scene);
-<a name="l00076"></a>00076     views.append(view);
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078     <span class="keywordflow">return</span> ui-&gt;tabWidget-&gt;addTab(view, QString(<span class="stringliteral">&quot;unnamed %1&quot;</span>).arg(tabCount));
-<a name="l00079"></a>00079 }
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081 
-<a name="l00090"></a><a class="code" href="class_main_window.html#aa872e5655ad537a37de696713b1bff5c">00090</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#aa872e5655ad537a37de696713b1bff5c">MainWindow::closeTab</a>(<span class="keywordtype">int</span> tab)
-<a name="l00091"></a>00091 {
-<a name="l00092"></a>00092     QGraphicsView *view = views.at(tab);
-<a name="l00093"></a>00093     <a class="code" href="class_diagram_scene.html">DiagramScene</a> *scene = scenes.at(tab);
-<a name="l00094"></a>00094     ui-&gt;tabWidget-&gt;removeTab(tab);
-<a name="l00095"></a>00095     views.removeAt(tab);
-<a name="l00096"></a>00096     scenes.removeAt(tab);
-<a name="l00097"></a>00097     <span class="keyword">delete</span> scene;
-<a name="l00098"></a>00098     <span class="keyword">delete</span> view;
-<a name="l00099"></a>00099 }
-<a name="l00100"></a>00100 
-<a name="l00104"></a><a class="code" href="class_main_window.html#a42b431d6bb55966f679ee7c288742c7a">00104</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a42b431d6bb55966f679ee7c288742c7a">MainWindow::selectMouse</a>()
-<a name="l00105"></a>00105 {
-<a name="l00106"></a>00106     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::MoveItem);
-<a name="l00107"></a>00107 }
-<a name="l00108"></a>00108 
-<a name="l00112"></a><a class="code" href="class_main_window.html#acd38e1baf286e8f37ac086988567712d">00112</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#acd38e1baf286e8f37ac086988567712d">MainWindow::selectArc</a>()
-<a name="l00113"></a>00113 {
-<a name="l00114"></a>00114     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::InsertLine);
-<a name="l00115"></a>00115 }
-<a name="l00116"></a>00116 
-<a name="l00120"></a><a class="code" href="class_main_window.html#ab1ac7b74e439eb30b9a36f2b74534f95">00120</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#ab1ac7b74e439eb30b9a36f2b74534f95">MainWindow::selectPlace</a>()
-<a name="l00121"></a>00121 {
-<a name="l00122"></a>00122     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::InsertItem);
-<a name="l00123"></a>00123     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setItemType(DiagramItem::Place);
-<a name="l00124"></a>00124 }
-<a name="l00125"></a>00125 
-<a name="l00129"></a><a class="code" href="class_main_window.html#ac29d5848738c17b1e2044c932d696252">00129</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#ac29d5848738c17b1e2044c932d696252">MainWindow::selectTransition</a>()
-<a name="l00130"></a>00130 {
-<a name="l00131"></a>00131     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::InsertItem);
-<a name="l00132"></a>00132     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setItemType(DiagramItem::Transition);
-<a name="l00133"></a>00133 }
-<a name="l00134"></a>00134 
-<a name="l00140"></a><a class="code" href="class_main_window.html#a41f289a6ea0e9807e5df74c8d8c240dd">00140</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a41f289a6ea0e9807e5df74c8d8c240dd">MainWindow::updateToolBar</a>(<span class="keywordtype">int</span> tab)
-<a name="l00141"></a>00141 {
-<a name="l00142"></a>00142     <span class="keywordflow">if</span> (tab == -1)
-<a name="l00143"></a>00143         <span class="keywordflow">return</span>;
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145     <a class="code" href="class_diagram_scene.html">DiagramScene</a>::Mode mode;
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147     mode = scenes.at(tab)-&gt;getMode();
-<a name="l00148"></a>00148     <span class="keywordflow">if</span> (mode == DiagramScene::MoveItem)
-<a name="l00149"></a>00149     {
-<a name="l00150"></a>00150         ui-&gt;actionMouse-&gt;setChecked(<span class="keyword">true</span>);
-<a name="l00151"></a>00151     }
-<a name="l00152"></a>00152     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (mode == DiagramScene::InsertLine)
-<a name="l00153"></a>00153     {
-<a name="l00154"></a>00154         ui-&gt;actionArc-&gt;setChecked(<span class="keyword">true</span>);
-<a name="l00155"></a>00155     }
-<a name="l00156"></a>00156     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (mode == DiagramScene::InsertItem)
-<a name="l00157"></a>00157     {
-<a name="l00158"></a>00158         <a class="code" href="class_diagram_item.html">DiagramItem</a>::DiagramType item = scenes.at(tab)-&gt;getItemType();
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160         <span class="keywordflow">if</span>(item == DiagramItem::Place)
-<a name="l00161"></a>00161         {
-<a name="l00162"></a>00162             ui-&gt;actionPlace-&gt;setChecked(<span class="keyword">true</span>);
-<a name="l00163"></a>00163         }
-<a name="l00164"></a>00164         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (item == DiagramItem::Transition)
-<a name="l00165"></a>00165         {
-<a name="l00166"></a>00166             ui-&gt;actionTransition-&gt;setChecked(<span class="keyword">true</span>);
-<a name="l00167"></a>00167         }
-<a name="l00168"></a>00168     }
-<a name="l00169"></a>00169 }
-<a name="l00170"></a>00170 
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 }
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046 MainWindow::~MainWindow()
+<a name="l00047"></a>00047 {
+<a name="l00048"></a>00048     <span class="keyword">delete</span> ui;
+<a name="l00049"></a>00049     QGraphicsView *view;
+<a name="l00050"></a>00050     <span class="keywordflow">foreach</span>(view,views)
+<a name="l00051"></a>00051     {
+<a name="l00052"></a>00052         <span class="keyword">delete</span> view;
+<a name="l00053"></a>00053     }
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055     <a class="code" href="class_diagram_scene.html">DiagramScene</a> *scene;
+<a name="l00056"></a>00056     <span class="keywordflow">foreach</span> (scene, scenes)
+<a name="l00057"></a>00057     {
+<a name="l00058"></a>00058         <span class="keyword">delete</span> scene;
+<a name="l00059"></a>00059     }
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061 }
+<a name="l00062"></a>00062 
+<a name="l00070"></a><a class="code" href="class_main_window.html#a2abbb26a49a2e6be4a580225124aab96">00070</a> <span class="keywordtype">int</span> <a class="code" href="class_main_window.html#a2abbb26a49a2e6be4a580225124aab96">MainWindow::addTab</a>()
+<a name="l00071"></a>00071 {
+<a name="l00072"></a>00072     tabCount++;
+<a name="l00073"></a>00073     <a class="code" href="class_diagram_scene.html">DiagramScene</a> *scene = <span class="keyword">new</span> <a class="code" href="class_diagram_scene.html">DiagramScene</a>;
+<a name="l00074"></a>00074     scene-&gt;setSceneRect(QRectF(0,0,500,500));
+<a name="l00075"></a>00075     scenes.append(scene);
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077     QGraphicsView *view = <span class="keyword">new</span> QGraphicsView(scene);
+<a name="l00078"></a>00078     views.append(view);
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080     <span class="keywordflow">return</span> ui-&gt;tabWidget-&gt;addTab(view, QString(<span class="stringliteral">&quot;unnamed %1&quot;</span>).arg(tabCount));
+<a name="l00081"></a>00081 }
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083 
+<a name="l00092"></a><a class="code" href="class_main_window.html#aa872e5655ad537a37de696713b1bff5c">00092</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#aa872e5655ad537a37de696713b1bff5c">MainWindow::closeTab</a>(<span class="keywordtype">int</span> tab)
+<a name="l00093"></a>00093 {
+<a name="l00094"></a>00094     QGraphicsView *view = views.at(tab);
+<a name="l00095"></a>00095     <a class="code" href="class_diagram_scene.html">DiagramScene</a> *scene = scenes.at(tab);
+<a name="l00096"></a>00096     ui-&gt;tabWidget-&gt;removeTab(tab);
+<a name="l00097"></a>00097     views.removeAt(tab);
+<a name="l00098"></a>00098     scenes.removeAt(tab);
+<a name="l00099"></a>00099     <span class="keyword">delete</span> scene;
+<a name="l00100"></a>00100     <span class="keyword">delete</span> view;
+<a name="l00101"></a>00101 }
+<a name="l00102"></a>00102 
+<a name="l00106"></a><a class="code" href="class_main_window.html#a42b431d6bb55966f679ee7c288742c7a">00106</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a42b431d6bb55966f679ee7c288742c7a">MainWindow::selectMouse</a>()
+<a name="l00107"></a>00107 {
+<a name="l00108"></a>00108     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::MoveItem);
+<a name="l00109"></a>00109 }
+<a name="l00110"></a>00110 
+<a name="l00114"></a><a class="code" href="class_main_window.html#acd38e1baf286e8f37ac086988567712d">00114</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#acd38e1baf286e8f37ac086988567712d">MainWindow::selectArc</a>()
+<a name="l00115"></a>00115 {
+<a name="l00116"></a>00116     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::InsertLine);
+<a name="l00117"></a>00117 }
+<a name="l00118"></a>00118 
+<a name="l00122"></a><a class="code" href="class_main_window.html#ab1ac7b74e439eb30b9a36f2b74534f95">00122</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#ab1ac7b74e439eb30b9a36f2b74534f95">MainWindow::selectPlace</a>()
+<a name="l00123"></a>00123 {
+<a name="l00124"></a>00124     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::InsertItem);
+<a name="l00125"></a>00125     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setItemType(DiagramItem::Place);
+<a name="l00126"></a>00126 }
+<a name="l00127"></a>00127 
+<a name="l00131"></a><a class="code" href="class_main_window.html#ac29d5848738c17b1e2044c932d696252">00131</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#ac29d5848738c17b1e2044c932d696252">MainWindow::selectTransition</a>()
+<a name="l00132"></a>00132 {
+<a name="l00133"></a>00133     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setMode(DiagramScene::InsertItem);
+<a name="l00134"></a>00134     scenes.at(ui-&gt;tabWidget-&gt;currentIndex())-&gt;setItemType(DiagramItem::Transition);
+<a name="l00135"></a>00135 }
+<a name="l00136"></a>00136 
+<a name="l00141"></a><a class="code" href="class_main_window.html#a41f289a6ea0e9807e5df74c8d8c240dd">00141</a> <span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a41f289a6ea0e9807e5df74c8d8c240dd">MainWindow::updateToolBar</a>(<span class="keywordtype">int</span> tab)
+<a name="l00142"></a>00142 {
+<a name="l00143"></a>00143     <span class="keywordflow">if</span> (tab == -1)
+<a name="l00144"></a>00144         <span class="keywordflow">return</span>;
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146     <a class="code" href="class_diagram_scene.html">DiagramScene</a>::Mode mode;
+<a name="l00147"></a>00147 
+<a name="l00148"></a>00148     mode = scenes.at(tab)-&gt;getMode();
+<a name="l00149"></a>00149     <span class="keywordflow">if</span> (mode == DiagramScene::MoveItem)
+<a name="l00150"></a>00150     {
+<a name="l00151"></a>00151         ui-&gt;actionMouse-&gt;setChecked(<span class="keyword">true</span>);
+<a name="l00152"></a>00152     }
+<a name="l00153"></a>00153     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (mode == DiagramScene::InsertLine)
+<a name="l00154"></a>00154     {
+<a name="l00155"></a>00155         ui-&gt;actionArc-&gt;setChecked(<span class="keyword">true</span>);
+<a name="l00156"></a>00156     }
+<a name="l00157"></a>00157     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (mode == DiagramScene::InsertItem)
+<a name="l00158"></a>00158     {
+<a name="l00159"></a>00159         <a class="code" href="class_diagram_item.html">DiagramItem</a>::DiagramType item = scenes.at(tab)-&gt;getItemType();
+<a name="l00160"></a>00160 
+<a name="l00161"></a>00161         <span class="keywordflow">if</span>(item == DiagramItem::Place)
+<a name="l00162"></a>00162         {
+<a name="l00163"></a>00163             ui-&gt;actionPlace-&gt;setChecked(<span class="keyword">true</span>);
+<a name="l00164"></a>00164         }
+<a name="l00165"></a>00165         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (item == DiagramItem::Transition)
+<a name="l00166"></a>00166         {
+<a name="l00167"></a>00167             ui-&gt;actionTransition-&gt;setChecked(<span class="keyword">true</span>);
+<a name="l00168"></a>00168         }
+<a name="l00169"></a>00169     }
+<a name="l00170"></a>00170 }
 <a name="l00171"></a>00171 
 <a name="l00172"></a>00172 
 <a name="l00173"></a>00173 
@@ -223,6 +224,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 <a name="l00185"></a>00185 
 <a name="l00186"></a>00186 
 <a name="l00187"></a>00187 
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189 
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -242,7 +245,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno pá 16. bře 2012 12.50:05 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno pá 20. dub 2012 21.59:11 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>

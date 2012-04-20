@@ -99,6 +99,7 @@ Veřejné typy</h2></td></tr>
 Veřejné sloty</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#a744ea6890f2e562192a4d3cb913c9766">setMode</a> (Mode mode)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#a59a2ab949930f51e4db292aed2e770cd">setItemType</a> (DiagramItem::DiagramType type)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#ad1f1ead9fa99111fd1b62bcaf454fba2">deleteItem</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="signals"></a>
 Signály</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af831d659c3c3b3427a1376a738d27df1"></a><!-- doxytag: member="DiagramScene::itemInserted" ref="af831d659c3c3b3427a1376a738d27df1" args="(DiagramItem *item)" -->
@@ -113,8 +114,28 @@ Veřejné metody</h2></td></tr>
 Chráněné metody</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#a56249136dab559afa4f840a5c92acf73">mousePressEvent</a> (QGraphicsSceneMouseEvent *mouseEvent)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#a4c0f6af69a806c55da083a110a4eb820">mouseMoveEvent</a> (QGraphicsSceneMouseEvent *mouseEvent)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#a361512439a7cf2bcd0388c78eb1bb301">mouseReleaseEvent</a> (QGraphicsSceneMouseEvent *mouseEvent)</td></tr>
 </table>
 <hr/><h2>Dokumentace k metodám</h2>
+<a class="anchor" id="ad1f1ead9fa99111fd1b62bcaf454fba2"></a><!-- doxytag: member="DiagramScene::deleteItem" ref="ad1f1ead9fa99111fd1b62bcaf454fba2" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DiagramScene::deleteItem </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Smaže všechny označené itemy </p>
+
+<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00201">201</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ac721a062e8605ab22e1df379c4a97191"></a><!-- doxytag: member="DiagramScene::getItemType" ref="ac721a062e8605ab22e1df379c4a97191" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -130,7 +151,7 @@ Chráněné metody</h2></td></tr>
 <div class="memdoc">
 <dl class="return"><dt><b>Návratová hodnota:</b></dt><dd>DiagramType současný vkládaný objekt </dd></dl>
 
-<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00048">48</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00050">50</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -149,7 +170,7 @@ Chráněné metody</h2></td></tr>
 <div class="memdoc">
 <dl class="return"><dt><b>Návratová hodnota:</b></dt><dd>Mode současný mod scene </dd></dl>
 
-<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00031">31</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00033">33</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -175,7 +196,7 @@ Chráněné metody</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00102">102</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00104">104</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -201,7 +222,33 @@ Chráněné metody</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00061">61</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00063">63</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a361512439a7cf2bcd0388c78eb1bb301"></a><!-- doxytag: member="DiagramScene::mouseReleaseEvent" ref="a361512439a7cf2bcd0388c78eb1bb301" args="(QGraphicsSceneMouseEvent *mouseEvent)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DiagramScene::mouseReleaseEvent </td>
+          <td>(</td>
+          <td class="paramtype">QGraphicsSceneMouseEvent *&#160;</td>
+          <td class="paramname"><em>mouseEvent</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Vyvoláno při uvolnění myši</p>
+<dl><dt><b>Parametry:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mouseEvent</td><td>událost myši </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00125">125</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -227,7 +274,7 @@ Chráněné metody</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00040">40</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00042">42</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -253,7 +300,7 @@ Chráněné metody</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00022">22</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="diagramscene_8cpp_source.html#l00024">24</a> v souboru <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -280,7 +327,7 @@ Chráněné metody</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno pá 16. bře 2012 12.50:05 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno pá 20. dub 2012 21.59:11 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>

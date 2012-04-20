@@ -30,15 +30,21 @@ public:
     QPolygonF polygon() const
         { return myPolygon; }
 
+    int type() const
+    {return Type;}
+
     void removeArrow(Arrow *arrow);
     void removeArrows();
     void addArrow(Arrow *arrow);
 
-
-private:
+protected:
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
     DiagramType myDiagramType;
     QPolygonF myPolygon;
     QList<Arrow *> arrows;
+
+
+
 };
 
 #endif // DIAGRAMITEM_H

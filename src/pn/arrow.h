@@ -6,6 +6,7 @@
 #include <QtGui/QPainter>
 
 #include "diagramitem.h"
+#include "place.h"
 
 class QGraphicsPolygonItem;
 class QGraphicsLineItem;
@@ -46,6 +47,9 @@ private:
     DiagramItem *myStartItem;
     DiagramItem *myEndItem;
     QPolygonF arrowHead;
+    QPointF sourcePoint;
+    QPointF destPoint;
+
 };
 
 #endif // ARROW_H

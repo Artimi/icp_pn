@@ -82,31 +82,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 <a name="l00009"></a>00009 Place::Place(QGraphicsItem *parent) :
 <a name="l00010"></a>00010     <a class="code" href="class_diagram_item.html">DiagramItem</a>(<a class="code" href="class_diagram_item.html">DiagramItem</a>::<a class="code" href="class_place.html">Place</a>,parent)
 <a name="l00011"></a>00011 {
-<a name="l00012"></a>00012     rectangle.setRect(0,0,50,50);
-<a name="l00013"></a>00013 }
-<a name="l00014"></a>00014 
-<a name="l00019"></a><a class="code" href="class_place.html#a289ff180bf4b32bd0ff780aaa9bf7524">00019</a> <span class="keywordtype">void</span> <a class="code" href="class_place.html#a289ff180bf4b32bd0ff780aaa9bf7524">Place::paint</a>(QPainter *painter, <span class="keyword">const</span> QStyleOptionGraphicsItem *option, QWidget *widget)
-<a name="l00020"></a>00020 {
-<a name="l00021"></a>00021     painter-&gt;setRenderHint(QPainter::Antialiasing);
-<a name="l00022"></a>00022     painter-&gt;drawEllipse(rectangle);
-<a name="l00023"></a>00023     painter-&gt;drawText(rectangle,getTokenString());
-<a name="l00024"></a>00024 }
-<a name="l00025"></a>00025 
-<a name="l00030"></a><a class="code" href="class_place.html#a8f6d7e0a10bc695f77a411c95b79e159">00030</a> <span class="keywordtype">void</span> <a class="code" href="class_place.html#a8f6d7e0a10bc695f77a411c95b79e159">Place::addToken</a>(<span class="keywordtype">int</span> token)
-<a name="l00031"></a>00031 {
-<a name="l00032"></a>00032     tokens.append(token);
-<a name="l00033"></a>00033 }
-<a name="l00034"></a>00034 
-<a name="l00038"></a>00038 QString Place::getTokenString()
-<a name="l00039"></a>00039 {
-<a name="l00040"></a>00040     QString result;
-<a name="l00041"></a>00041     QString s;
-<a name="l00042"></a>00042     <span class="keywordflow">foreach</span>(s, tokens)
-<a name="l00043"></a>00043     {
-<a name="l00044"></a>00044         result += s + <span class="stringliteral">&quot;, &quot;</span>;
-<a name="l00045"></a>00045     }
-<a name="l00046"></a>00046     <span class="keywordflow">return</span> result;
-<a name="l00047"></a>00047 }
+<a name="l00012"></a>00012     size = 70;
+<a name="l00013"></a>00013     rectangle.setRect(0,0,size,size);
+<a name="l00014"></a>00014     myPolygon = QPolygonF(boundingRect());
+<a name="l00015"></a>00015 }
+<a name="l00016"></a>00016 
+<a name="l00021"></a><a class="code" href="class_place.html#a289ff180bf4b32bd0ff780aaa9bf7524">00021</a> <span class="keywordtype">void</span> <a class="code" href="class_place.html#a289ff180bf4b32bd0ff780aaa9bf7524">Place::paint</a>(QPainter *painter, <span class="keyword">const</span> QStyleOptionGraphicsItem *option, QWidget *widget)
+<a name="l00022"></a>00022 {
+<a name="l00023"></a>00023     <span class="keywordflow">if</span>(isSelected())
+<a name="l00024"></a>00024         painter-&gt;setPen(Qt::red);
+<a name="l00025"></a>00025     <span class="keywordflow">else</span>
+<a name="l00026"></a>00026         painter-&gt;setPen(Qt::black);
+<a name="l00027"></a>00027     painter-&gt;setRenderHint(QPainter::Antialiasing);
+<a name="l00028"></a>00028     painter-&gt;drawEllipse(rectangle);
+<a name="l00029"></a>00029     painter-&gt;drawText(rectangle,getTokenString());
+<a name="l00030"></a>00030 }
+<a name="l00031"></a>00031 
+<a name="l00036"></a><a class="code" href="class_place.html#a8f6d7e0a10bc695f77a411c95b79e159">00036</a> <span class="keywordtype">void</span> <a class="code" href="class_place.html#a8f6d7e0a10bc695f77a411c95b79e159">Place::addToken</a>(<span class="keywordtype">int</span> token)
+<a name="l00037"></a>00037 {
+<a name="l00038"></a>00038     tokens.append(token);
+<a name="l00039"></a>00039 }
+<a name="l00040"></a>00040 
+<a name="l00044"></a>00044 QString Place::getTokenString()
+<a name="l00045"></a>00045 {
+<a name="l00046"></a>00046     QString result;
+<a name="l00047"></a>00047     QString s;
+<a name="l00048"></a>00048     <span class="keywordflow">foreach</span>(s, tokens)
+<a name="l00049"></a>00049     {
+<a name="l00050"></a>00050         result += s + <span class="stringliteral">&quot;, &quot;</span>;
+<a name="l00051"></a>00051     }
+<a name="l00052"></a>00052     <span class="keywordflow">return</span> result;
+<a name="l00053"></a>00053 }
+<a name="l00054"></a>00054 
+<a name="l00059"></a><a class="code" href="class_place.html#a4713e2e8c6e472bc6143cbbf506e46b3">00059</a> QPainterPath <a class="code" href="class_place.html#a4713e2e8c6e472bc6143cbbf506e46b3">Place::shape</a>()<span class="keyword"> const</span>
+<a name="l00060"></a>00060 <span class="keyword"></span>{
+<a name="l00061"></a>00061     QPainterPath path;
+<a name="l00062"></a>00062     path.addEllipse(boundingRect());
+<a name="l00063"></a>00063     <span class="keywordflow">return</span> path;
+<a name="l00064"></a>00064 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -126,7 +139,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno pá 16. bře 2012 12.50:05 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno pá 20. dub 2012 21.59:11 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>

@@ -22,16 +22,23 @@ class Place : public DiagramItem
 {
 
 public:
+    enum {Type = UserType + 16};
     Place(QGraphicsItem *parent = 0);
+    int type() const
+    {return Type;}
 
     QRectF boundingRect() const
     {
         return rectangle;
     }
 
+    QPainterPath shape() const;
+
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void addToken(int token);
+
+    int size;
 
 signals:
     
