@@ -64,7 +64,7 @@ MainWindow::~MainWindow()
   * DiagramScene a QGraphicsView v seznamech scenes a views. Nutno zachovat
   * pořadí
   *
-  * @retun index nově vytvořeného Tabu, -1 při chybě
+  * @return index nově vytvořeného Tabu, -1 při chybě
   */
 int MainWindow::addTab()
 {
@@ -168,6 +168,7 @@ void MainWindow::updateToolBar(int tab)
         }
     }
 }
+
 
 
 

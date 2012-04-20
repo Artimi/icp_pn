@@ -17,6 +17,7 @@ class QPainterPath;
 class Arrow : public QGraphicsLineItem
 {
 public:
+    enum {Type = UserType +4};
     Arrow(DiagramItem *startItem, DiagramItem *endItem,
           QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 
@@ -24,8 +25,14 @@ public:
     QRectF boundingRect() const;
     QPainterPath shape() const;
 
-    DiagramItem *startItem() const;
-    DiagramItem *endItem() const;
+    DiagramItem *startItem() const
+    {
+        return myStartItem;
+    }
+    DiagramItem *endItem() const
+    {
+        return myEndItem;
+    }
 
     void updatePosition();
 

@@ -39,6 +39,8 @@ public:
 public slots:
     void setMode(Mode mode);
     void setItemType(DiagramItem::DiagramType type);
+    void deleteItem();
+
 
 signals:
     void itemInserted(DiagramItem *item);
@@ -47,7 +49,7 @@ signals:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-//    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
     bool isItemChange(int type);

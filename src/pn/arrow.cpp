@@ -45,7 +45,6 @@ void Arrow::paint(QPainter *painter,
     if(myStartItem->collidesWithItem(myEndItem))
         return;
 
-
     QPen myPen = pen();
     myPen.setColor(Qt::black);
     qreal arrowSize = 20;

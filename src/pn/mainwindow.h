@@ -14,6 +14,8 @@
 #include <QtGui/QMessageBox>
 #include <QDebug>
 #include "diagramscene.h"
+#include "diagramitem.h"
+#include "arrow.h"
 
 class QActionGroup;
 class QGraphicsView;
@@ -47,6 +49,7 @@ public slots:
     void selectPlace();
     void selectTransition();
     void updateToolBar(int tab);
+    //void deleteItem();
 
 };
 
