@@ -1,6 +1,8 @@
 #include "arrow.h"
 #include <math.h>
 
+ const qreal Pi = 3.14;
+
 /**
   * Konstruktor, který vytvoří hranu
   * @param  startItem   item, ze kterého hrana vystupuje
@@ -40,6 +42,8 @@ QPainterPath Arrow::shape() const
 }
 
 
+
+
 /**
   * Přepočítá souřadnice počátku a konce hrany
   */
@@ -57,15 +61,27 @@ void Arrow::updatePosition()
                       myEndItem->pos() + endCenter);
 
     qreal length = line.length();
-
     prepareGeometryChange();
 
-    if (length > qreal(70)) {
+    if (length > qreal(70))
+    {
         QPointF edgeOffset((line.dx() * 35) / length, (line.dy() * 35) / length);
-        sourcePoint = line.p1() + edgeOffset;
-        destPoint = line.p2() - edgeOffset;
-    } else {
-        sourcePoint =myStartItem->pos() + startCenter;
+        if (myStartItem->type() == Place::Type)
+        {
+            sourcePoint = line.p1() + edgeOffset;
+            destPoint = getIntersectionPoint(line,myEndItem);
+
+        }
+        else
+        {
+            destPoint = line.p2() - edgeOffset;
+            sourcePoint = getIntersectionPoint(line,myStartItem);
+        }
+
+    }
+    else
+    {
+        sourcePoint = myStartItem->pos() + startCenter;
         destPoint = myEndItem->pos() + endCenter;
     }
 }
@@ -78,6 +94,48 @@ void Arrow::paint(QPainter *painter,
                   QWidget *widget)
 {
 
-    painter->drawLine(QLineF(sourcePoint,destPoint));
+    setLine(QLineF(sourcePoint,destPoint));
 
+    qreal arrowSize = 15;
+    double angle = ::acos(line().dx() / line().length());
+
+    if (line().dy() >= 0)
+        angle = (Pi * 2) - angle;
+
+    QPointF arrowP1 = line().p2() + QPointF(-sin(angle + Pi / 3) * arrowSize,
+                                    -cos(angle + Pi / 3) * arrowSize);
+    QPointF arrowP2 = line().p2() + QPointF(-sin(angle + Pi - Pi / 3) * arrowSize,
+                                    -cos(angle + Pi - Pi / 3) * arrowSize);
+
+    painter->drawLine(line());
+    painter->drawLine(QLineF(destPoint, arrowP1));
+    painter->drawLine(QLineF(destPoint, arrowP2));
+    if (isSelected())
+    {
+        painter->setPen(QPen(Qt::red,1,Qt::DashLine));
+        QLineF myLine = line();
+        myLine.translate(0, 4.0);
+        painter->drawLine(myLine);
+        myLine.translate(0,-8.0);
+        painter->drawLine(myLine);
+    }
+}
+
+QPointF Arrow::getIntersectionPoint(QLineF line, DiagramItem *item)
+{
+    QPolygonF transitionPolygon;
+    QPointF p1, p2, result;
+    QLineF polyLine;
+
+    transitionPolygon = item->polygon();
+    for(int i = 0; i < transitionPolygon.count(); ++i)
+    {
+        p2 = transitionPolygon.at(i) + item->pos();
+        polyLine = QLineF(p1,p2);
+        if (polyLine.intersect(line,&result) == QLineF::BoundedIntersection)
+            break;
+
+        p1 = p2;
+    }
+    return result;
 }

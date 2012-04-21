@@ -8,8 +8,6 @@
   */
 
 #include "diagramscene.h"
-#include "arrow.h"
-#include <QMessageBox>
 
 DiagramScene::DiagramScene()
 {
@@ -129,7 +127,6 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         case InsertLine:
             if (line != 0)
             {
-                    QMessageBox msg;
                     QList<QGraphicsItem *> startItems = items(line->line().p1());
                     if (startItems.count() && startItems.first() == line)
                         startItems.removeFirst();
@@ -140,6 +137,8 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                     removeItem(line);
                     delete line;
+
+
 
                     if (startItems.count() > 0 && endItems.count() > 0 &&
                             startItems.first() != endItems.first())
@@ -161,9 +160,12 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         }
                         else
                         {
-                          line = 0;
                           break;
                         }
+
+                        if (hasArc(startItem,endItem))
+                                break;
+
                         Arrow *arrow = new Arrow(startItem, endItem);
                         startItem->addArrow(arrow);
                         endItem->addArrow(arrow);
@@ -221,6 +223,29 @@ void DiagramScene::deleteItem()
         removeItem(item);
         delete item;
     }
+}
+
+/**
+  * Zjistí zda dané itemy mezi sebou mají hranu
+  * @param  item1   dotazovaný objekt
+  * @param  item2   dotazovaný objekt
+  * @return true - mají mezi sebou hranu, false - nemají
+  */
+bool DiagramScene::hasArc(DiagramItem *item1, DiagramItem *item2)
+{
+    foreach(QGraphicsItem *item, items())
+    {
+        if (item->type() == Arrow::Type)
+        {
+            Arrow * arrow = qgraphicsitem_cast<Arrow *>(item);
+            if( (arrow->startItem() == item1 &&
+                arrow->endItem() == item2 ) ||
+                (arrow->startItem() == item2 &&
+                arrow->endItem() == item1 )     )
+                return true;
+        }
+    }
+    return false;
 }
 
 

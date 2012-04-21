@@ -14,7 +14,7 @@
 #include "diagramitem.h"
 #include "place.h"
 #include "transition.h"
-
+#include "arrow.h"
 
 class QGraphicSceneMouseEvent;
 class DiagramItem;
@@ -53,6 +53,7 @@ protected:
 
 private:
     bool isItemChange(int type);
+    bool hasArc(DiagramItem *item1, DiagramItem *item2);
 
     DiagramItem::DiagramType myItemType;
     Mode myMode;

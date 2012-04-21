@@ -10,6 +10,7 @@ Transition::Transition(QGraphicsItem *parent) :
     DiagramItem(DiagramItem::Transition,parent)
 {
     rectangle.setRect(0,0,70,70);
+    rectangle.toRect();
     myPolygon = QPolygonF(boundingRect());
 }
 

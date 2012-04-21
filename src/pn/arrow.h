@@ -7,6 +7,7 @@
 
 #include "diagramitem.h"
 #include "place.h"
+#include "transition.h"
 
 class QGraphicsPolygonItem;
 class QGraphicsLineItem;
@@ -19,6 +20,7 @@ class Arrow : public QGraphicsLineItem
 {
 public:
     enum {Type = UserType +4};
+
     Arrow(DiagramItem *startItem, DiagramItem *endItem,
           QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 
@@ -37,6 +39,9 @@ public:
 
     void updatePosition();
 
+    int type() const
+    {return Type;}
+
 
 protected:
     void paint(QPainter *painter,
@@ -49,6 +54,8 @@ private:
     QPolygonF arrowHead;
     QPointF sourcePoint;
     QPointF destPoint;
+
+    QPointF getIntersectionPoint(QLineF line,DiagramItem * item);
 
 };
 
