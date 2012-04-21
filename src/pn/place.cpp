@@ -17,6 +17,8 @@ Place::Place(QGraphicsItem *parent) :
     myPolygon = QPolygonF(boundingRect());
     name.setNum(++count);
     name.prepend("p");
+
+
 }
 
 /**

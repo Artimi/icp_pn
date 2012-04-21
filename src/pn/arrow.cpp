@@ -3,8 +3,6 @@
 
 const qreal Pi = 3.14;
 
-int Arrow::count = 0;
-
 /**
   * Konstruktor, který vytvoří hranu
   * @param  startItem   item, ze kterého hrana vystupuje
@@ -15,8 +13,7 @@ Arrow::Arrow(DiagramItem *startItem, DiagramItem *endItem,
 {
     myStartItem = startItem;
     myEndItem = endItem;
-    name.setNum(++count);
-    name.prepend("a");
+    variable = "";
 
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ));

@@ -37,6 +37,11 @@ public:
     Mode getMode();
     DiagramItem::DiagramType getItemType();
 
+    QString name;
+    QString version;
+    QString author;
+    QString description;
+
 public slots:
     void setMode(Mode mode);
     void setItemType(DiagramItem::DiagramType type);
@@ -62,7 +67,6 @@ private:
     bool leftButtonDown;
     QPointF startPoint;
     QGraphicsLineItem *line;
-
 };
 
 #endif // DIAGRAMSCENE_H

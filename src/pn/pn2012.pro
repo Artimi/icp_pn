@@ -13,7 +13,8 @@ HEADERS += arrow.h \
            diagramscene.h \
            mainwindow.h \
            place.h \
-           transition.h
+           transition.h \
+    xmlhandler.h
 FORMS += mainwindow.ui
 SOURCES += arrow.cpp \
            diagramitem.cpp \
@@ -21,4 +22,5 @@ SOURCES += arrow.cpp \
            main.cpp \
            mainwindow.cpp \
            place.cpp \
-           transition.cpp
+           transition.cpp \
+    xmlhandler.cpp

@@ -50,6 +50,11 @@ public:
     QString getTokenString();
     void setTokenString(QString str);
 
+    QList<int> getTokens()
+    {
+        return tokens;
+    }
+
 private:
     QRectF rectangle;
     QList<int> tokens;

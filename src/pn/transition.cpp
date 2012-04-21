@@ -16,6 +16,9 @@ Transition::Transition(QGraphicsItem *parent) :
     myPolygon = QPolygonF(boundingRect());
     name.setNum(++count);
     name.prepend("n");
+
+    guard = "";
+    action = "";
 }
 
 /**

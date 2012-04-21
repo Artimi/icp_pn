@@ -18,6 +18,7 @@
 #include "arrow.h"
 #include "place.h"
 #include "transition.h"
+#include "xmlhandler.h"
 
 class QActionGroup;
 class QGraphicsView;
@@ -65,8 +66,7 @@ public slots:
     void selectPlace();
     void selectTransition();
     void updateToolBar(int tab);
-    //void deleteItem();
-
+    void saveLocal();
 };
 
 #endif // MAINWINDOW_H

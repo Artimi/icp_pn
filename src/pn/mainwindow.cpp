@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     addTab();
     connect(ui->actionNovakarta,SIGNAL(triggered()), this, SLOT(addTab()));
 
+    connect(ui->actionUlozit_lokalne,SIGNAL(triggered()),this,SLOT(saveLocal()));
 }
 
 MainWindow::~MainWindow()
@@ -166,6 +167,29 @@ void MainWindow::updateToolBar(int tab)
         {
             ui->actionTransition->setChecked(true);
         }
+    }
+}
+
+void MainWindow::saveLocal()
+{
+    XMLHandler xmlhandler(scenes.at(0));
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    QString("Uložit síť"),
+                                                    QString(""),
+                                                    QString("All Files(*)"));
+    if(fileName.isEmpty())
+        return;
+    else
+    {
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly))
+        {
+            QMessageBox::information(this,
+                                     QString("Soubor nelze otevřít"),
+                                     file.errorString());
+            return;
+        }
+    xmlhandler.saveToXMLFile(&file);
     }
 }
 
