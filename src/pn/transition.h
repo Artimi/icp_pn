@@ -43,14 +43,16 @@ public:
         return guard;
     }
 
-    void setGuard(QString str);
+    void setGuard(QString str)
+    {guard = str;}
 
     QString getAction()
     {
         return action;
     }
 
-    void setAction(QString str);
+    void setAction(QString str)
+    {action = str;}
 
 private:
     QRectF rectangle;

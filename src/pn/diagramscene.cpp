@@ -50,7 +50,7 @@ DiagramItem::DiagramType DiagramScene::getItemType()
     return myItemType;
 }
 
-//TODO: editorLostFocus
+
 
 /**
   * Vyvoláno při zmáčknutí tlačítka myši, podle nastaveného modu a ItemType se
@@ -81,7 +81,6 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
         addItem(item);
         item->setPos(mouseEvent->scenePos());
-        emit itemInserted(item);
         break;
 
     case InsertLine:
@@ -251,4 +250,25 @@ bool DiagramScene::hasArc(DiagramItem *item1, DiagramItem *item2)
     }
     return false;
 }
+
+DiagramItem *DiagramScene::getDiagramItem(QString name)
+{
+    foreach(QGraphicsItem * item, items())
+    {
+        if(item->type() == Place::Type)
+        {
+            Place * place = qgraphicsitem_cast<Place *>(item);
+            if(place->getName() == name)
+                return place;
+        }
+        else if (item->type() == Transition::Type)
+        {
+            Transition * transition = qgraphicsitem_cast<Transition *>(item);
+            if(transition->getName() == name)
+                return transition;
+        }
+    }
+    return NULL;
+}
+
 

@@ -47,7 +47,8 @@ public:
         return variable;
     }
 
-    void setVariable(QString str);
+    void setVariable(QString str)
+    {variable=str;}
 
 protected:
     void paint(QPainter *painter,

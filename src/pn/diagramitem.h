@@ -38,6 +38,8 @@ public:
     {
         return name;
     }
+    void setName(QString str)
+    {name = str;}
 
     void removeArrow(Arrow *arrow);
     void removeArrows();

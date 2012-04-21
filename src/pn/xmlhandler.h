@@ -18,8 +18,10 @@ class XMLHandler
 {
 public:
     XMLHandler(DiagramScene * scene, QString name ="");
-    QString toXML();
-    void saveToXMLFile(QFile *file);
+    QString toStr();
+    void saveToFile(QFile *file);
+
+    int  loadFromFile(QFile *file);
 private:
     DiagramScene *myScene;
     QString myName;
@@ -28,6 +30,11 @@ private:
     void writePlace(QXmlStreamWriter * writer, Place * place);
     void writeTransition(QXmlStreamWriter * writer, Transition * transition);
     void writeArc(QXmlStreamWriter * writer, Arrow * arrow);
+
+    int readPetriNet(QXmlStreamReader *reader);
+    int readPlace(QXmlStreamReader * reader);
+    int readTransition(QXmlStreamReader * reader);
+    int readArc(QXmlStreamReader * reader);
 };
 
 #endif // XMLHANDLER_H

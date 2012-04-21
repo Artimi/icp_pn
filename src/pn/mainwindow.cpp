@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionNovakarta,SIGNAL(triggered()), this, SLOT(addTab()));
 
     connect(ui->actionUlozit_lokalne,SIGNAL(triggered()),this,SLOT(saveLocal()));
+    connect(ui->actionOtevrit_lokalne,SIGNAL(triggered()),this,SLOT(loadLocal()));
 }
 
 MainWindow::~MainWindow()
@@ -174,9 +175,9 @@ void MainWindow::saveLocal()
 {
     XMLHandler xmlhandler(scenes.at(0));
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    QString("Uložit síť"),
-                                                    QString(""),
-                                                    QString("All Files(*)"));
+                                                    tr("Uložit síť"),
+                                                    "",
+                                                    tr("All Files(*)"));
     if(fileName.isEmpty())
         return;
     else
@@ -189,8 +190,40 @@ void MainWindow::saveLocal()
                                      file.errorString());
             return;
         }
-    xmlhandler.saveToXMLFile(&file);
+    xmlhandler.saveToFile(&file);
     }
+}
+
+void MainWindow::loadLocal()
+{
+    int tab = addTab();
+    XMLHandler xmlhandler(scenes.at(tab));
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Otevři síť"),
+                                                    "",
+                                                    tr("All files(*)"));
+    if(fileName.isEmpty())
+        return;
+    else
+    {
+        QFile file(fileName);
+
+        if(!file.open(QIODevice::ReadOnly))
+        {
+            QMessageBox::information(this,
+                                     tr("Soubor nelze otevřít."),
+                                     file.errorString());
+            return;
+        }
+        if( xmlhandler.loadFromFile(&file) != 0)
+        {
+            QMessageBox::critical(this,
+                                  tr("Problém s načítáním xml"),
+                                  tr("Soubor se nepodařilo rozparsovat"),
+                                  QMessageBox::Ok);
+        }
+    }
+
 }
 
 

@@ -67,6 +67,7 @@ public slots:
     void selectTransition();
     void updateToolBar(int tab);
     void saveLocal();
+    void loadLocal();
 };
 
 #endif // MAINWINDOW_H
