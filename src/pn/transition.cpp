@@ -6,12 +6,16 @@
   */
 #include "transition.h"
 
+int Transition::count = 0;
+
 Transition::Transition(QGraphicsItem *parent) :
     DiagramItem(DiagramItem::Transition,parent)
 {
     rectangle.setRect(0,0,70,70);
     rectangle.toRect();
     myPolygon = QPolygonF(boundingRect());
+    name.setNum(++count);
+    name.prepend("n");
 }
 
 /**

@@ -23,7 +23,8 @@ class DiagramItem : public QGraphicsItem
 public:
     enum {Type = UserType + 15};
     enum DiagramType{Place, Transition};
-    DiagramItem(DiagramType diagramType, QGraphicsItem *parent =0, QGraphicsScene *scene = 0);
+    DiagramItem(DiagramType diagramType, QGraphicsItem *parent =0,
+                QGraphicsScene *scene = 0);
 
     DiagramType diagramType()
     {return myDiagramType;}
@@ -32,6 +33,11 @@ public:
 
     int type() const
     {return Type;}
+
+    QString getName()
+    {
+        return name;
+    }
 
     void removeArrow(Arrow *arrow);
     void removeArrows();
@@ -42,6 +48,9 @@ protected:
     DiagramType myDiagramType;
     QPolygonF myPolygon;
     QList<Arrow *> arrows;
+    QString name;
+
+    QMenu *myContextMenu;
 
 
 

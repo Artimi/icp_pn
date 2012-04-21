@@ -16,6 +16,8 @@
 #include "diagramscene.h"
 #include "diagramitem.h"
 #include "arrow.h"
+#include "place.h"
+#include "transition.h"
 
 class QActionGroup;
 class QGraphicsView;
@@ -40,6 +42,20 @@ private:
     QActionGroup *actionGroup;
 
     int tabCount;
+
+    void createMenus();
+
+
+    QMenu *placeMenu;
+//    QMenu *transitionMenu;
+//    QMenu *arrowMenu;
+
+    QAction * placeSettingAction;
+//    QAction * transitionSettingAction;
+//    QAction * arrowSettingAction;
+
+    void placeSettings();
+
 
 public slots:
     int addTab();

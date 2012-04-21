@@ -75,6 +75,10 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         {
             item = new Transition();
         }
+        else
+        {
+            break;
+        }
         addItem(item);
         item->setPos(mouseEvent->scenePos());
         emit itemInserted(item);
@@ -84,6 +88,21 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(), mouseEvent->scenePos()));
         line->setPen(QPen(Qt::black));
         addItem(line);
+        break;
+    case MoveItem:
+        QGraphicsItem * itemUnderMouse = itemAt(mouseEvent->scenePos().x(),
+                                                mouseEvent->scenePos().y());
+
+        if(itemUnderMouse &&
+           itemUnderMouse->isEnabled() &&
+           itemUnderMouse->flags() & QGraphicsItem::ItemIsSelectable)
+        {
+            itemUnderMouse->setSelected(!itemUnderMouse->isSelected());
+        }
+        else if (!itemUnderMouse)
+        {
+            clearSelection();
+        }
         break;
 
 
@@ -108,7 +127,6 @@ void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
     else if (myMode == MoveItem)
     {
-
         QGraphicsScene::mouseMoveEvent(mouseEvent);
     }
     update();
@@ -174,21 +192,7 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
             }
             line = 0;
-        case MoveItem:
-        QGraphicsItem * itemUnderMouse = itemAt(mouseEvent->scenePos().x(),
-                                                mouseEvent->scenePos().y());
-
-        if(itemUnderMouse &&
-           itemUnderMouse->isEnabled() &&
-           itemUnderMouse->flags() & QGraphicsItem::ItemIsSelectable)
-        {
-            itemUnderMouse->setSelected(!itemUnderMouse->isSelected());
-        }
-        else if (!itemUnderMouse)
-        {
-            clearSelection();
-        }
-        break;
+    default: ;
     }
     update();
 
@@ -247,23 +251,4 @@ bool DiagramScene::hasArc(DiagramItem *item1, DiagramItem *item2)
     }
     return false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

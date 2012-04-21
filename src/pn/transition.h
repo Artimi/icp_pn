@@ -36,6 +36,8 @@ public:
 
 private:
     QRectF rectangle;
+
+    static int count;
 };
 
 #endif // TRANSITION_H

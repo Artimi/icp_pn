@@ -1,0 +1,27 @@
+<petrinet name="jmeno" version="0.39" author="login">
+  <description>
+  Popis cele site  
+  </description>
+
+ <place name="p1">
+   <x>35</x>
+   <y>45</y>
+   <token>5</token>
+   <token>7</token>
+   <token>11</token>
+ </place>
+ 
+ <transition name="t1">
+   <x>78</x>
+   <y>47</y>
+   <guard>x &gt; y</guard>
+   <action> t = x + y</action>
+ </transition>
+ 
+ <arc>
+   <startItem>p1</startItem>
+   <endItem>t1</endItem>
+   <variable>x</variable>
+ </arc>
+
+</petrinet>

@@ -11,6 +11,7 @@
 #include <QtGui/QGraphicsScene>
 #include <QtGui/QGraphicsSceneMouseEvent>
 #include <QLineF>
+#include <QDebug>
 #include "diagramitem.h"
 #include "place.h"
 #include "transition.h"
@@ -54,6 +55,7 @@ protected:
 private:
     bool isItemChange(int type);
     bool hasArc(DiagramItem *item1, DiagramItem *item2);
+
 
     DiagramItem::DiagramType myItemType;
     Mode myMode;

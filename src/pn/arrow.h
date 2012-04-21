@@ -55,6 +55,9 @@ private:
     QPointF sourcePoint;
     QPointF destPoint;
 
+    QString name;
+    static int count;
+
     QPointF getIntersectionPoint(QLineF line,DiagramItem * item);
 
 };

@@ -5,6 +5,9 @@
   * @author xsebek02, xsimon14
   */
 #include "place.h"
+#include <QMessageBox>
+
+int Place::count = 0;
 
 Place::Place(QGraphicsItem *parent) :
     DiagramItem(DiagramItem::Place,parent)
@@ -12,6 +15,8 @@ Place::Place(QGraphicsItem *parent) :
     size = 70;
     rectangle.setRect(0,0,size,size);
     myPolygon = QPolygonF(boundingRect());
+    name.setNum(++count);
+    name.prepend("p");
 }
 
 /**
@@ -24,6 +29,7 @@ void Place::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
         painter->setPen(Qt::red);
     else
         painter->setPen(Qt::black);
+
     painter->setRenderHint(QPainter::Antialiasing);
     painter->drawEllipse(rectangle);
     painter->drawText(rectangle,getTokenString());
@@ -38,6 +44,15 @@ void Place::addToken(int token)
     tokens.append(token);
 }
 
+void Place::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    scene()->clearSelection();
+    setSelected(true);
+    myContextMenu->exec(event->screenPos());
+}
+
+
+
 /**
   * @return QString obsah tokens oddělený čárkami
   */
@@ -50,6 +65,11 @@ QString Place::getTokenString()
         result += s + ", ";
     }
     return result;
+}
+
+void Place::setTokenString(QString str)
+{
+
 }
 
 /**

@@ -11,11 +11,14 @@
 #include <QList>
 #include <QPainter>
 #include <QObject>
+#include <QtGui>
 #include "diagramitem.h"
 
 class QRectF;
 class QPainter;
 class QString;
+class QMenu;
+class QGraphicsSceneContextMenuEvent;
 
 
 class Place : public DiagramItem
@@ -40,15 +43,16 @@ public:
 
     int size;
 
-signals:
-    
-public slots:
+    static int count;
+
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+
+    QString getTokenString();
+    void setTokenString(QString str);
 
 private:
     QRectF rectangle;
     QList<int> tokens;
-
-    QString getTokenString();
 
     
 };

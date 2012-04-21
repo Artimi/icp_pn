@@ -60,6 +60,7 @@ MainWindow::~MainWindow()
 
 }
 
+
 /**
   * Slot, který přidává nový Tab do TabWidget, zároveň vytváří novou
   * DiagramScene a QGraphicsView v seznamech scenes a views. Nutno zachovat
@@ -69,7 +70,6 @@ MainWindow::~MainWindow()
   */
 int MainWindow::addTab()
 {
-    tabCount++;
     DiagramScene *scene = new DiagramScene;
     scene->setSceneRect(QRectF(0,0,500,500));
     scenes.append(scene);
@@ -77,7 +77,7 @@ int MainWindow::addTab()
     QGraphicsView *view = new QGraphicsView(scene);
     views.append(view);
 
-    return ui->tabWidget->addTab(view, QString("unnamed %1").arg(tabCount));
+    return ui->tabWidget->addTab(view, QString("unnamed %1").arg(++tabCount));
 }
 
 

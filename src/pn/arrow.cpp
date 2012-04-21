@@ -1,7 +1,9 @@
 #include "arrow.h"
 #include <math.h>
 
- const qreal Pi = 3.14;
+const qreal Pi = 3.14;
+
+int Arrow::count = 0;
 
 /**
   * Konstruktor, který vytvoří hranu
@@ -13,6 +15,9 @@ Arrow::Arrow(DiagramItem *startItem, DiagramItem *endItem,
 {
     myStartItem = startItem;
     myEndItem = endItem;
+    name.setNum(++count);
+    name.prepend("a");
+
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ));
     updatePosition();
