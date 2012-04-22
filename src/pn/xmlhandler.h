@@ -8,6 +8,7 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QObject>
+#include <QDebug>
 #include "transition.h"
 #include "place.h"
 #include "arrow.h"

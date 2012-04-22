@@ -72,7 +72,7 @@ void XMLHandler::writePetriNet(QXmlStreamWriter *writer)
             writeTransition(writer,transition);
         }
     }
-    //zapisuji se az posledni aby se posledni cetlu -> vsechny objekty vytvořené
+    //zapisuji se az posledni aby se posledni cetly -> vsechny objekty vytvořené
     foreach(QGraphicsItem * item, list)
     {
         if(item->type() == Arrow::Type)
@@ -151,9 +151,9 @@ int XMLHandler::readPetriNet(QXmlStreamReader *reader)
             myScene->setVersion(reader->attributes().value("version").toString());
             myScene->setAuthor(reader->attributes().value("author").toString());
 
-            while(!reader->atEnd())
+            while(!(reader->isEndElement() && reader->name() == "petrinet") &&
+                  !reader->hasError())
             {
-                reader->readNext();
                 if (reader->isStartElement())
                 {
                     if(reader->name() =="description")
@@ -173,18 +173,18 @@ int XMLHandler::readPetriNet(QXmlStreamReader *reader)
                         readArc(reader);
                     }
                 }
+                reader->readNext();
             }
 
         }
         reader->readNext();
     }
+
     if (reader->hasError())
     {
-        QByteArray arr = reader->errorString().toAscii();
-        const char * ptr = arr.data();
-        qDebug(ptr); //TODO: hlasí premature end of document, ale jinak načítá dobře, OPRAVIT
         return -1;
     }
+    reader->clear();
     return 0;
 }
 
@@ -204,7 +204,7 @@ int XMLHandler::readPlace(QXmlStreamReader *reader)
 
         place->setName(reader->attributes().value("name").toString());
         reader->readNext();
-        while (!reader->isEndElement() && !(reader->name() == "place"))
+        while (!(reader->isEndElement() && reader->name() == "place"))
         {
             if(reader->isStartElement())
             {
@@ -246,7 +246,7 @@ int XMLHandler::readTransition(QXmlStreamReader *reader)
 
         transition->setName(reader->attributes().value("name").toString());
         reader->readNext();
-        while (!reader->isEndElement() && !(reader->name() == "transition"))
+        while (!(reader->isEndElement() && reader->name() == "transition"))
         {
             if(reader->isStartElement())
             {
@@ -290,7 +290,7 @@ int XMLHandler::readArc(QXmlStreamReader *reader)
         QString variable;
 
         reader->readNext();
-        while(!reader->isEndElement() && !(reader->name() == "arc"))
+        while(!(reader->isEndElement() && reader->name() == "arc"))
         {
             if(reader->isStartElement())
             {

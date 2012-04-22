@@ -26,7 +26,7 @@ class Place : public DiagramItem
 
 public:
     enum {Type = UserType + 16};
-    Place(QGraphicsItem *parent = 0);
+    Place(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
     int type() const
     {return Type;}
 
@@ -45,7 +45,6 @@ public:
 
     static int count;
 
-    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
     QString getTokenString();
     void setTokenString(QString str);

@@ -24,7 +24,7 @@ class Transition : public DiagramItem
 public:
     enum {Type = UserType + 17};
 
-    Transition(QGraphicsItem *parent =0);
+    Transition(QGraphicsItem *parent =0,QGraphicsScene * scene = 0);
 
     QRectF boundingRect() const
     {

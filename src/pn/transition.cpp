@@ -8,8 +8,8 @@
 
 int Transition::count = 0;
 
-Transition::Transition(QGraphicsItem *parent) :
-    DiagramItem(DiagramItem::Transition,parent)
+Transition::Transition(QGraphicsItem *parent, QGraphicsScene *scene)
+    :DiagramItem(DiagramItem::Transition,parent,scene)
 {
     rectangle.setRect(0,0,70,70);
     rectangle.toRect();

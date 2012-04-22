@@ -9,16 +9,14 @@
 
 int Place::count = 0;
 
-Place::Place(QGraphicsItem *parent) :
-    DiagramItem(DiagramItem::Place,parent)
+Place::Place(QGraphicsItem *parent, QGraphicsScene *scene) :
+    DiagramItem(DiagramItem::Place,parent, scene)
 {
     size = 70;
     rectangle.setRect(0,0,size,size);
     myPolygon = QPolygonF(boundingRect());
     name.setNum(++count);
     name.prepend("p");
-
-
 }
 
 /**
@@ -44,13 +42,6 @@ void Place::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 void Place::addToken(int token)
 {
     tokens.append(token);
-}
-
-void Place::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
-{
-    scene()->clearSelection();
-    setSelected(true);
-    myContextMenu->exec(event->screenPos());
 }
 
 

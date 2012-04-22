@@ -17,8 +17,11 @@ posouvání objektů na plátně
 right-click menu u objektů na plátně (upravit obsah, smazat)
 ověřování podmínek u přechodů
 export DiagramScene do XML (zřejmě nebude třeba vytvářet samostatnou třídu pro petriho sítě)
+    - DONE
 import z XML do DiagramScene
+    - DONE
 ukládání a otevírání lokálně
+    - DONE
 přihlašování na server (http://doc.qt.nokia.com/4.7-snapshot/network-fortuneclient.html)
 ukládání a otevírání na server
 konfigurace nastavení

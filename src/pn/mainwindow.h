@@ -45,17 +45,20 @@ private:
     int tabCount;
 
     void createMenus();
+    void createActions();
+
+    int activeTab;
 
 
     QMenu *placeMenu;
 //    QMenu *transitionMenu;
 //    QMenu *arrowMenu;
 
-    QAction * placeSettingAction;
+    QAction * actionPlaceSetting;
 //    QAction * transitionSettingAction;
 //    QAction * arrowSettingAction;
 
-    void placeSettings();
+
 
 
 public slots:

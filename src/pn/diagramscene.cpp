@@ -9,7 +9,8 @@
 
 #include "diagramscene.h"
 
-DiagramScene::DiagramScene()
+DiagramScene::DiagramScene(QObject *parent)
+    :   QGraphicsScene(parent)
 {
     myMode = MoveItem;
     line = 0;

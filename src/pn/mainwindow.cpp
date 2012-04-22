@@ -169,6 +169,7 @@ void MainWindow::updateToolBar(int tab)
             ui->actionTransition->setChecked(true);
         }
     }
+    activeTab = tab;
 }
 
 void MainWindow::saveLocal()
@@ -191,6 +192,7 @@ void MainWindow::saveLocal()
             return;
         }
     xmlhandler.saveToFile(&file);
+    file.close();
     }
 }
 
@@ -222,8 +224,8 @@ void MainWindow::loadLocal()
                                   tr("Soubor se nepodařilo rozparsovat"),
                                   QMessageBox::Ok);
         }
+        file.close();
     }
-
 }
 
 

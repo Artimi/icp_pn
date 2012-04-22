@@ -32,7 +32,7 @@ class DiagramScene : public QGraphicsScene
 
 public:
     enum Mode {InsertItem, InsertLine, MoveItem};
-    DiagramScene();
+    DiagramScene(QObject *parent =0);
 
     Mode getMode();
     DiagramItem::DiagramType getItemType();
@@ -87,6 +87,8 @@ private:
     QString version;
     QString author;
     QString description;
+
+    QMenu * myMenu;
 };
 
 #endif // DIAGRAMSCENE_H
