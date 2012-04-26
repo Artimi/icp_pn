@@ -12,7 +12,9 @@
 #include <QPainter>
 #include <QObject>
 #include <QtGui>
+#include <QMenu>
 #include "diagramitem.h"
+#include <QRegExp>
 
 class QRectF;
 class QPainter;
@@ -26,7 +28,7 @@ class Place : public DiagramItem
 
 public:
     enum {Type = UserType + 16};
-    Place(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+    Place(QMenu *menu,QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
     int type() const
     {return Type;}
 
@@ -47,7 +49,7 @@ public:
 
 
     QString getTokenString();
-    void setTokenString(QString str);
+    bool setTokenString(QString str);
 
     QList<int> getTokens()
     {
@@ -55,9 +57,13 @@ public:
     }
 
 private:
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+
     QRectF rectangle;
+    QRectF textRectangle;
     QList<int> tokens;
 
+    QMenu *myMenu;
     
 };
 

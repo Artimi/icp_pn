@@ -9,14 +9,17 @@
 
 int Place::count = 0;
 
-Place::Place(QGraphicsItem *parent, QGraphicsScene *scene) :
+Place::Place(QMenu *menu, QGraphicsItem *parent, QGraphicsScene *scene) :
     DiagramItem(DiagramItem::Place,parent, scene)
 {
     size = 70;
     rectangle.setRect(0,0,size,size);
+    textRectangle.setRect(size/4,size/4,3*size/4,3*size/4);
     myPolygon = QPolygonF(boundingRect());
     name.setNum(++count);
     name.prepend("p");
+
+    myMenu = menu;
 }
 
 /**
@@ -32,7 +35,7 @@ void Place::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
     painter->setRenderHint(QPainter::Antialiasing);
     painter->drawEllipse(rectangle);
-    painter->drawText(rectangle,getTokenString());
+    painter->drawText(textRectangle,getTokenString());
 }
 
 /**
@@ -45,7 +48,6 @@ void Place::addToken(int token)
 }
 
 
-
 /**
   * @return QString obsah tokens oddělený čárkami
   */
@@ -53,16 +55,43 @@ QString Place::getTokenString()
 {
     QString result;
     QString s;
-    foreach(s, tokens)
+    QList<int>::const_iterator iter = tokens.begin();
+    QList<int>::const_iterator end = tokens.end();
+    for(; iter != end; iter++)
     {
-        result += s + ", ";
+        s = QString::number((*iter));
+//        if (iter != tokens.last())
+            result += s + " ";
+//        else
+//            result += s;
     }
     return result;
 }
 
-void Place::setTokenString(QString str)
+bool Place::setTokenString(QString str)
 {
+    QRegExp valid ("[\\d\\s,]*");
+    if(!valid.exactMatch(str))
+        return false;
 
+    tokens.clear();
+
+    QRegExp rx("(\\d+)");
+    int pos = 0;
+
+    while ((pos = rx.indexIn(str,pos)) != -1)
+    {
+        addToken(rx.cap(1).toInt());
+        pos += rx.matchedLength();
+    }
+    return true;
+}
+
+void Place::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    scene()->clearSelection();
+    setSelected(true);
+    myMenu->exec(event->screenPos());
 }
 
 /**

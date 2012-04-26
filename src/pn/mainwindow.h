@@ -13,6 +13,7 @@
 #include <QGraphicsView>
 #include <QtGui/QMessageBox>
 #include <QDebug>
+#include <QMessageBox>
 #include "diagramscene.h"
 #include "diagramitem.h"
 #include "arrow.h"
@@ -51,13 +52,14 @@ private:
 
 
     QMenu *placeMenu;
-//    QMenu *transitionMenu;
-//    QMenu *arrowMenu;
+    QMenu *transitionMenu;
+    QMenu *arrowMenu;
 
-    QAction * actionPlaceSetting;
-//    QAction * transitionSettingAction;
-//    QAction * arrowSettingAction;
-
+    QAction * actionEditTokens;
+    QAction * actionEditGuard;
+    QAction * actionEditVariable;
+    QAction * actionEditAction;
+    QAction * actionDeleteItem;
 
 
 
@@ -71,6 +73,12 @@ public slots:
     void updateToolBar(int tab);
     void saveLocal();
     void loadLocal();
+
+    void editTokens();
+    void editGuard();
+    void editAction();
+    void editVariable();
+    void deleteItem();
 };
 
 #endif // MAINWINDOW_H

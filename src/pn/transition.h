@@ -12,11 +12,15 @@
 #include <QList>
 #include <QPainter>
 #include <QObject>
+#include <QtGui>
+#include <QMenu>
 #include "diagramitem.h"
 
 class QRectF;
 class QPainter;
 class QString;
+class QMenu;
+class QGraphicsSceneContextMenuEvent;
 
 class Transition : public DiagramItem
 {
@@ -24,7 +28,7 @@ class Transition : public DiagramItem
 public:
     enum {Type = UserType + 17};
 
-    Transition(QGraphicsItem *parent =0,QGraphicsScene * scene = 0);
+    Transition(QMenu *menu,QGraphicsItem *parent =0,QGraphicsScene * scene = 0);
 
     QRectF boundingRect() const
     {
@@ -43,16 +47,18 @@ public:
         return guard;
     }
 
-    void setGuard(QString str)
-    {guard = str;}
+    bool setGuard(QString str)
+    {guard = str;
+    return true;}
 
     QString getAction()
     {
         return action;
     }
 
-    void setAction(QString str)
-    {action = str;}
+    bool setAction(QString str)
+    {action = str;
+    return true;}
 
 private:
     QRectF rectangle;
@@ -61,6 +67,10 @@ private:
 
     QString guard;
     QString action;
+
+    QMenu *myMenu;
+
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 };
 
 #endif // TRANSITION_H

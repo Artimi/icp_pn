@@ -200,7 +200,7 @@ int XMLHandler::readPlace(QXmlStreamReader *reader)
         qreal x, y;
         x = y = 0;
 
-        Place * place = new Place();
+        Place * place = new Place(myScene->myPlaceMenu);
 
         place->setName(reader->attributes().value("name").toString());
         reader->readNext();
@@ -242,7 +242,7 @@ int XMLHandler::readTransition(QXmlStreamReader *reader)
         qreal x, y;
         x = y = 0;
 
-        Transition * transition = new Transition();
+        Transition * transition = new Transition(myScene->myTransitionMenu);
 
         transition->setName(reader->attributes().value("name").toString());
         reader->readNext();
@@ -317,7 +317,7 @@ int XMLHandler::readArc(QXmlStreamReader *reader)
             return -1;
         }
 
-        Arrow * arrow = new Arrow(startItem,endItem);
+        Arrow * arrow = new Arrow(startItem,endItem, myScene->myArrowMenu);
         arrow->setVariable(variable);
 
         startItem->addArrow(arrow);

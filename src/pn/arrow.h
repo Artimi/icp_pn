@@ -4,6 +4,7 @@
 #include <QGraphicsLineItem>
 #include <QtGui/QPen>
 #include <QtGui/QPainter>
+#include <QMenu>
 
 #include "diagramitem.h"
 #include "place.h"
@@ -21,7 +22,7 @@ class Arrow : public QGraphicsLineItem
 public:
     enum {Type = UserType +4};
 
-    Arrow(DiagramItem *startItem, DiagramItem *endItem,
+    Arrow(DiagramItem *startItem, DiagramItem *endItem, QMenu * menu,
           QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 
 
@@ -47,8 +48,9 @@ public:
         return variable;
     }
 
-    void setVariable(QString str)
-    {variable=str;}
+    bool setVariable(QString str)
+    {variable=str;
+    return true;}
 
 protected:
     void paint(QPainter *painter,
@@ -65,6 +67,10 @@ private:
     QPointF getIntersectionPoint(QLineF line,DiagramItem * item);
 
     QString variable;
+
+    QMenu * myMenu;
+
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
 };
 

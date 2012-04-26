@@ -8,7 +8,7 @@ const qreal Pi = 3.14;
   * @param  startItem   item, ze kterého hrana vystupuje
   * @param  endItem     item, do kterého hrana vstupuje
   */
-Arrow::Arrow(DiagramItem *startItem, DiagramItem *endItem,
+Arrow::Arrow(DiagramItem *startItem, DiagramItem *endItem, QMenu *menu,
              QGraphicsItem *parent, QGraphicsScene *scene)
 {
     myStartItem = startItem;
@@ -17,7 +17,11 @@ Arrow::Arrow(DiagramItem *startItem, DiagramItem *endItem,
 
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ));
+    myMenu = menu;
+
     updatePosition();
+
+
 }
 
 /**
@@ -140,4 +144,12 @@ QPointF Arrow::getIntersectionPoint(QLineF line, DiagramItem *item)
         p1 = p2;
     }
     return result;
+}
+
+
+void Arrow::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    scene()->clearSelection();
+    setSelected(true);
+    myMenu->exec(event->screenPos());
 }

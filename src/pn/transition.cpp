@@ -8,7 +8,7 @@
 
 int Transition::count = 0;
 
-Transition::Transition(QGraphicsItem *parent, QGraphicsScene *scene)
+Transition::Transition(QMenu *menu,QGraphicsItem *parent, QGraphicsScene *scene)
     :DiagramItem(DiagramItem::Transition,parent,scene)
 {
     rectangle.setRect(0,0,70,70);
@@ -19,6 +19,7 @@ Transition::Transition(QGraphicsItem *parent, QGraphicsScene *scene)
 
     guard = "";
     action = "";
+    myMenu = menu;
 }
 
 /**
@@ -34,4 +35,12 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     painter->setRenderHint(QPainter::Antialiasing);
     painter->drawRect(rectangle);
     painter->drawLine(0,rectangle.height()/2,rectangle.width(), rectangle.height()/2);
+}
+
+
+void Transition::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    scene()->clearSelection();
+    setSelected(true);
+    myMenu->exec(event->screenPos());
 }

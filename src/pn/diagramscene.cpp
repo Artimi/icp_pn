@@ -9,11 +9,15 @@
 
 #include "diagramscene.h"
 
-DiagramScene::DiagramScene(QObject *parent)
+DiagramScene::DiagramScene(QMenu *placeMenu, QMenu *transitionMenu, QMenu *arrowMenu, QObject *parent)
     :   QGraphicsScene(parent)
 {
     myMode = MoveItem;
     line = 0;
+
+    myPlaceMenu = placeMenu;
+    myTransitionMenu = transitionMenu;
+    myArrowMenu = arrowMenu;
 }
 
 /**
@@ -70,11 +74,11 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     case InsertItem:
         if(myItemType == DiagramItem::Place)
         {
-            item = new Place();
+            item = new Place(myPlaceMenu);
         }
         else if (myItemType == DiagramItem::Transition)
         {
-            item = new Transition();
+            item = new Transition(myTransitionMenu);
         }
         else
         {
@@ -184,7 +188,7 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         if (hasArc(startItem,endItem))
                                 break;
 
-                        Arrow *arrow = new Arrow(startItem, endItem);
+                        Arrow *arrow = new Arrow(startItem, endItem, myArrowMenu);
                         startItem->addArrow(arrow);
                         endItem->addArrow(arrow);
                         addItem(arrow);

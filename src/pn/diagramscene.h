@@ -32,7 +32,7 @@ class DiagramScene : public QGraphicsScene
 
 public:
     enum Mode {InsertItem, InsertLine, MoveItem};
-    DiagramScene(QObject *parent =0);
+    DiagramScene(QMenu *placeMenu, QMenu *transitionMenu, QMenu *arrowMenu,QObject *parent =0);
 
     Mode getMode();
     DiagramItem::DiagramType getItemType();
@@ -57,11 +57,14 @@ public:
     void setDescription(QString str)
     {description = str;}
 
+    QMenu * myPlaceMenu;
+    QMenu * myTransitionMenu;
+    QMenu * myArrowMenu;
+
 public slots:
     void setMode(Mode mode);
     void setItemType(DiagramItem::DiagramType type);
     void deleteItem();
-
 
 signals:
     void itemInserted(DiagramItem *item);
@@ -88,7 +91,7 @@ private:
     QString author;
     QString description;
 
-    QMenu * myMenu;
+
 };
 
 #endif // DIAGRAMSCENE_H

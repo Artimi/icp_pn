@@ -8,13 +8,12 @@
 #include "diagramitem.h"
 #include "arrow.h"
 
-DiagramItem::DiagramItem(DiagramType diagramType,QGraphicsItem *parent, QGraphicsScene *scene)
+DiagramItem::DiagramItem(DiagramType diagramType, QGraphicsItem *parent, QGraphicsScene *scene)
     :QGraphicsItem(parent,scene)
 {
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges,true);
-
 }
 /**
   * Vymaže ze seznamu napojených hran hranu arrow

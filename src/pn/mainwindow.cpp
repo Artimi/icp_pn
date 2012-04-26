@@ -37,6 +37,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
     connect(ui->tabWidget,SIGNAL(currentChanged(int)), this, SLOT(updateToolBar(int)));
 
+    createActions();
+    createMenus();
+
+
     tabCount = 0;
     addTab();
     connect(ui->actionNovakarta,SIGNAL(triggered()), this, SLOT(addTab()));
@@ -62,6 +66,48 @@ MainWindow::~MainWindow()
 
 }
 
+void MainWindow::createMenus()
+{
+    placeMenu = menuBar()->addMenu(tr("Place"));
+    placeMenu->addAction(actionEditTokens);
+    placeMenu->addSeparator();
+    placeMenu->addAction(actionDeleteItem);
+
+    transitionMenu = menuBar()->addMenu(tr("Transition"));
+    transitionMenu->addAction(actionEditGuard);
+    transitionMenu->addAction(actionEditAction);
+    transitionMenu->addSeparator();
+    transitionMenu->addAction(actionDeleteItem);
+
+
+    arrowMenu = menuBar()->addMenu(tr("Arc"));
+    arrowMenu->addAction(actionEditVariable);
+    arrowMenu->addSeparator();
+    arrowMenu->addAction(actionDeleteItem);
+}
+
+void MainWindow::createActions()
+{
+    actionEditTokens = new QAction(tr("Edit tokens"),this);
+    connect(actionEditTokens, SIGNAL(triggered()),
+            this, SLOT(editTokens()));
+
+    actionEditGuard = new QAction(tr("Edit guard"),this);
+    connect(actionEditGuard, SIGNAL(triggered()),
+            this, SLOT(editGuard()));
+    actionEditAction = new QAction(tr("Edit action"),this);
+    connect(actionEditAction, SIGNAL(triggered()),
+            this, SLOT(editAction()));
+
+    actionEditVariable = new QAction(tr("Edit variable"),this);
+    connect(actionEditVariable, SIGNAL(triggered()),
+            this, SLOT(editVariable()));
+
+    actionDeleteItem = new QAction(tr("Delete item"),this);
+    connect(actionDeleteItem, SIGNAL(triggered()),
+            this, SLOT(deleteItem()));
+}
+
 
 /**
   * Slot, který přidává nový Tab do TabWidget, zároveň vytváří novou
@@ -72,7 +118,7 @@ MainWindow::~MainWindow()
   */
 int MainWindow::addTab()
 {
-    DiagramScene *scene = new DiagramScene;
+    DiagramScene *scene = new DiagramScene(placeMenu,transitionMenu,arrowMenu);
     scene->setSceneRect(QRectF(0,0,500,500));
     scenes.append(scene);
 
@@ -176,7 +222,7 @@ void MainWindow::saveLocal()
 {
     XMLHandler xmlhandler(scenes.at(0));
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Uložit síť"),
+                                                    tr("Save petri net"),
                                                     "",
                                                     tr("All Files(*)"));
     if(fileName.isEmpty())
@@ -187,7 +233,7 @@ void MainWindow::saveLocal()
         if (!file.open(QIODevice::WriteOnly))
         {
             QMessageBox::information(this,
-                                     QString("Soubor nelze otevřít"),
+                                     QString("The file can not be opened."),
                                      file.errorString());
             return;
         }
@@ -201,7 +247,7 @@ void MainWindow::loadLocal()
     int tab = addTab();
     XMLHandler xmlhandler(scenes.at(tab));
     QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Otevři síť"),
+                                                    tr("Open petri net"),
                                                     "",
                                                     tr("All files(*)"));
     if(fileName.isEmpty())
@@ -213,19 +259,167 @@ void MainWindow::loadLocal()
         if(!file.open(QIODevice::ReadOnly))
         {
             QMessageBox::information(this,
-                                     tr("Soubor nelze otevřít."),
+                                     tr("The file can not be opened."),
                                      file.errorString());
             return;
         }
         if( xmlhandler.loadFromFile(&file) != 0)
         {
             QMessageBox::critical(this,
-                                  tr("Problém s načítáním xml"),
-                                  tr("Soubor se nepodařilo rozparsovat"),
+                                  tr("XML parse problem"),
+                                  tr("File can not be parsed."),
                                   QMessageBox::Ok);
         }
         file.close();
     }
+}
+
+void MainWindow::editTokens()
+{
+    if (scenes.at(activeTab)->selectedItems().isEmpty())
+        return;
+
+    QGraphicsItem *item = scenes.at(activeTab)->selectedItems().first();
+    Place *place = qgraphicsitem_cast<Place *>(item);
+
+    bool ok;
+    QString text = QInputDialog::getText(this,
+                                         tr("Tokens edit"),
+                                         tr("Tokens:"),
+                                         QLineEdit::Normal,
+                                         place->getTokenString(),
+                                         &ok);
+
+    if (ok && !text.isEmpty())
+    {
+        if(!place->setTokenString(text))
+        {
+            QMessageBox::warning(this,
+                                 tr("Token input error"),
+                                 tr("Input string (%1) of tokens is not valid.\nUse only number, comma and whitespaces.").arg(text),
+                                 QMessageBox::Ok,
+                                 QMessageBox::Ok);
+        }
+        //TODO: Update sceny
+    }
+}
+
+void MainWindow::editGuard()
+{
+    if (scenes.at(activeTab)->selectedItems().isEmpty())
+        return;
+
+    QGraphicsItem *item = scenes.at(activeTab)->selectedItems().first();
+    Transition *transition = qgraphicsitem_cast<Transition *>(item);
+
+    bool ok;
+    QString text = QInputDialog::getText(this,
+                                         tr("Guard edit"),
+                                         tr("Guard:"),
+                                         QLineEdit::Normal,
+                                         transition->getGuard(),
+                                         &ok);
+
+    if (ok && !text.isEmpty())
+    {
+        if(!transition->setGuard(text))
+        {
+            QMessageBox::warning(this,
+                                 tr("Guard input error"),
+                                 tr("Input string (%1) is not valid guard.").arg(text),
+                                 QMessageBox::Ok,
+                                 QMessageBox::Ok);
+        }
+       //TODO: update sceny
+    }
+}
+
+void MainWindow::editAction()
+{
+    if (scenes.at(activeTab)->selectedItems().isEmpty())
+        return;
+
+    QGraphicsItem *item = scenes.at(activeTab)->selectedItems().first();
+    Transition *transition = qgraphicsitem_cast<Transition *>(item);
+
+    bool ok;
+    QString text = QInputDialog::getText(this,
+                                         tr("Action edit"),
+                                         tr("Action:"),
+                                         QLineEdit::Normal,
+                                         transition->getAction(),
+                                         &ok);
+
+    if (ok && !text.isEmpty())
+    {
+        if(!transition->setAction(text))
+        {
+            QMessageBox::warning(this,
+                                 tr("Action input error"),
+                                 tr("Input string (%1) is not valid action.").arg(text),
+                                 QMessageBox::Ok,
+                                 QMessageBox::Ok);
+        }
+       //TODO: update sceny
+    }
+}
+
+void MainWindow::editVariable()
+{
+    if (scenes.at(activeTab)->selectedItems().isEmpty())
+        return;
+
+    QGraphicsItem *item = scenes.at(activeTab)->selectedItems().first();
+    Arrow *arrow = qgraphicsitem_cast<Arrow *>(item);
+
+    bool ok;
+    QString text = QInputDialog::getText(this,
+                                         tr("Variable edit"),
+                                         tr("Variable:"),
+                                         QLineEdit::Normal,
+                                         arrow->getVariable(),
+                                         &ok);
+
+    if (ok && !text.isEmpty())
+    {
+        if(!arrow->setVariable(text))
+        {
+            QMessageBox::warning(this,
+                                 tr("Variable input error"),
+                                 tr("Input string (%1) is not valid variable.").arg(text),
+                                 QMessageBox::Ok,
+                                 QMessageBox::Ok);
+        }
+       //TODO: update sceny
+    }
+}
+
+void MainWindow::deleteItem()
+{
+    foreach (QGraphicsItem *item, scenes.at(activeTab)->selectedItems()) {
+        if (item->type() == Arrow::Type)
+        {
+            scenes.at(activeTab)->removeItem(item);
+            Arrow *arrow = qgraphicsitem_cast<Arrow *>(item);
+            arrow->startItem()->removeArrow(arrow);
+            arrow->endItem()->removeArrow(arrow);
+            delete item;
+        }
+    }
+
+    foreach (QGraphicsItem *item, scenes.at(activeTab)->selectedItems())
+    {
+         if (item->type() == Place::Type)
+         {
+             qgraphicsitem_cast<Place *>(item)->removeArrows();
+         }
+         else if(item->type() == Transition::Type)
+         {
+             qgraphicsitem_cast<Transition *>(item)->removeArrows();
+         }
+         scenes.at(activeTab)->removeItem(item);
+         delete item;
+     }
 }
 
 
