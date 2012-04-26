@@ -1,3 +1,8 @@
+/**
+  * @file xmlhandler.h
+  *
+  * @author xsebek02, xsimon14
+  */
 #ifndef XMLHANDLER_H
 #define XMLHANDLER_H
 

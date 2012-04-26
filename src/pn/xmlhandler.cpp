@@ -1,3 +1,9 @@
+/**
+  * @file xmlhandler.cpp
+  *
+  * @brief Třída pro konverzi scény do xml
+  * @author xsebek02, xsimon14
+  */
 #include "xmlhandler.h"
 
 XMLHandler::XMLHandler(DiagramScene * scene,QString name)
@@ -99,7 +105,7 @@ void XMLHandler::writePlace(QXmlStreamWriter *writer, Place *place)
     writer->writeTextElement("y",QString("%1").arg(place->y()));
     foreach(int token,place->getTokens())
     {
-        writer->writeTextElement("token",QString(token));
+        writer->writeTextElement("token",QString::number(token));
     }
     writer->writeEndElement();//Place
 }
@@ -302,7 +308,7 @@ int XMLHandler::readArc(QXmlStreamReader *reader)
                 {
                     endItemStr = reader->readElementText();
                 }
-                else if(reader->name() == variable)
+                else if(reader->name() == "variable")
                 {
                     variable = reader->readElementText();
                 }

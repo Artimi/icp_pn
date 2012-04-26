@@ -20,6 +20,7 @@
 #include "place.h"
 #include "transition.h"
 #include "xmlhandler.h"
+#include "netinformation.h"
 
 class QActionGroup;
 class QGraphicsView;
@@ -79,6 +80,7 @@ public slots:
     void editAction();
     void editVariable();
     void deleteItem();
+    void netInformation();
 };
 
 #endif // MAINWINDOW_H

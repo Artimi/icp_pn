@@ -14,8 +14,10 @@ HEADERS += arrow.h \
            mainwindow.h \
            place.h \
            transition.h \
-           xmlhandler.h
-FORMS += mainwindow.ui
+           xmlhandler.h \
+    netinformation.h
+FORMS += mainwindow.ui \
+    netinformation.ui
 SOURCES += arrow.cpp \
            diagramitem.cpp \
            diagramscene.cpp \
@@ -23,4 +25,5 @@ SOURCES += arrow.cpp \
            mainwindow.cpp \
            place.cpp \
            transition.cpp \
-           xmlhandler.cpp
+           xmlhandler.cpp \
+    netinformation.cpp

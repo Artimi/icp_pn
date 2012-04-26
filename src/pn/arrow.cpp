@@ -1,3 +1,10 @@
+/**
+  * @file arrow.cpp
+  *
+  * @brief Zapouzdřuje položku grafu hrana
+  * @author xsebek02, xsimon14
+  */
+
 #include "arrow.h"
 #include <math.h>
 
@@ -71,15 +78,19 @@ void Arrow::updatePosition()
 
     if (length > qreal(70))
     {
-        QPointF edgeOffset((line.dx() * 35) / length, (line.dy() * 35) / length);
+
         if (myStartItem->type() == Place::Type)
         {
+            Place * place = qgraphicsitem_cast<Place *>(myStartItem);
+            QPointF edgeOffset((line.dx() * place->size/2) / length, (line.dy() * place->size / 2) / length);
             sourcePoint = line.p1() + edgeOffset;
             destPoint = getIntersectionPoint(line,myEndItem);
 
         }
         else
         {
+            Place * place = qgraphicsitem_cast<Place *>(myEndItem);
+            QPointF edgeOffset((line.dx() * place->size/2) / length, (line.dy() * place->size / 2) / length);
             destPoint = line.p2() - edgeOffset;
             sourcePoint = getIntersectionPoint(line,myStartItem);
         }
@@ -90,6 +101,17 @@ void Arrow::updatePosition()
         sourcePoint = myStartItem->pos() + startCenter;
         destPoint = myEndItem->pos() + endCenter;
     }
+}
+
+bool Arrow::setVariable(QString str)
+{
+
+    QRegExp valid ("[a-zA-Z0-9]+");
+    if(!valid.exactMatch(str))
+        return false;
+
+    variable=str;
+    return true;
 }
 
 /**
@@ -113,12 +135,14 @@ void Arrow::paint(QPainter *painter,
     QPointF arrowP2 = line().p2() + QPointF(-sin(angle + Pi - Pi / 3) * arrowSize,
                                     -cos(angle + Pi - Pi / 3) * arrowSize);
 
+    QPointF center = (line().p1() + line().p2()) / 2;
     painter->drawLine(line());
     painter->drawLine(QLineF(destPoint, arrowP1));
     painter->drawLine(QLineF(destPoint, arrowP2));
+    painter->drawText(QRectF(center.x()-10,center.y() + 10, 50,50),variable);
     if (isSelected())
     {
-        painter->setPen(QPen(Qt::red,1,Qt::DashLine));
+        painter->setPen(QPen(Qt::darkBlue,1,Qt::DashLine));
         QLineF myLine = line();
         myLine.translate(0, 4.0);
         painter->drawLine(myLine);

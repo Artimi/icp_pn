@@ -5,32 +5,30 @@ při prvním kliknutí se vykresluje do středu plátna - OPRAVIT
     - DONE přidáno scene->setSceneRect() do MainWindow::addTab()
 přidání hran
     - PROBLEM - pokud se má hrana napojovat na levý horní roh,způsobuje problémy jinak ok
-
 označování objektů na plátně, označit vše, označit více pomcí CTRL
     - PROBLEM - nevím jak docílit aby se kolem objektu objevoval čtverec značící označení, zatím je to červenou barvou
-
 zoom in/out
-místo nápisů v toolbaru dát ikonky
+místo/vedle nápisů v toolbaru, v menu dát ikonky
 posouvání objektů na plátně
     -DONE
-
 right-click menu u objektů na plátně (upravit obsah, smazat)
+    -DONE syntakticky analyzováno pomocí regexpů, sémantická kontrola tu nebo až u serveru?
 ověřování podmínek u přechodů
 export DiagramScene do XML (zřejmě nebude třeba vytvářet samostatnou třídu pro petriho sítě)
     - DONE
 import z XML do DiagramScene
     - DONE
 ukládání a otevírání lokálně
-    - DONE
+    - DONE (pamatování si souboru a jen ukládání pomocí uložit jinak uložit jako?)
 přihlašování na server (http://doc.qt.nokia.com/4.7-snapshot/network-fortuneclient.html)
 ukládání a otevírání na server
 konfigurace nastavení
 funkce krok (více?) vpřed vzad
     -http://doc.qt.nokia.com/4.7-snapshot/tools-undoframework.html
-
 dialog na uložení při zavírání změněné scene (pomocí undoframework a clean state)
 menu About, představení editoru
 doprovodné informace k síti (autor, název, verze, stručný popis - spíše u serveru, ale zadáno na straně klienta)
+    - DONE
 vyhledávání sítě pomocí klíčových slov (na serveru)
 prohlížení nápovědy přes externí prohlížeč
 

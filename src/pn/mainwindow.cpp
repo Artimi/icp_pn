@@ -15,38 +15,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->actionKonec,SIGNAL(triggered()), qApp, SLOT(quit()));
-
-    //výlučnost při vybírání kresleného předmětu z toolbaru
-    actionGroup = new QActionGroup(this);
-    actionGroup->setExclusive(true);
-    actionGroup->addAction(ui->actionMouse);
-    actionGroup->addAction(ui->actionArc);
-    actionGroup->addAction(ui->actionTransition);
-    actionGroup->addAction(ui->actionPlace);
     ui->actionMouse->setChecked(true);
-
-    connect(ui->actionMouse,SIGNAL(triggered()),this, SLOT(selectMouse()));
-    connect(ui->actionArc,SIGNAL(triggered()),this, SLOT(selectArc()));
-    connect(ui->actionPlace,SIGNAL(triggered()),this, SLOT(selectPlace()));
-    connect(ui->actionTransition,SIGNAL(triggered()),this, SLOT(selectTransition()));
-
     ui->mainToolBar->setMovable(false);
-
     ui->tabWidget->setTabsClosable(true);
-    connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
-    connect(ui->tabWidget,SIGNAL(currentChanged(int)), this, SLOT(updateToolBar(int)));
-
-    createActions();
-    createMenus();
-
-
     tabCount = 0;
     addTab();
-    connect(ui->actionNovakarta,SIGNAL(triggered()), this, SLOT(addTab()));
-
-    connect(ui->actionUlozit_lokalne,SIGNAL(triggered()),this,SLOT(saveLocal()));
-    connect(ui->actionOtevrit_lokalne,SIGNAL(triggered()),this,SLOT(loadLocal()));
+    createActions();
+    createMenus();
 }
 
 MainWindow::~MainWindow()
@@ -63,31 +38,58 @@ MainWindow::~MainWindow()
     {
         delete scene;
     }
-
 }
 
+/**
+  * Vytváří menu pro Scene a Itemy
+  */
 void MainWindow::createMenus()
 {
-    placeMenu = menuBar()->addMenu(tr("Place"));
+    placeMenu = new QMenu(tr("Place"));
     placeMenu->addAction(actionEditTokens);
     placeMenu->addSeparator();
     placeMenu->addAction(actionDeleteItem);
 
-    transitionMenu = menuBar()->addMenu(tr("Transition"));
+    transitionMenu = new QMenu(tr("Transition"));
     transitionMenu->addAction(actionEditGuard);
     transitionMenu->addAction(actionEditAction);
     transitionMenu->addSeparator();
     transitionMenu->addAction(actionDeleteItem);
 
-
-    arrowMenu = menuBar()->addMenu(tr("Arc"));
+    arrowMenu = new QMenu(tr("Arc"));
     arrowMenu->addAction(actionEditVariable);
     arrowMenu->addSeparator();
     arrowMenu->addAction(actionDeleteItem);
 }
 
+/**
+  * Vytváří a spojuje všechnu akce hlavního
+  */
 void MainWindow::createActions()
 {
+    //výlučnost při vybírání kresleného předmětu z toolbaru
+    actionGroup = new QActionGroup(this);
+    actionGroup->setExclusive(true);
+    actionGroup->addAction(ui->actionMouse);
+    actionGroup->addAction(ui->actionArc);
+    actionGroup->addAction(ui->actionTransition);
+    actionGroup->addAction(ui->actionPlace);
+
+
+    connect(ui->actionMouse,SIGNAL(triggered()),this, SLOT(selectMouse()));
+    connect(ui->actionArc,SIGNAL(triggered()),this, SLOT(selectArc()));
+    connect(ui->actionPlace,SIGNAL(triggered()),this, SLOT(selectPlace()));
+    connect(ui->actionTransition,SIGNAL(triggered()),this, SLOT(selectTransition()));
+
+    connect(ui->actionKonec,SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(ui->actionNovakarta,SIGNAL(triggered()), this, SLOT(addTab()));
+    connect(ui->actionUlozit_lokalne,SIGNAL(triggered()),this,SLOT(saveLocal()));
+    connect(ui->actionOtevrit_lokalne,SIGNAL(triggered()),this,SLOT(loadLocal()));
+    connect(ui->actionInformace_o_s_ti,SIGNAL(triggered()),this, SLOT(netInformation()));
+
+    connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
+    connect(ui->tabWidget,SIGNAL(currentChanged(int)), this, SLOT(updateToolBar(int)));
+
     actionEditTokens = new QAction(tr("Edit tokens"),this);
     connect(actionEditTokens, SIGNAL(triggered()),
             this, SLOT(editTokens()));
@@ -104,6 +106,7 @@ void MainWindow::createActions()
             this, SLOT(editVariable()));
 
     actionDeleteItem = new QAction(tr("Delete item"),this);
+    actionDeleteItem->setShortcut(Qt::Key_Delete);
     connect(actionDeleteItem, SIGNAL(triggered()),
             this, SLOT(deleteItem()));
 }
@@ -125,7 +128,7 @@ int MainWindow::addTab()
     QGraphicsView *view = new QGraphicsView(scene);
     views.append(view);
 
-    return ui->tabWidget->addTab(view, QString("unnamed %1").arg(++tabCount));
+    return ui->tabWidget->addTab(view, QString("Unnamed %1").arg(++tabCount));
 }
 
 
@@ -218,9 +221,13 @@ void MainWindow::updateToolBar(int tab)
     activeTab = tab;
 }
 
+/**
+  * Slot pro ukládání na lokálním uložišti, zeptá se na jméno souboru a uloží tam
+  * Při chybě vyskočí warning
+  */
 void MainWindow::saveLocal()
 {
-    XMLHandler xmlhandler(scenes.at(0));
+    XMLHandler xmlhandler(scenes.at(activeTab));
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Save petri net"),
                                                     "",
@@ -242,6 +249,9 @@ void MainWindow::saveLocal()
     }
 }
 
+/**
+  * Nahraje xml síť z lokálního uložiště a vloží ji do nově otevřeného tabu
+  */
 void MainWindow::loadLocal()
 {
     int tab = addTab();
@@ -271,9 +281,14 @@ void MainWindow::loadLocal()
                                   QMessageBox::Ok);
         }
         file.close();
+        scenes.at(tab)->update();
     }
 }
 
+/**
+  * Otevře input dialog, kterým zadá nové tokeny do místa. Pokud nejsou místem
+  * úspěšně zpracovány háže warning
+  */
 void MainWindow::editTokens()
 {
     if (scenes.at(activeTab)->selectedItems().isEmpty())
@@ -300,10 +315,14 @@ void MainWindow::editTokens()
                                  QMessageBox::Ok,
                                  QMessageBox::Ok);
         }
-        //TODO: Update sceny
+        scenes.at(activeTab)->update();
     }
 }
 
+/**
+  * Otevře input dialog, kterým se zadává stráž do přechodu. Při neúspěšném
+  * zpracování na straně přechodu vyhodí warning
+  */
 void MainWindow::editGuard()
 {
     if (scenes.at(activeTab)->selectedItems().isEmpty())
@@ -330,10 +349,14 @@ void MainWindow::editGuard()
                                  QMessageBox::Ok,
                                  QMessageBox::Ok);
         }
-       //TODO: update sceny
+        scenes.at(activeTab)->update();
     }
 }
 
+/**
+  * Otevře input dialog, kterým se zadává akce do přechodu. Při špatném řetězci
+  * vyhodí warning
+  */
 void MainWindow::editAction()
 {
     if (scenes.at(activeTab)->selectedItems().isEmpty())
@@ -360,10 +383,14 @@ void MainWindow::editAction()
                                  QMessageBox::Ok,
                                  QMessageBox::Ok);
         }
-       //TODO: update sceny
+        scenes.at(activeTab)->update();
     }
 }
 
+/**
+  * Otevře input dialog, jímž se zadává proměnná na hraně. Pokud není správně
+  * přijata vyhazuje warning
+  */
 void MainWindow::editVariable()
 {
     if (scenes.at(activeTab)->selectedItems().isEmpty())
@@ -390,10 +417,13 @@ void MainWindow::editVariable()
                                  QMessageBox::Ok,
                                  QMessageBox::Ok);
         }
-       //TODO: update sceny
+        scenes.at(activeTab)->update();
     }
 }
 
+/**
+  * Maže všechny označené itemy na aktivní sceně
+  */
 void MainWindow::deleteItem()
 {
     foreach (QGraphicsItem *item, scenes.at(activeTab)->selectedItems()) {
@@ -419,7 +449,17 @@ void MainWindow::deleteItem()
          }
          scenes.at(activeTab)->removeItem(item);
          delete item;
-     }
+    }
+}
+
+/**
+  * Vyvolá formulář pro zápis informací o síti
+  */
+void MainWindow::netInformation()
+{
+    NetInformation * diag =  new NetInformation(scenes.at(activeTab));
+    diag->exec();
+    delete diag;
 }
 
 

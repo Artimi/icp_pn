@@ -1,7 +1,6 @@
 /**
   * @file diagramscene.cpp
   *
-  *
   * @brief Scena obsahujicí všechny grafické objekty
   * @author xsebek02 xsimon14
   *

@@ -1,5 +1,5 @@
 /**
-  * @file transition.cpp
+  * @file transition.h
   *
   * @author xsebek02, xsimon14
   */
@@ -14,6 +14,7 @@
 #include <QObject>
 #include <QtGui>
 #include <QMenu>
+#include <QRegExp>
 #include "diagramitem.h"
 
 class QRectF;
@@ -47,22 +48,22 @@ public:
         return guard;
     }
 
-    bool setGuard(QString str)
-    {guard = str;
-    return true;}
+    bool setGuard(QString str);
+
 
     QString getAction()
     {
         return action;
     }
 
-    bool setAction(QString str)
-    {action = str;
-    return true;}
+    bool setAction(QString str);
 
 private:
     QRectF rectangle;
+    QRectF guardRectangle;
+    QRectF actionRectangle;
 
+    int size;
     static int count;
 
     QString guard;

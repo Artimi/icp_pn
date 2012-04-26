@@ -10,6 +10,9 @@
     <height>461</height>
    </rect>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -52,6 +55,10 @@
     <property name="title">
      <string>Úpravy</string>
     </property>
+    <addaction name="actionZp_t"/>
+    <addaction name="actionVp_ed"/>
+    <addaction name="separator"/>
+    <addaction name="actionInformace_o_s_ti"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -79,20 +86,32 @@
    <property name="text">
     <string>Otevřít lokálně</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionUlozit_lokalne">
    <property name="text">
     <string>Uložit lokálně</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionOtevrit_ze_serveru">
    <property name="text">
     <string>Otevřít ze serveru</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+O</string>
+   </property>
   </action>
   <action name="actionUlozit_na_server">
    <property name="text">
     <string>Uložit na server</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+S</string>
    </property>
   </action>
   <action name="actionMouse">
@@ -102,6 +121,9 @@
    <property name="text">
     <string>Mouse</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
   </action>
   <action name="actionPlace">
    <property name="checkable">
@@ -109,6 +131,9 @@
    </property>
    <property name="text">
     <string>Place</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
    </property>
   </action>
   <action name="actionTransition">
@@ -118,6 +143,9 @@
    <property name="text">
     <string>Transition</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
   </action>
   <action name="actionArc">
    <property name="checkable">
@@ -125,6 +153,9 @@
    </property>
    <property name="text">
     <string>Arc</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
    </property>
   </action>
   <action name="actionNov">
@@ -136,10 +167,31 @@
    <property name="text">
     <string>Nová &amp;karta</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="actionKonec">
    <property name="text">
     <string>&amp;Konec</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionZp_t">
+   <property name="text">
+    <string>Zpět</string>
+   </property>
+  </action>
+  <action name="actionVp_ed">
+   <property name="text">
+    <string>Vpřed</string>
+   </property>
+  </action>
+  <action name="actionInformace_o_s_ti">
+   <property name="text">
+    <string>Informace o síti</string>
    </property>
   </action>
  </widget>

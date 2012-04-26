@@ -1,3 +1,8 @@
+/**
+  * @file arrow.cpp
+  *
+  * @author xsebek02, xsimon14
+  */
 #ifndef ARROW_H
 #define ARROW_H
 
@@ -48,9 +53,7 @@ public:
         return variable;
     }
 
-    bool setVariable(QString str)
-    {variable=str;
-    return true;}
+    bool setVariable(QString str);
 
 protected:
     void paint(QPainter *painter,
