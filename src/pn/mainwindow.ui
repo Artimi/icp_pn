@@ -81,7 +81,6 @@
    <addaction name="actionTransition"/>
    <addaction name="actionArc"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOtevrit_lokalne">
    <property name="text">
     <string>Otevřít lokálně</string>

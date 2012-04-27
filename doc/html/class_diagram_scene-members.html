@@ -82,9 +82,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 <div class="contents">
 Zde naleznete úplný seznam členů třídy <a class="el" href="class_diagram_scene.html">DiagramScene</a>, včetně všech zděděných členů.<table>
   <tr class="memlist"><td><a class="el" href="class_diagram_scene.html#ad1f1ead9fa99111fd1b62bcaf454fba2">deleteItem</a>()</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [slot]</code></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>DiagramScene</b>() (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>DiagramScene</b>(QMenu *placeMenu, QMenu *transitionMenu, QMenu *arrowMenu, QObject *parent=0) (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>getAuthor</b>() (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [inline]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>getDescription</b>() (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [inline]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>getDiagramItem</b>(QString name) (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_diagram_scene.html#ac721a062e8605ab22e1df379c4a97191">getItemType</a>()</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_diagram_scene.html#a461ff24d2686bb075d82417dbd09f93d">getMode</a>()</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>getName</b>() (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [inline]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>getVersion</b>() (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [inline]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>InsertItem</b> hodnota výčtu (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>InsertLine</b> hodnota výčtu (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>itemInserted</b>(DiagramItem *item) (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [signal]</code></td></tr>
@@ -94,8 +99,15 @@ Zde naleznete úplný seznam členů třídy <a class="el" href="class_diagram_s
   <tr class="memlist"><td><a class="el" href="class_diagram_scene.html#a56249136dab559afa4f840a5c92acf73">mousePressEvent</a>(QGraphicsSceneMouseEvent *mouseEvent)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_diagram_scene.html#a361512439a7cf2bcd0388c78eb1bb301">mouseReleaseEvent</a>(QGraphicsSceneMouseEvent *mouseEvent)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>MoveItem</b> hodnota výčtu (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>myArrowMenu</b> (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>myPlaceMenu</b> (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>myTransitionMenu</b> (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setAuthor</b>(QString str) (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [inline]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setDescription</b>(QString str) (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [inline]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_diagram_scene.html#a59a2ab949930f51e4db292aed2e770cd">setItemType</a>(DiagramItem::DiagramType type)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_diagram_scene.html#a744ea6890f2e562192a4d3cb913c9766">setMode</a>(Mode mode)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [slot]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setName</b>(QString str) (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [inline]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setVersion</b>(QString str) (definován v <a class="el" href="class_diagram_scene.html">DiagramScene</a>)</td><td><a class="el" href="class_diagram_scene.html">DiagramScene</a></td><td><code> [inline]</code></td></tr>
 </table></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -114,7 +126,7 @@ Zde naleznete úplný seznam členů třídy <a class="el" href="class_diagram_s
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno pá 20. dub 2012 21.59:11 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno čt 26. dub 2012 23.24:00 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>

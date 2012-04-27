@@ -115,6 +115,10 @@ DiagramType&#160;</td><td class="memItemRight" valign="bottom"><b>diagramType</b
 QPolygonF&#160;</td><td class="memItemRight" valign="bottom"><b>polygon</b> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4851c7c4ea5fbb3e137c074082ebf84b"></a><!-- doxytag: member="DiagramItem::type" ref="a4851c7c4ea5fbb3e137c074082ebf84b" args="() const " -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f2798521e959e28d070a9fd5d8ed846"></a><!-- doxytag: member="DiagramItem::getName" ref="a4f2798521e959e28d070a9fd5d8ed846" args="()" -->
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3af448109a74bff72e69f597beafccf"></a><!-- doxytag: member="DiagramItem::setName" ref="aa3af448109a74bff72e69f597beafccf" args="(QString str)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setName</b> (QString str)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item.html#af85bfb4edd1f641fae6b605e4bb529b4">removeArrow</a> (<a class="el" href="class_arrow.html">Arrow</a> *arrow)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item.html#ade8fc7eb5fc8795ed32088b9d84d8e79">removeArrows</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item.html#a7eea98dfc6ec8956e0fb0e6e440fdcb0">addArrow</a> (<a class="el" href="class_arrow.html">Arrow</a> *arrow)</td></tr>
@@ -129,6 +133,8 @@ DiagramType&#160;</td><td class="memItemRight" valign="bottom"><b>myDiagramType<
 QPolygonF&#160;</td><td class="memItemRight" valign="bottom"><b>myPolygon</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aafa6da7a3aa2fdd51f4517bf9c963181"></a><!-- doxytag: member="DiagramItem::arrows" ref="aafa6da7a3aa2fdd51f4517bf9c963181" args="" -->
 QList&lt; <a class="el" href="class_arrow.html">Arrow</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>arrows</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a922dc121975a10a42fe42ee61d8b46fd"></a><!-- doxytag: member="DiagramItem::name" ref="a922dc121975a10a42fe42ee61d8b46fd" args="" -->
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>name</b></td></tr>
 </table>
 <hr/><h2>Dokumentace k metodám</h2>
 <a class="anchor" id="a7eea98dfc6ec8956e0fb0e6e440fdcb0"></a><!-- doxytag: member="DiagramItem::addArrow" ref="a7eea98dfc6ec8956e0fb0e6e440fdcb0" args="(Arrow *arrow)" -->
@@ -153,7 +159,7 @@ QList&lt; <a class="el" href="class_arrow.html">Arrow</a> * &gt;&#160;</td><td c
   </dd>
 </dl>
 
-<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00047">47</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00048">48</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
 
 </div>
 </div>
@@ -191,7 +197,7 @@ QList&lt; <a class="el" href="class_arrow.html">Arrow</a> * &gt;&#160;</td><td c
 </dl>
 <dl class="return"><dt><b>Návratová hodnota:</b></dt><dd>value nepoužito </dd></dl>
 
-<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00058">58</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00059">59</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
 
 </div>
 </div>
@@ -217,7 +223,7 @@ QList&lt; <a class="el" href="class_arrow.html">Arrow</a> * &gt;&#160;</td><td c
   </dd>
 </dl>
 
-<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00021">21</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00022">22</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
 
 </div>
 </div>
@@ -236,7 +242,7 @@ QList&lt; <a class="el" href="class_arrow.html">Arrow</a> * &gt;&#160;</td><td c
 <div class="memdoc">
 <p>Smaže všechny hrany napojené na item </p>
 
-<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00032">32</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="diagramitem_8cpp_source.html#l00033">33</a> v souboru <a class="el" href="diagramitem_8cpp_source.html">diagramitem.cpp</a>.</p>
 
 </div>
 </div>
@@ -262,7 +268,7 @@ QList&lt; <a class="el" href="class_arrow.html">Arrow</a> * &gt;&#160;</td><td c
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno pá 20. dub 2012 21.59:11 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno čt 26. dub 2012 23.24:00 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>

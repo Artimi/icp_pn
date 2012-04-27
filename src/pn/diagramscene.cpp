@@ -159,8 +159,6 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     removeItem(line);
                     delete line;
 
-
-
                     if (startItems.count() > 0 && endItems.count() > 0 &&
                             startItems.first() != endItems.first())
                     {

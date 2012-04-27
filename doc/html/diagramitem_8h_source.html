@@ -96,32 +96,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 <a name="l00023"></a>00023 <span class="keyword">public</span>:
 <a name="l00024"></a>00024     <span class="keyword">enum</span> {Type = UserType + 15};
 <a name="l00025"></a>00025     <span class="keyword">enum</span> DiagramType{<a class="code" href="class_place.html">Place</a>, <a class="code" href="class_transition.html">Transition</a>};
-<a name="l00026"></a>00026     <a class="code" href="class_diagram_item.html">DiagramItem</a>(DiagramType diagramType, QGraphicsItem *parent =0, QGraphicsScene *scene = 0);
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028     DiagramType diagramType()
-<a name="l00029"></a>00029     {<span class="keywordflow">return</span> myDiagramType;}
-<a name="l00030"></a>00030     QPolygonF polygon()<span class="keyword"> const</span>
-<a name="l00031"></a>00031 <span class="keyword">        </span>{ <span class="keywordflow">return</span> myPolygon; }
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033     <span class="keywordtype">int</span> type()<span class="keyword"> const</span>
-<a name="l00034"></a>00034 <span class="keyword">    </span>{<span class="keywordflow">return</span> Type;}
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036     <span class="keywordtype">void</span> <a class="code" href="class_diagram_item.html#af85bfb4edd1f641fae6b605e4bb529b4">removeArrow</a>(<a class="code" href="class_arrow.html">Arrow</a> *arrow);
-<a name="l00037"></a>00037     <span class="keywordtype">void</span> <a class="code" href="class_diagram_item.html#ade8fc7eb5fc8795ed32088b9d84d8e79">removeArrows</a>();
-<a name="l00038"></a>00038     <span class="keywordtype">void</span> <a class="code" href="class_diagram_item.html#a7eea98dfc6ec8956e0fb0e6e440fdcb0">addArrow</a>(<a class="code" href="class_arrow.html">Arrow</a> *arrow);
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040 <span class="keyword">protected</span>:
-<a name="l00041"></a>00041     QVariant <a class="code" href="class_diagram_item.html#ada966349ddc26ea7b0c04f4f756d9fc3">itemChange</a>(GraphicsItemChange change, <span class="keyword">const</span> QVariant &amp;value);
-<a name="l00042"></a>00042     DiagramType myDiagramType;
-<a name="l00043"></a>00043     QPolygonF myPolygon;
-<a name="l00044"></a>00044     QList&lt;Arrow *&gt; arrows;
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046 
+<a name="l00026"></a>00026     <a class="code" href="class_diagram_item.html">DiagramItem</a>(DiagramType diagramType,
+<a name="l00027"></a>00027                 QGraphicsItem *parent =0,QGraphicsScene *scene = 0);
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029     DiagramType diagramType()
+<a name="l00030"></a>00030     {<span class="keywordflow">return</span> myDiagramType;}
+<a name="l00031"></a>00031     QPolygonF polygon()<span class="keyword"> const</span>
+<a name="l00032"></a>00032 <span class="keyword">        </span>{ <span class="keywordflow">return</span> myPolygon; }
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034     <span class="keywordtype">int</span> type()<span class="keyword"> const</span>
+<a name="l00035"></a>00035 <span class="keyword">    </span>{<span class="keywordflow">return</span> Type;}
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037     QString getName()
+<a name="l00038"></a>00038     {
+<a name="l00039"></a>00039         <span class="keywordflow">return</span> name;
+<a name="l00040"></a>00040     }
+<a name="l00041"></a>00041     <span class="keywordtype">void</span> setName(QString str)
+<a name="l00042"></a>00042     {name = str;}
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044     <span class="keywordtype">void</span> <a class="code" href="class_diagram_item.html#af85bfb4edd1f641fae6b605e4bb529b4">removeArrow</a>(<a class="code" href="class_arrow.html">Arrow</a> *arrow);
+<a name="l00045"></a>00045     <span class="keywordtype">void</span> <a class="code" href="class_diagram_item.html#ade8fc7eb5fc8795ed32088b9d84d8e79">removeArrows</a>();
+<a name="l00046"></a>00046     <span class="keywordtype">void</span> <a class="code" href="class_diagram_item.html#a7eea98dfc6ec8956e0fb0e6e440fdcb0">addArrow</a>(<a class="code" href="class_arrow.html">Arrow</a> *arrow);
 <a name="l00047"></a>00047 
-<a name="l00048"></a>00048 };
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="preprocessor">#endif // DIAGRAMITEM_H</span>
-<a name="l00051"></a>00051 <span class="preprocessor"></span>
+<a name="l00048"></a>00048 <span class="keyword">protected</span>:
+<a name="l00049"></a>00049     QVariant <a class="code" href="class_diagram_item.html#ada966349ddc26ea7b0c04f4f756d9fc3">itemChange</a>(GraphicsItemChange change, <span class="keyword">const</span> QVariant &amp;value);
+<a name="l00050"></a>00050     DiagramType myDiagramType;
+<a name="l00051"></a>00051     QPolygonF myPolygon;
+<a name="l00052"></a>00052     QList&lt;Arrow *&gt; arrows;
+<a name="l00053"></a>00053     QString name;
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 };
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057 <span class="preprocessor">#endif // DIAGRAMITEM_H</span>
+<a name="l00058"></a>00058 <span class="preprocessor"></span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -141,7 +148,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno pá 20. dub 2012 21.59:11 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno čt 26. dub 2012 23.24:00 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>

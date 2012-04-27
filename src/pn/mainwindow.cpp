@@ -22,22 +22,12 @@ MainWindow::MainWindow(QWidget *parent) :
     addTab();
     createActions();
     createMenus();
+    QObject::dumpObjectTree();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    QGraphicsView *view;
-    foreach(view,views)
-    {
-        delete view;
-    }
-
-    DiagramScene *scene;
-    foreach (scene, scenes)
-    {
-        delete scene;
-    }
 }
 
 /**
@@ -45,18 +35,18 @@ MainWindow::~MainWindow()
   */
 void MainWindow::createMenus()
 {
-    placeMenu = new QMenu(tr("Place"));
+    placeMenu = new QMenu(tr("Place"),this);
     placeMenu->addAction(actionEditTokens);
     placeMenu->addSeparator();
     placeMenu->addAction(actionDeleteItem);
 
-    transitionMenu = new QMenu(tr("Transition"));
+    transitionMenu = new QMenu(tr("Transition"),this);
     transitionMenu->addAction(actionEditGuard);
     transitionMenu->addAction(actionEditAction);
     transitionMenu->addSeparator();
     transitionMenu->addAction(actionDeleteItem);
 
-    arrowMenu = new QMenu(tr("Arc"));
+    arrowMenu = new QMenu(tr("Arc"),this);
     arrowMenu->addAction(actionEditVariable);
     arrowMenu->addSeparator();
     arrowMenu->addAction(actionDeleteItem);
@@ -121,11 +111,11 @@ void MainWindow::createActions()
   */
 int MainWindow::addTab()
 {
-    DiagramScene *scene = new DiagramScene(placeMenu,transitionMenu,arrowMenu);
+    DiagramScene *scene = new DiagramScene(placeMenu,transitionMenu,arrowMenu,this);
     scene->setSceneRect(QRectF(0,0,500,500));
     scenes.append(scene);
 
-    QGraphicsView *view = new QGraphicsView(scene);
+    QGraphicsView *view = new QGraphicsView(scene,this);
     views.append(view);
 
     return ui->tabWidget->addTab(view, QString("Unnamed %1").arg(++tabCount));

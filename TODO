@@ -22,7 +22,7 @@ ukládání a otevírání lokálně
     - DONE (pamatování si souboru a jen ukládání pomocí uložit jinak uložit jako?)
 přihlašování na server (http://doc.qt.nokia.com/4.7-snapshot/network-fortuneclient.html)
 ukládání a otevírání na server
-konfigurace nastavení
+konfigurace nastavení (http://qt-project.org/doc/qt-4.8/qsettings.html)
 funkce krok (více?) vpřed vzad
     -http://doc.qt.nokia.com/4.7-snapshot/tools-undoframework.html
 dialog na uložení při zavírání změněné scene (pomocí undoframework a clean state)
@@ -32,13 +32,15 @@ doprovodné informace k síti (autor, název, verze, stručný popis - spíše u
 vyhledávání sítě pomocí klíčových slov (na serveru)
 prohlížení nápovědy přes externí prohlížeč
 
+memory leak: addTab() 330 000 B
+
 
 Server: 
 
 konkurentní server (http://doc.qt.nokia.com/4.7-snapshot/network-threadedfortuneserver.html)
 načítání XML souboru do interní třídy Petri Net
 Petri Net -> XML
-simulace po kroku, do konce
+simulace po kroku, do konce (http://doc.qt.nokia.com/4.7-snapshot/statemachine-api.html ?)
 správa verzí
 logování přístupu na server a spouštění simulací atd.
 autentizace a autorizace uživatelů

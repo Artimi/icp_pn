@@ -14,6 +14,7 @@
 #include <QtGui/QMessageBox>
 #include <QDebug>
 #include <QMessageBox>
+#include <QtNetwork/QAuthenticator>
 #include "diagramscene.h"
 #include "diagramitem.h"
 #include "arrow.h"

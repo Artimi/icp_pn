@@ -79,7 +79,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/********************************************************************************</span>
 <a name="l00002"></a>00002 <span class="comment">** Form generated from reading UI file &#39;mainwindow.ui&#39;</span>
 <a name="l00003"></a>00003 <span class="comment">**</span>
-<a name="l00004"></a>00004 <span class="comment">** Created: Thu Mar 15 16:30:36 2012</span>
+<a name="l00004"></a>00004 <span class="comment">** Created: Thu Apr 26 21:54:00 2012</span>
 <a name="l00005"></a>00005 <span class="comment">**      by: Qt User Interface Compiler version 4.7.4</span>
 <a name="l00006"></a>00006 <span class="comment">**</span>
 <a name="l00007"></a>00007 <span class="comment">** WARNING! All changes made in this file will be lost when recompiling UI file!</span>
@@ -118,130 +118,157 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 <a name="l00040"></a>00040     QAction *actionNov;
 <a name="l00041"></a>00041     QAction *actionNovakarta;
 <a name="l00042"></a>00042     QAction *actionKonec;
-<a name="l00043"></a>00043     QWidget *centralWidget;
-<a name="l00044"></a>00044     QVBoxLayout *verticalLayout;
-<a name="l00045"></a>00045     QTabWidget *tabWidget;
-<a name="l00046"></a>00046     QMenuBar *menuBar;
-<a name="l00047"></a>00047     QMenu *menuSoubor;
-<a name="l00048"></a>00048     QMenu *menuNastaven;
-<a name="l00049"></a>00049     QMenu *menuAbout;
-<a name="l00050"></a>00050     QToolBar *mainToolBar;
-<a name="l00051"></a>00051     QStatusBar *statusBar;
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053     <span class="keywordtype">void</span> setupUi(QMainWindow *<a class="code" href="class_main_window.html">MainWindow</a>)
-<a name="l00054"></a>00054     {
-<a name="l00055"></a>00055         <span class="keywordflow">if</span> (MainWindow-&gt;objectName().isEmpty())
-<a name="l00056"></a>00056             MainWindow-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;MainWindow&quot;</span>));
-<a name="l00057"></a>00057         MainWindow-&gt;resize(737, 461);
-<a name="l00058"></a>00058         actionOtevrit_lokalne = <span class="keyword">new</span> QAction(MainWindow);
-<a name="l00059"></a>00059         actionOtevrit_lokalne-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionOtevrit_lokalne&quot;</span>));
-<a name="l00060"></a>00060         actionUlozit_lokalne = <span class="keyword">new</span> QAction(MainWindow);
-<a name="l00061"></a>00061         actionUlozit_lokalne-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionUlozit_lokalne&quot;</span>));
-<a name="l00062"></a>00062         actionOtevrit_ze_serveru = <span class="keyword">new</span> QAction(MainWindow);
-<a name="l00063"></a>00063         actionOtevrit_ze_serveru-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionOtevrit_ze_serveru&quot;</span>));
-<a name="l00064"></a>00064         actionUlozit_na_server = <span class="keyword">new</span> QAction(MainWindow);
-<a name="l00065"></a>00065         actionUlozit_na_server-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionUlozit_na_server&quot;</span>));
-<a name="l00066"></a>00066         actionMouse = <span class="keyword">new</span> QAction(MainWindow);
-<a name="l00067"></a>00067         actionMouse-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionMouse&quot;</span>));
-<a name="l00068"></a>00068         actionMouse-&gt;setCheckable(<span class="keyword">true</span>);
-<a name="l00069"></a>00069         actionPlace = <span class="keyword">new</span> QAction(MainWindow);
-<a name="l00070"></a>00070         actionPlace-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionPlace&quot;</span>));
-<a name="l00071"></a>00071         actionPlace-&gt;setCheckable(<span class="keyword">true</span>);
-<a name="l00072"></a>00072         actionTransition = <span class="keyword">new</span> QAction(MainWindow);
-<a name="l00073"></a>00073         actionTransition-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionTransition&quot;</span>));
-<a name="l00074"></a>00074         actionTransition-&gt;setCheckable(<span class="keyword">true</span>);
-<a name="l00075"></a>00075         actionArc = <span class="keyword">new</span> QAction(MainWindow);
-<a name="l00076"></a>00076         actionArc-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionArc&quot;</span>));
-<a name="l00077"></a>00077         actionArc-&gt;setCheckable(<span class="keyword">true</span>);
-<a name="l00078"></a>00078         actionNov = <span class="keyword">new</span> QAction(MainWindow);
-<a name="l00079"></a>00079         actionNov-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionNov&quot;</span>));
-<a name="l00080"></a>00080         actionNovakarta = <span class="keyword">new</span> QAction(MainWindow);
-<a name="l00081"></a>00081         actionNovakarta-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionNovakarta&quot;</span>));
-<a name="l00082"></a>00082         actionKonec = <span class="keyword">new</span> QAction(MainWindow);
-<a name="l00083"></a>00083         actionKonec-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionKonec&quot;</span>));
-<a name="l00084"></a>00084         centralWidget = <span class="keyword">new</span> QWidget(MainWindow);
-<a name="l00085"></a>00085         centralWidget-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;centralWidget&quot;</span>));
-<a name="l00086"></a>00086         verticalLayout = <span class="keyword">new</span> QVBoxLayout(centralWidget);
-<a name="l00087"></a>00087         verticalLayout-&gt;setSpacing(6);
-<a name="l00088"></a>00088         verticalLayout-&gt;setContentsMargins(11, 11, 11, 11);
-<a name="l00089"></a>00089         verticalLayout-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;verticalLayout&quot;</span>));
-<a name="l00090"></a>00090         tabWidget = <span class="keyword">new</span> QTabWidget(centralWidget);
-<a name="l00091"></a>00091         tabWidget-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;tabWidget&quot;</span>));
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093         verticalLayout-&gt;addWidget(tabWidget);
-<a name="l00094"></a>00094 
-<a name="l00095"></a>00095         MainWindow-&gt;setCentralWidget(centralWidget);
-<a name="l00096"></a>00096         menuBar = <span class="keyword">new</span> QMenuBar(MainWindow);
-<a name="l00097"></a>00097         menuBar-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;menuBar&quot;</span>));
-<a name="l00098"></a>00098         menuBar-&gt;setGeometry(QRect(0, 0, 737, 25));
-<a name="l00099"></a>00099         menuSoubor = <span class="keyword">new</span> QMenu(menuBar);
-<a name="l00100"></a>00100         menuSoubor-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;menuSoubor&quot;</span>));
-<a name="l00101"></a>00101         menuNastaven = <span class="keyword">new</span> QMenu(menuBar);
-<a name="l00102"></a>00102         menuNastaven-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;menuNastaven&quot;</span>));
-<a name="l00103"></a>00103         menuAbout = <span class="keyword">new</span> QMenu(menuBar);
-<a name="l00104"></a>00104         menuAbout-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;menuAbout&quot;</span>));
-<a name="l00105"></a>00105         MainWindow-&gt;setMenuBar(menuBar);
-<a name="l00106"></a>00106         mainToolBar = <span class="keyword">new</span> QToolBar(MainWindow);
-<a name="l00107"></a>00107         mainToolBar-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;mainToolBar&quot;</span>));
-<a name="l00108"></a>00108         MainWindow-&gt;addToolBar(Qt::TopToolBarArea, mainToolBar);
-<a name="l00109"></a>00109         statusBar = <span class="keyword">new</span> QStatusBar(MainWindow);
-<a name="l00110"></a>00110         statusBar-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;statusBar&quot;</span>));
-<a name="l00111"></a>00111         MainWindow-&gt;setStatusBar(statusBar);
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113         menuBar-&gt;addAction(menuSoubor-&gt;menuAction());
-<a name="l00114"></a>00114         menuBar-&gt;addAction(menuNastaven-&gt;menuAction());
-<a name="l00115"></a>00115         menuBar-&gt;addAction(menuAbout-&gt;menuAction());
-<a name="l00116"></a>00116         menuSoubor-&gt;addAction(actionNov);
-<a name="l00117"></a>00117         menuSoubor-&gt;addAction(actionNovakarta);
-<a name="l00118"></a>00118         menuSoubor-&gt;addSeparator();
-<a name="l00119"></a>00119         menuSoubor-&gt;addAction(actionOtevrit_lokalne);
-<a name="l00120"></a>00120         menuSoubor-&gt;addAction(actionUlozit_lokalne);
-<a name="l00121"></a>00121         menuSoubor-&gt;addSeparator();
-<a name="l00122"></a>00122         menuSoubor-&gt;addAction(actionOtevrit_ze_serveru);
-<a name="l00123"></a>00123         menuSoubor-&gt;addAction(actionUlozit_na_server);
-<a name="l00124"></a>00124         menuSoubor-&gt;addSeparator();
-<a name="l00125"></a>00125         menuSoubor-&gt;addAction(actionKonec);
-<a name="l00126"></a>00126         mainToolBar-&gt;addAction(actionMouse);
-<a name="l00127"></a>00127         mainToolBar-&gt;addAction(actionPlace);
-<a name="l00128"></a>00128         mainToolBar-&gt;addAction(actionTransition);
-<a name="l00129"></a>00129         mainToolBar-&gt;addAction(actionArc);
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131         retranslateUi(MainWindow);
-<a name="l00132"></a>00132 
-<a name="l00133"></a>00133         tabWidget-&gt;setCurrentIndex(-1);
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135 
-<a name="l00136"></a>00136         QMetaObject::connectSlotsByName(MainWindow);
-<a name="l00137"></a>00137     } <span class="comment">// setupUi</span>
-<a name="l00138"></a>00138 
-<a name="l00139"></a>00139     <span class="keywordtype">void</span> retranslateUi(QMainWindow *MainWindow)
-<a name="l00140"></a>00140     {
-<a name="l00141"></a>00141         MainWindow-&gt;setWindowTitle(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;MainWindow&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00142"></a>00142         actionOtevrit_lokalne-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Otev\305\231\303\255t lok\303\241ln\304\233&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00143"></a>00143         actionUlozit_lokalne-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ulo\305\276it lok\303\241ln\304\233&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00144"></a>00144         actionOtevrit_ze_serveru-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Otev\305\231\303\255t ze serveru&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00145"></a>00145         actionUlozit_na_server-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ulo\305\276it na server&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00146"></a>00146         actionMouse-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Mouse&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00147"></a>00147         actionPlace-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Place&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00148"></a>00148         actionTransition-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Transition&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00149"></a>00149         actionArc-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Arc&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00150"></a>00150         actionNov-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;&amp;Nov\303\275&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00151"></a>00151         actionNovakarta-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Nov\303\241 &amp;karta&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00152"></a>00152         actionKonec-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;&amp;Konec&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00153"></a>00153         menuSoubor-&gt;setTitle(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Soubor&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00154"></a>00154         menuNastaven-&gt;setTitle(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;\303\232pravy&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00155"></a>00155         menuAbout-&gt;setTitle(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;About&quot;</span>, 0, QApplication::UnicodeUTF8));
-<a name="l00156"></a>00156     } <span class="comment">// retranslateUi</span>
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158 };
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160 <span class="keyword">namespace </span>Ui {
-<a name="l00161"></a>00161     <span class="keyword">class </span>MainWindow: <span class="keyword">public</span> <a class="code" href="class_ui___main_window.html">Ui_MainWindow</a> {};
-<a name="l00162"></a>00162 } <span class="comment">// namespace Ui</span>
-<a name="l00163"></a>00163 
-<a name="l00164"></a>00164 QT_END_NAMESPACE
-<a name="l00165"></a>00165 
-<a name="l00166"></a>00166 <span class="preprocessor">#endif // UI_MAINWINDOW_H</span>
+<a name="l00043"></a>00043     QAction *actionZp_t;
+<a name="l00044"></a>00044     QAction *actionVp_ed;
+<a name="l00045"></a>00045     QAction *actionInformace_o_s_ti;
+<a name="l00046"></a>00046     QWidget *centralWidget;
+<a name="l00047"></a>00047     QVBoxLayout *verticalLayout;
+<a name="l00048"></a>00048     QTabWidget *tabWidget;
+<a name="l00049"></a>00049     QMenuBar *menuBar;
+<a name="l00050"></a>00050     QMenu *menuSoubor;
+<a name="l00051"></a>00051     QMenu *menuNastaven;
+<a name="l00052"></a>00052     QMenu *menuAbout;
+<a name="l00053"></a>00053     QToolBar *mainToolBar;
+<a name="l00054"></a>00054     QStatusBar *statusBar;
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056     <span class="keywordtype">void</span> setupUi(QMainWindow *<a class="code" href="class_main_window.html">MainWindow</a>)
+<a name="l00057"></a>00057     {
+<a name="l00058"></a>00058         <span class="keywordflow">if</span> (MainWindow-&gt;objectName().isEmpty())
+<a name="l00059"></a>00059             MainWindow-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;MainWindow&quot;</span>));
+<a name="l00060"></a>00060         MainWindow-&gt;resize(737, 461);
+<a name="l00061"></a>00061         MainWindow-&gt;setContextMenuPolicy(Qt::NoContextMenu);
+<a name="l00062"></a>00062         actionOtevrit_lokalne = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00063"></a>00063         actionOtevrit_lokalne-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionOtevrit_lokalne&quot;</span>));
+<a name="l00064"></a>00064         actionUlozit_lokalne = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00065"></a>00065         actionUlozit_lokalne-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionUlozit_lokalne&quot;</span>));
+<a name="l00066"></a>00066         actionOtevrit_ze_serveru = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00067"></a>00067         actionOtevrit_ze_serveru-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionOtevrit_ze_serveru&quot;</span>));
+<a name="l00068"></a>00068         actionUlozit_na_server = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00069"></a>00069         actionUlozit_na_server-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionUlozit_na_server&quot;</span>));
+<a name="l00070"></a>00070         actionMouse = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00071"></a>00071         actionMouse-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionMouse&quot;</span>));
+<a name="l00072"></a>00072         actionMouse-&gt;setCheckable(<span class="keyword">true</span>);
+<a name="l00073"></a>00073         actionPlace = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00074"></a>00074         actionPlace-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionPlace&quot;</span>));
+<a name="l00075"></a>00075         actionPlace-&gt;setCheckable(<span class="keyword">true</span>);
+<a name="l00076"></a>00076         actionTransition = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00077"></a>00077         actionTransition-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionTransition&quot;</span>));
+<a name="l00078"></a>00078         actionTransition-&gt;setCheckable(<span class="keyword">true</span>);
+<a name="l00079"></a>00079         actionArc = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00080"></a>00080         actionArc-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionArc&quot;</span>));
+<a name="l00081"></a>00081         actionArc-&gt;setCheckable(<span class="keyword">true</span>);
+<a name="l00082"></a>00082         actionNov = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00083"></a>00083         actionNov-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionNov&quot;</span>));
+<a name="l00084"></a>00084         actionNovakarta = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00085"></a>00085         actionNovakarta-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionNovakarta&quot;</span>));
+<a name="l00086"></a>00086         actionKonec = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00087"></a>00087         actionKonec-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionKonec&quot;</span>));
+<a name="l00088"></a>00088         actionZp_t = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00089"></a>00089         actionZp_t-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionZp_t&quot;</span>));
+<a name="l00090"></a>00090         actionVp_ed = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00091"></a>00091         actionVp_ed-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionVp_ed&quot;</span>));
+<a name="l00092"></a>00092         actionInformace_o_s_ti = <span class="keyword">new</span> QAction(MainWindow);
+<a name="l00093"></a>00093         actionInformace_o_s_ti-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;actionInformace_o_s_ti&quot;</span>));
+<a name="l00094"></a>00094         centralWidget = <span class="keyword">new</span> QWidget(MainWindow);
+<a name="l00095"></a>00095         centralWidget-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;centralWidget&quot;</span>));
+<a name="l00096"></a>00096         verticalLayout = <span class="keyword">new</span> QVBoxLayout(centralWidget);
+<a name="l00097"></a>00097         verticalLayout-&gt;setSpacing(6);
+<a name="l00098"></a>00098         verticalLayout-&gt;setContentsMargins(11, 11, 11, 11);
+<a name="l00099"></a>00099         verticalLayout-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;verticalLayout&quot;</span>));
+<a name="l00100"></a>00100         tabWidget = <span class="keyword">new</span> QTabWidget(centralWidget);
+<a name="l00101"></a>00101         tabWidget-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;tabWidget&quot;</span>));
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103         verticalLayout-&gt;addWidget(tabWidget);
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105         MainWindow-&gt;setCentralWidget(centralWidget);
+<a name="l00106"></a>00106         menuBar = <span class="keyword">new</span> QMenuBar(MainWindow);
+<a name="l00107"></a>00107         menuBar-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;menuBar&quot;</span>));
+<a name="l00108"></a>00108         menuBar-&gt;setGeometry(QRect(0, 0, 737, 25));
+<a name="l00109"></a>00109         menuSoubor = <span class="keyword">new</span> QMenu(menuBar);
+<a name="l00110"></a>00110         menuSoubor-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;menuSoubor&quot;</span>));
+<a name="l00111"></a>00111         menuNastaven = <span class="keyword">new</span> QMenu(menuBar);
+<a name="l00112"></a>00112         menuNastaven-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;menuNastaven&quot;</span>));
+<a name="l00113"></a>00113         menuAbout = <span class="keyword">new</span> QMenu(menuBar);
+<a name="l00114"></a>00114         menuAbout-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;menuAbout&quot;</span>));
+<a name="l00115"></a>00115         MainWindow-&gt;setMenuBar(menuBar);
+<a name="l00116"></a>00116         mainToolBar = <span class="keyword">new</span> QToolBar(MainWindow);
+<a name="l00117"></a>00117         mainToolBar-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;mainToolBar&quot;</span>));
+<a name="l00118"></a>00118         MainWindow-&gt;addToolBar(Qt::TopToolBarArea, mainToolBar);
+<a name="l00119"></a>00119         statusBar = <span class="keyword">new</span> QStatusBar(MainWindow);
+<a name="l00120"></a>00120         statusBar-&gt;setObjectName(QString::fromUtf8(<span class="stringliteral">&quot;statusBar&quot;</span>));
+<a name="l00121"></a>00121         MainWindow-&gt;setStatusBar(statusBar);
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123         menuBar-&gt;addAction(menuSoubor-&gt;menuAction());
+<a name="l00124"></a>00124         menuBar-&gt;addAction(menuNastaven-&gt;menuAction());
+<a name="l00125"></a>00125         menuBar-&gt;addAction(menuAbout-&gt;menuAction());
+<a name="l00126"></a>00126         menuSoubor-&gt;addAction(actionNov);
+<a name="l00127"></a>00127         menuSoubor-&gt;addAction(actionNovakarta);
+<a name="l00128"></a>00128         menuSoubor-&gt;addSeparator();
+<a name="l00129"></a>00129         menuSoubor-&gt;addAction(actionOtevrit_lokalne);
+<a name="l00130"></a>00130         menuSoubor-&gt;addAction(actionUlozit_lokalne);
+<a name="l00131"></a>00131         menuSoubor-&gt;addSeparator();
+<a name="l00132"></a>00132         menuSoubor-&gt;addAction(actionOtevrit_ze_serveru);
+<a name="l00133"></a>00133         menuSoubor-&gt;addAction(actionUlozit_na_server);
+<a name="l00134"></a>00134         menuSoubor-&gt;addSeparator();
+<a name="l00135"></a>00135         menuSoubor-&gt;addAction(actionKonec);
+<a name="l00136"></a>00136         menuNastaven-&gt;addAction(actionZp_t);
+<a name="l00137"></a>00137         menuNastaven-&gt;addAction(actionVp_ed);
+<a name="l00138"></a>00138         menuNastaven-&gt;addSeparator();
+<a name="l00139"></a>00139         menuNastaven-&gt;addAction(actionInformace_o_s_ti);
+<a name="l00140"></a>00140         mainToolBar-&gt;addAction(actionMouse);
+<a name="l00141"></a>00141         mainToolBar-&gt;addAction(actionPlace);
+<a name="l00142"></a>00142         mainToolBar-&gt;addAction(actionTransition);
+<a name="l00143"></a>00143         mainToolBar-&gt;addAction(actionArc);
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145         retranslateUi(MainWindow);
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147         tabWidget-&gt;setCurrentIndex(-1);
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150         QMetaObject::connectSlotsByName(MainWindow);
+<a name="l00151"></a>00151     } <span class="comment">// setupUi</span>
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153     <span class="keywordtype">void</span> retranslateUi(QMainWindow *MainWindow)
+<a name="l00154"></a>00154     {
+<a name="l00155"></a>00155         MainWindow-&gt;setWindowTitle(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;MainWindow&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00156"></a>00156         actionOtevrit_lokalne-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Otev\305\231\303\255t lok\303\241ln\304\233&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00157"></a>00157         actionOtevrit_lokalne-&gt;setShortcut(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ctrl+O&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00158"></a>00158         actionUlozit_lokalne-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ulo\305\276it lok\303\241ln\304\233&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00159"></a>00159         actionUlozit_lokalne-&gt;setShortcut(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ctrl+S&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00160"></a>00160         actionOtevrit_ze_serveru-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Otev\305\231\303\255t ze serveru&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00161"></a>00161         actionOtevrit_ze_serveru-&gt;setShortcut(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ctrl+Alt+O&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00162"></a>00162         actionUlozit_na_server-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ulo\305\276it na server&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00163"></a>00163         actionUlozit_na_server-&gt;setShortcut(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ctrl+Alt+S&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00164"></a>00164         actionMouse-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Mouse&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00165"></a>00165         actionMouse-&gt;setShortcut(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ctrl+1&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00166"></a>00166         actionPlace-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Place&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00167"></a>00167         actionPlace-&gt;setShortcut(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ctrl+2&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00168"></a>00168         actionTransition-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Transition&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00169"></a>00169         actionTransition-&gt;setShortcut(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ctrl+3&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00170"></a>00170         actionArc-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Arc&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00171"></a>00171         actionArc-&gt;setShortcut(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ctrl+4&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00172"></a>00172         actionNov-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;&amp;Nov\303\275&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00173"></a>00173         actionNovakarta-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Nov\303\241 &amp;karta&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00174"></a>00174         actionNovakarta-&gt;setShortcut(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ctrl+N&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00175"></a>00175         actionKonec-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;&amp;Konec&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00176"></a>00176         actionKonec-&gt;setShortcut(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Ctrl+Q&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00177"></a>00177         actionZp_t-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Zp\304\233t&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00178"></a>00178         actionVp_ed-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Vp\305\231ed&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00179"></a>00179         actionInformace_o_s_ti-&gt;setText(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Informace o s\303\255ti&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00180"></a>00180         menuSoubor-&gt;setTitle(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;Soubor&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00181"></a>00181         menuNastaven-&gt;setTitle(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;\303\232pravy&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00182"></a>00182         menuAbout-&gt;setTitle(QApplication::translate(<span class="stringliteral">&quot;MainWindow&quot;</span>, <span class="stringliteral">&quot;About&quot;</span>, 0, QApplication::UnicodeUTF8));
+<a name="l00183"></a>00183     } <span class="comment">// retranslateUi</span>
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185 };
+<a name="l00186"></a>00186 
+<a name="l00187"></a>00187 <span class="keyword">namespace </span>Ui {
+<a name="l00188"></a>00188     <span class="keyword">class </span>MainWindow: <span class="keyword">public</span> <a class="code" href="class_ui___main_window.html">Ui_MainWindow</a> {};
+<a name="l00189"></a>00189 } <span class="comment">// namespace Ui</span>
+<a name="l00190"></a>00190 
+<a name="l00191"></a>00191 QT_END_NAMESPACE
+<a name="l00192"></a>00192 
+<a name="l00193"></a>00193 <span class="preprocessor">#endif // UI_MAINWINDOW_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -261,7 +288,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno pá 20. dub 2012 21.59:11 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno čt 26. dub 2012 23.24:00 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>

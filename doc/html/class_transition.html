@@ -101,13 +101,19 @@ Veřejné typy</h2></td></tr>
  }</td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Veřejné metody</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7135c54c43f853557ed4fc42675a4626"></a><!-- doxytag: member="Transition::Transition" ref="a7135c54c43f853557ed4fc42675a4626" args="(QGraphicsItem *parent=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Transition</b> (QGraphicsItem *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a804881c4dfb8facd589e7ee1917bd866"></a><!-- doxytag: member="Transition::Transition" ref="a804881c4dfb8facd589e7ee1917bd866" args="(QMenu *menu, QGraphicsItem *parent=0, QGraphicsScene *scene=0)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>Transition</b> (QMenu *menu, QGraphicsItem *parent=0, QGraphicsScene *scene=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fb3feff682a05113048d5d0c62d9f10"></a><!-- doxytag: member="Transition::boundingRect" ref="a3fb3feff682a05113048d5d0c62d9f10" args="() const " -->
 QRectF&#160;</td><td class="memItemRight" valign="bottom"><b>boundingRect</b> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee7b7a6d972f5ea6e2f84a490d89dc49"></a><!-- doxytag: member="Transition::type" ref="aee7b7a6d972f5ea6e2f84a490d89dc49" args="() const " -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_transition.html#a1e5907121e31a1b3172926ea58415301">paint</a> (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca9a76e6be9202ad17f806d23a9e8c60"></a><!-- doxytag: member="Transition::getGuard" ref="aca9a76e6be9202ad17f806d23a9e8c60" args="()" -->
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>getGuard</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_transition.html#a7b89d9f0f0d9eca63b9c2713745780b1">setGuard</a> (QString str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad479d254d1d3349903eff6d281954c5f"></a><!-- doxytag: member="Transition::getAction" ref="ad479d254d1d3349903eff6d281954c5f" args="()" -->
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>getAction</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_transition.html#a1a86ae2d627648db48a65894472e9f2a">setAction</a> (QString str)</td></tr>
 </table>
 <hr/><h2>Dokumentace k metodám</h2>
 <a class="anchor" id="a1e5907121e31a1b3172926ea58415301"></a><!-- doxytag: member="Transition::paint" ref="a1e5907121e31a1b3172926ea58415301" args="(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)" -->
@@ -142,7 +148,61 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const </td
 <div class="memdoc">
 <p>metoda vykresluje objekt </p>
 
-<p>Definice je uvedena na řádku <a class="el" href="transition_8cpp_source.html#l00019">19</a> v souboru <a class="el" href="transition_8cpp_source.html">transition.cpp</a>.</p>
+<p>Definice je uvedena na řádku <a class="el" href="transition_8cpp_source.html#l00032">32</a> v souboru <a class="el" href="transition_8cpp_source.html">transition.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1a86ae2d627648db48a65894472e9f2a"></a><!-- doxytag: member="Transition::setAction" ref="a1a86ae2d627648db48a65894472e9f2a" args="(QString str)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Transition::setAction </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Nastavuje akci přechodu</p>
+<dl><dt><b>Parametry:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>vstupní řetězec s akcí </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Návratová hodnota:</b></dt><dd>true - všechno v pořádku, false - nepodařilo se rozparsovat </dd></dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="transition_8cpp_source.html#l00071">71</a> v souboru <a class="el" href="transition_8cpp_source.html">transition.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7b89d9f0f0d9eca63b9c2713745780b1"></a><!-- doxytag: member="Transition::setGuard" ref="a7b89d9f0f0d9eca63b9c2713745780b1" args="(QString str)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Transition::setGuard </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Nastavuje stráž přechodu</p>
+<dl><dt><b>Parametry:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>vstupní řetězec se stráží </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Návratová hodnota:</b></dt><dd>true -všechno v pořádku, false - nepodařilo se rozparsovat </dd></dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="transition_8cpp_source.html#l00055">55</a> v souboru <a class="el" href="transition_8cpp_source.html">transition.cpp</a>.</p>
 
 </div>
 </div>
@@ -168,7 +228,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const </td
 
 
 <hr class="footer"/><address class="footer"><small>
-Generováno pá 20. dub 2012 21.59:11 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
+Generováno čt 26. dub 2012 23.24:00 pro projekt Editor a simulátor vysokoúrovňových Petriho sítí programem &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.5
 </small></address>
