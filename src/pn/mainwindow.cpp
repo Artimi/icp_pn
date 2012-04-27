@@ -30,6 +30,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
 /**
   * Vytváří menu pro Scene a Itemy
   */

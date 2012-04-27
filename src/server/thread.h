@@ -9,18 +9,23 @@ class Thread : public QThread
     Q_OBJECT
 public:
     explicit Thread(int socketDescriptor,QObject *parent = 0);
-    
+
     void run();
 
 signals:
     void error(QTcpSocket::SocketError socketError);
-    
+
+public slots:
+    void readyRead();
+    void disconnected();
+
 private:
-    int mySocketDescriptor;
+    int socketDescriptor;
+    QTcpSocket *socket;
 
 
 public slots:
-    
+
 };
 
 #endif // THREAD_H

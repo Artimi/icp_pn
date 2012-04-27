@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core
-
+QT       += network
 QT       -= gui
 
 TARGET = pnserver
@@ -15,9 +15,10 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
+SOURCES += \
     server.cpp \
-    thread.cpp
+    thread.cpp \
+    servermain.cpp
 
 HEADERS += \
     server.h \

@@ -14,7 +14,8 @@
 #include <QtGui/QMessageBox>
 #include <QDebug>
 #include <QMessageBox>
-#include <QtNetwork/QAuthenticator>
+#include <QtNetwork/QTcpServer>
+#include <QtNetwork/QTcpSocket>
 #include "diagramscene.h"
 #include "diagramitem.h"
 #include "arrow.h"
@@ -52,7 +53,6 @@ private:
 
     int activeTab;
 
-
     QMenu *placeMenu;
     QMenu *transitionMenu;
     QMenu *arrowMenu;
@@ -62,8 +62,6 @@ private:
     QAction * actionEditVariable;
     QAction * actionEditAction;
     QAction * actionDeleteItem;
-
-
 
 public slots:
     int addTab();
@@ -82,6 +80,7 @@ public slots:
     void editVariable();
     void deleteItem();
     void netInformation();
+
 };
 
 #endif // MAINWINDOW_H

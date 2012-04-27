@@ -21,9 +21,9 @@ FORMS += mainwindow.ui \
 SOURCES += arrow.cpp \
            diagramitem.cpp \
            diagramscene.cpp \
-           main.cpp \
            mainwindow.cpp \
            place.cpp \
            transition.cpp \
            xmlhandler.cpp \
-    netinformation.cpp
+    netinformation.cpp \
+    clientmain.cpp
