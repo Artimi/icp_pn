@@ -22,7 +22,24 @@ MainWindow::MainWindow(QWidget *parent) :
     addTab();
     createActions();
     createMenus();
-    QObject::dumpObjectTree();
+
+
+//    Message message;
+//    message.user = "pepe";
+//    message.password = "12345";
+//    message.command = Message::SAVE;
+
+//    XMLHandler xmlhandler(scenes.at(activeTab),&message);
+//    QString str = xmlhandler.writeMessage();
+//    qDebug() << str;
+//    Message message2;
+
+//    XMLHandler xmlhandler2(scenes.at(activeTab),&message2);
+//    if (xmlhandler2.readMessage(str)==0 )
+//        qDebug() << message2.command ;
+//    else
+//        qDebug() << "ERROR";
+
 }
 
 MainWindow::~MainWindow()
@@ -235,7 +252,7 @@ void MainWindow::saveLocal()
                                      file.errorString());
             return;
         }
-    xmlhandler.saveToFile(&file);
+    xmlhandler.saveNetToFile(&file);
     file.close();
     }
 }
@@ -264,7 +281,7 @@ void MainWindow::loadLocal()
                                      file.errorString());
             return;
         }
-        if( xmlhandler.loadFromFile(&file) != 0)
+        if( xmlhandler.loadNetFromFile(&file) != 0)
         {
             QMessageBox::critical(this,
                                   tr("XML parse problem"),

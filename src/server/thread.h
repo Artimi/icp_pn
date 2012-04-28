@@ -3,6 +3,9 @@
 
 #include <QThread>
 #include <QtNetwork/QTcpSocket>
+#include "../pn/xmlhandler.h"
+#include "../pn/message.h"
+#include "../pn/diagramscene.h"
 
 class Thread : public QThread
 {

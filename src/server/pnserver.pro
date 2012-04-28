@@ -6,7 +6,7 @@
 
 QT       += core
 QT       += network
-QT       -= gui
+#QT       -= gui
 
 TARGET = pnserver
 CONFIG   += console
@@ -18,8 +18,22 @@ TEMPLATE = app
 SOURCES += \
     server.cpp \
     thread.cpp \
-    servermain.cpp
+    servermain.cpp \
+    ../pn/xmlhandler.cpp \
+    ../pn/transition.cpp  \
+    ../pn/place.cpp \
+    ../pn/diagramscene.cpp \
+    ../pn/diagramitem.cpp \
+    ../pn/arrow.cpp \
+    ../pn/message.cpp
 
 HEADERS += \
     server.h \
-    thread.h
+    thread.h \
+    ../pn/xmlhandler.h \
+    ../pn/transition.h  \
+    ../pn/place.h \
+    ../pn/diagramscene.h \
+    ../pn/diagramitem.h \
+    ../pn/arrow.h \
+    ../pn/message.h

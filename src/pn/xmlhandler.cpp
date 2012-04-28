@@ -6,9 +6,10 @@
   */
 #include "xmlhandler.h"
 
-XMLHandler::XMLHandler(DiagramScene * scene,QString name)
+XMLHandler::XMLHandler(DiagramScene * scene,Message * message)
 {
     myScene = scene;
+    myMessage = message;
 }
 
 /**
@@ -21,6 +22,7 @@ QString XMLHandler::toStr()
     QXmlStreamWriter writer(&result);
 
     writePetriNet(&writer);
+
     return result;
 }
 
@@ -28,10 +30,14 @@ QString XMLHandler::toStr()
   * Ukládání xml do souboru
   * @param  file    soubor do, kterého se má ukládat
   */
-void XMLHandler::saveToFile(QFile *file)
+void XMLHandler::saveNetToFile(QFile *file)
 {
     QXmlStreamWriter writer(file);
+
+    writer.setAutoFormatting(true);
+    writer.writeStartDocument();
     writePetriNet(&writer);
+    writer.writeEndDocument();
 }
 
 /**
@@ -39,11 +45,123 @@ void XMLHandler::saveToFile(QFile *file)
   * @param  file    otevíraný soubor
   * @return 0 Ok, jinak chyba
   */
-int XMLHandler::loadFromFile(QFile *file)
+int XMLHandler::loadNetFromFile(QFile *file)
 {
     QXmlStreamReader reader(file);
+    reader.readNext();
     if(readPetriNet(&reader)!=0)
         return -1;
+    return 0;
+}
+
+QString XMLHandler::writeMessage()
+{
+    QString result;
+    QXmlStreamWriter writer(&result);
+
+    writer.writeStartDocument();
+    writer.writeStartElement("message");
+
+    writer.writeTextElement("command",QString::number(myMessage->command));
+    writer.writeStartElement("data");
+
+    switch(myMessage->command)
+    {
+    case Message::SLOGIN:
+        break;
+    case Message::CLOGIN:
+        writer.writeTextElement("user",myMessage->user);
+        writer.writeTextElement("password",myMessage->password);
+        break;
+    case Message::WRONGLOGIN:
+        break;
+    case Message::LOGGED:
+        break;
+    case Message::CLIST:
+        break;
+    case Message::SLIST:
+        writePetriNetList(&writer);
+        break;
+    case Message::SEND:
+        writePetriNet(&writer);
+        break;
+    case Message::ERROR:
+        writer.writeTextElement("error",myMessage->errorText);
+        break;
+    case Message::SAVE:
+        writePetriNet(&writer);
+        break;
+    case Message::LOAD:
+        writePetriNet(&writer); //ve scene bude uloženo jen name, author, version
+        break;
+    }
+
+    writer.writeEndElement(); //data
+
+    writer.writeEndElement(); //message
+    writer.writeEndDocument();
+    return result;
+}
+
+int XMLHandler::readMessage(QString str)
+{
+    QXmlStreamReader reader(str);
+
+    reader.readNext(); // začátek dokumentu
+    reader.readNext();
+
+    if(reader.isStartElement() && reader.name()=="message")
+    {
+        reader.readNext();
+
+        if(reader.isStartElement() && reader.name()=="command")
+        {
+            myMessage->command = (Message::Commands)reader.readElementText().toInt();
+            qDebug()<<"command";
+        }
+        reader.readNext();
+
+        if(reader.isStartElement() && reader.name()=="data")
+        {
+            reader.readNext();
+            switch(myMessage->command)
+            {
+                case Message::CLOGIN:
+                    while(!(reader.isEndElement() && reader.name() == "data"))
+                    {
+                        if(reader.isStartElement() && reader.name() == "user")
+                            myMessage->user = reader.readElementText();
+                        else if(reader.isStartElement() && reader.name() == "password")
+                            myMessage->password = reader.readElementText();
+
+                        reader.readNext();
+                    }
+                    break;
+                case Message::SLIST:
+                    readPetriNetList(&reader);
+                    break;
+                case Message::SEND:
+                    readPetriNet(&reader);
+                    break;
+                case Message::ERROR:
+                    if(reader.isStartDocument() && reader.name() == "error")
+                        myMessage->errorText = reader.readElementText();
+                    break;
+                case Message::SAVE:
+                    readPetriNet(&reader);
+                    break;
+                case Message::LOAD:
+                    readPetriNet(&reader);
+                    break;
+            }
+        }
+    }
+
+    if (reader.hasError())
+    {
+        return -1;
+    }
+    reader.clear();
     return 0;
 }
 
@@ -55,9 +173,6 @@ void XMLHandler::writePetriNet(QXmlStreamWriter *writer)
 {
     QList<QGraphicsItem *> list = myScene->items();
 
-    writer->setAutoFormatting(true);
-
-    writer->writeStartDocument();
     writer->writeStartElement("petrinet");
     writer->writeAttribute("name",myScene->getName());
     writer->writeAttribute("version",myScene->getVersion());
@@ -88,7 +203,7 @@ void XMLHandler::writePetriNet(QXmlStreamWriter *writer)
         }
     }
     writer->writeEndElement();// petrinet
-    writer->writeEndDocument();
+
 }
 
 
@@ -141,6 +256,11 @@ void XMLHandler::writeArc(QXmlStreamWriter *writer, Arrow *arrow)
     writer->writeEndElement(); //arc
 }
 
+int XMLHandler::readPetriNetList(QXmlStreamReader *reader)
+{
+
+}
+
 /**
   * Přečte celou petriho síť z reader a uloží ji do myScene
   * @param  reader  obsahuje stream reader s xml
@@ -148,7 +268,7 @@ void XMLHandler::writeArc(QXmlStreamWriter *writer, Arrow *arrow)
   */
 int XMLHandler::readPetriNet(QXmlStreamReader *reader)
 {
-    reader->readNext(); //prectu zacatek dokumentu
+    //reader->readNext(); //prectu zacatek dokumentu
     while(!reader->atEnd() && !reader->hasError())
     {
         if(reader->isStartElement() && reader->name()=="petrinet")
@@ -332,6 +452,13 @@ int XMLHandler::readArc(QXmlStreamReader *reader)
         arrow->updatePosition();
     }
     return 0;
+}
+/**
+  * Vypíše všechny petriho sítě jednoho uživatele na serveru do xml
+  */
+void XMLHandler::writePetriNetList(QXmlStreamWriter *writer)
+{
+
 }
 
 

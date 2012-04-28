@@ -19,24 +19,33 @@
 #include "arrow.h"
 #include "diagramitem.h"
 #include "diagramscene.h"
+#include "message.h"
 
 class XMLHandler
 {
 public:
-    XMLHandler(DiagramScene * scene, QString name ="");
-    QString toStr();
-    void saveToFile(QFile *file);
+    XMLHandler(DiagramScene * scene, Message *message=0);
 
-    int  loadFromFile(QFile *file);
+    QString toStr();
+    void saveNetToFile(QFile *file);
+
+    int  loadNetFromFile(QFile *file);
+
+    QString writeMessage();
+    int readMessage(QString str);
+
 private:
     DiagramScene *myScene;
-    QString myName;
+    Message *myMessage;
 
+    void writePetriNetList(QXmlStreamWriter *writer);
     void writePetriNet(QXmlStreamWriter *writer);
     void writePlace(QXmlStreamWriter * writer, Place * place);
     void writeTransition(QXmlStreamWriter * writer, Transition * transition);
     void writeArc(QXmlStreamWriter * writer, Arrow * arrow);
 
+
+    int readPetriNetList(QXmlStreamReader *reader);
     int readPetriNet(QXmlStreamReader *reader);
     int readPlace(QXmlStreamReader * reader);
     int readTransition(QXmlStreamReader * reader);

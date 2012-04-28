@@ -27,9 +27,19 @@ void Thread::run()
 void Thread::readyRead()
 {
     QByteArray data = socket->readAll();
-
     qDebug() << socketDescriptor << "Data in:" << data;
+    Message message;
 
+    DiagramScene scene;
+
+    XMLHandler xmlhandler(&scene,&message);
+    xmlhandler.readMessage(QString(data));
+
+    QString out = xmlhandler.writeMessage(); //jen zkouším parsing, mělo by se vrátit cojsem poslal
+
+    data = out.toLatin1();
+
+    qDebug() << socketDescriptor << "Data out:" << data;
     socket->write(data);
 }
 

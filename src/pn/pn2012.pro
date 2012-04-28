@@ -15,7 +15,8 @@ HEADERS += arrow.h \
            place.h \
            transition.h \
            xmlhandler.h \
-    netinformation.h
+    netinformation.h \
+    message.h
 FORMS += mainwindow.ui \
     netinformation.ui
 SOURCES += arrow.cpp \
@@ -26,4 +27,5 @@ SOURCES += arrow.cpp \
            transition.cpp \
            xmlhandler.cpp \
     netinformation.cpp \
-    clientmain.cpp
+    clientmain.cpp \
+    message.cpp

@@ -23,6 +23,7 @@
 #include "transition.h"
 #include "xmlhandler.h"
 #include "netinformation.h"
+#include "message.h"
 
 class QActionGroup;
 class QGraphicsView;
