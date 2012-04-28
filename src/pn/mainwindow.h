@@ -24,6 +24,7 @@
 #include "xmlhandler.h"
 #include "netinformation.h"
 #include "message.h"
+#include "connect.h"
 
 class QActionGroup;
 class QGraphicsView;
@@ -64,6 +65,8 @@ private:
     QAction * actionEditAction;
     QAction * actionDeleteItem;
 
+    QTcpSocket *socket;
+
 public slots:
     int addTab();
     void closeTab(int tab);
@@ -81,6 +84,7 @@ public slots:
     void editVariable();
     void deleteItem();
     void netInformation();
+    void connectToServer();
 
 };
 

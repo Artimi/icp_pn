@@ -4,6 +4,7 @@
 
 TEMPLATE = app
 TARGET = pn2012
+QT       += network
 DEPENDPATH += ../../../icp_pn .
 INCLUDEPATH += .
 
@@ -16,9 +17,11 @@ HEADERS += arrow.h \
            transition.h \
            xmlhandler.h \
     netinformation.h \
-    message.h
+    message.h \
+    connect.h
 FORMS += mainwindow.ui \
-    netinformation.ui
+    netinformation.ui \
+    connect.ui
 SOURCES += arrow.cpp \
            diagramitem.cpp \
            diagramscene.cpp \
@@ -28,4 +31,5 @@ SOURCES += arrow.cpp \
            xmlhandler.cpp \
     netinformation.cpp \
     clientmain.cpp \
-    message.cpp
+    message.cpp \
+    connect.cpp

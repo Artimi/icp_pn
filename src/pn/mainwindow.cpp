@@ -94,6 +94,8 @@ void MainWindow::createActions()
     connect(ui->actionUlozit_lokalne,SIGNAL(triggered()),this,SLOT(saveLocal()));
     connect(ui->actionOtevrit_lokalne,SIGNAL(triggered()),this,SLOT(loadLocal()));
     connect(ui->actionInformace_o_s_ti,SIGNAL(triggered()),this, SLOT(netInformation()));
+    connect(ui->actionP_ipojit_k_serveru,SIGNAL(triggered()),this,SLOT(connectToServer()));
+
 
     connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
     connect(ui->tabWidget,SIGNAL(currentChanged(int)), this, SLOT(updateToolBar(int)));
@@ -465,9 +467,14 @@ void MainWindow::deleteItem()
   */
 void MainWindow::netInformation()
 {
-    NetInformation * diag =  new NetInformation(scenes.at(activeTab));
-    diag->exec();
-    delete diag;
+    NetInformation diag(scenes.at(activeTab));
+    diag.exec();
+}
+
+void MainWindow::connectToServer()
+{
+    Connect con(socket);
+    con.exec();
 }
 
 

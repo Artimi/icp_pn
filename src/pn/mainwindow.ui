@@ -59,6 +59,7 @@
     <addaction name="actionVp_ed"/>
     <addaction name="separator"/>
     <addaction name="actionInformace_o_s_ti"/>
+    <addaction name="actionP_ipojit_k_serveru"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -191,6 +192,11 @@
   <action name="actionInformace_o_s_ti">
    <property name="text">
     <string>Informace o síti</string>
+   </property>
+  </action>
+  <action name="actionP_ipojit_k_serveru">
+   <property name="text">
+    <string>Připojit k serveru</string>
    </property>
   </action>
  </widget>
