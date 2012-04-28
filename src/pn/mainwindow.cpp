@@ -18,11 +18,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionMouse->setChecked(true);
     ui->mainToolBar->setMovable(false);
     ui->tabWidget->setTabsClosable(true);
-    tabCount = 0;
-    addTab();
     createActions();
     createMenus();
-
+    tabCount = 0;
+    addTab();
 
 //    Message message;
 //    message.user = "pepe";
