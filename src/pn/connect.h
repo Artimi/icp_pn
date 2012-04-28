@@ -7,7 +7,6 @@
 #include <QtNetwork/QTcpSocket>
 #include <QMessageBox>
 #include <QHostAddress>
-
 namespace Ui {
 class Connect;
 }

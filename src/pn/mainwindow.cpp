@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     createMenus();
     tabCount = 0;
     addTab();
+    socket = new QTcpSocket(this);
+
 
 //    Message message;
 //    message.user = "pepe";
@@ -118,6 +120,12 @@ void MainWindow::createActions()
     actionDeleteItem->setShortcut(Qt::Key_Delete);
     connect(actionDeleteItem, SIGNAL(triggered()),
             this, SLOT(deleteItem()));
+
+    connect(socket,SIGNAL(connected()),SLOT(gotConnected()));
+//    connect(socket,SIGNAL(disconnected()),SLOT(gotDisconnected()));
+//    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
+//            SLOT(gotError(QAbstractSocket::SocketError)));
+//    connect(socket, SIGNAL(readyRead()),SLOT(handleReply()));
 }
 
 
@@ -474,6 +482,11 @@ void MainWindow::connectToServer()
 {
     Connect con(socket);
     con.exec();
+}
+
+void MainWindow::gotConnected()
+{
+    ui->statusBar->showMessage(tr("Connected to server"));
 }
 
 

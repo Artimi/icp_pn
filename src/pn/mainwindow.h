@@ -86,6 +86,8 @@ public slots:
     void netInformation();
     void connectToServer();
 
+    void gotConnected();
+
 };
 
 #endif // MAINWINDOW_H

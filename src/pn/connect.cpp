@@ -30,4 +30,5 @@ void Connect::connectToServer()
         return;
     }
     mySocket->connectToHost(addr,port);
+    this->accept();
 }
