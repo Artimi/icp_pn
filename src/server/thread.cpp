@@ -30,7 +30,7 @@ void Thread::readyRead()
     qDebug() << socketDescriptor << "Data in:" << data;
     Message message;
 
-    DiagramScene scene;
+    DiagramScene scene(NULL,NULL,NULL);
 
     XMLHandler xmlhandler(&scene,&message);
     xmlhandler.readMessage(QString(data));
