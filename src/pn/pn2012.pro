@@ -18,10 +18,12 @@ HEADERS += arrow.h \
            xmlhandler.h \
     netinformation.h \
     message.h \
-    connect.h
+    connect.h \
+    loginwindow.h
 FORMS += mainwindow.ui \
     netinformation.ui \
-    connect.ui
+    connect.ui \
+    loginwindow.ui
 SOURCES += arrow.cpp \
            diagramitem.cpp \
            diagramscene.cpp \
@@ -32,4 +34,5 @@ SOURCES += arrow.cpp \
     netinformation.cpp \
     clientmain.cpp \
     message.cpp \
-    connect.cpp
+    connect.cpp \
+    loginwindow.cpp

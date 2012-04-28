@@ -25,6 +25,7 @@
 #include "netinformation.h"
 #include "message.h"
 #include "connect.h"
+#include "loginwindow.h"
 
 class QActionGroup;
 class QGraphicsView;
@@ -68,7 +69,7 @@ private:
     QTcpSocket *socket;
 
 public slots:
-    int addTab();
+    int addTab(DiagramScene *scene = 0);
     void closeTab(int tab);
     void selectMouse();
     void selectArc();
@@ -88,8 +89,12 @@ public slots:
 
     void gotConnected();
     void gotDisconnected();
+    void gotError(QAbstractSocket::SocketError);
+    void handleReply();
 
     void disconnectFromServer();
+
+    void login();
 
 };
 

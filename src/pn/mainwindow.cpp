@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //        qDebug() << message2.command ;
 //    else
 //        qDebug() << "ERROR";
-
+    login();
 
 }
 
@@ -125,9 +125,9 @@ void MainWindow::createActions()
 
     connect(socket,SIGNAL(connected()),SLOT(gotConnected()));
     connect(socket,SIGNAL(disconnected()),SLOT(gotDisconnected()));
-//    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
-//            SLOT(gotError(QAbstractSocket::SocketError)));
-//    connect(socket, SIGNAL(readyRead()),SLOT(handleReply()));
+    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
+            SLOT(gotError(QAbstractSocket::SocketError)));
+    connect(socket, SIGNAL(readyRead()),SLOT(handleReply()));
 
 
 }
@@ -140,9 +140,11 @@ void MainWindow::createActions()
   *
   * @return index nově vytvořeného Tabu, -1 při chybě
   */
-int MainWindow::addTab()
+int MainWindow::addTab(DiagramScene * scene)
 {
-    DiagramScene *scene = new DiagramScene(placeMenu,transitionMenu,arrowMenu,this);
+    if (scene == 0)
+        scene = new DiagramScene(placeMenu,transitionMenu,arrowMenu,this);
+
     scene->setSceneRect(QRectF(0,0,500,500));
     scenes.append(scene);
 
@@ -482,25 +484,120 @@ void MainWindow::netInformation()
     diag.exec();
 }
 
+/**
+  * Otevře okno, ve kterém se vyplňuje ip adresa a port na připojení k serveru
+  */
 void MainWindow::connectToServer()
 {
     Connect con(socket);
     con.exec();
 }
 
+/**
+  * Slot volaný při připojení k serveru, vypíše zprávu do status baru
+  */
 void MainWindow::gotConnected()
 {
     ui->statusBar->showMessage(tr("Connected to server"));
 }
 
+/**
+  * Slot volaný při disconnected() ze serveru, vypíše zprávu do status baru
+  */
 void MainWindow::gotDisconnected()
 {
     ui->statusBar->showMessage(tr("Disconnected from server."));
 }
 
+/**
+  * Vypíše do status baru pokud se na socketu objevil problém
+  */
+void MainWindow::gotError(QAbstractSocket::SocketError error)
+{
+    ui->statusBar->showMessage(socket->errorString());
+}
+
+/**
+  * Zpracuje příchozí zprávy od serveru
+  */
+void MainWindow::handleReply()
+{
+    QByteArray rawdata = socket->readAll();
+    qDebug()<< rawdata;
+
+    Message message;
+    DiagramScene *scene = new DiagramScene(placeMenu, transitionMenu,arrowMenu,this);
+
+    XMLHandler xmlhandler(scene,&message);
+    xmlhandler.readMessage(QString(rawdata));
+
+    switch(message.command)
+    {
+        case Message::SLOGIN:
+            break;
+        case Message::CLOGIN:
+            break;
+        case Message::WRONGLOGIN:
+            break;
+        case Message::LOGGED:
+            break;
+        case Message::CLIST:
+            break;
+        case Message::SLIST:
+            break;
+        case Message::SEND:
+            break;
+        case Message::ERROR:
+            break;
+        case Message::SAVE:
+            break;
+        case Message::LOAD:
+            break;
+    }
+}
+
+/**
+  * Slot volaný pro odhlášení ze serveru, emituje disconnected()
+  */
 void MainWindow::disconnectFromServer()
 {
     socket->disconnectFromHost();
+}
+
+void MainWindow::login()
+{
+//    QDialog dlg;
+//    QString user;
+//    QString password;
+
+//    Ui::loginWindow loginWindowUI;
+
+//    loginWindowUI.setupUi(&dlg);
+//    dlg.adjustSize();
+
+//    if (dlg.exec() == QDialog::Accepted) {
+//        user = loginWindowUI.LEUser->text();
+//        password = loginWindowUI.LEPassword->text();
+//    }
+
+//    qDebug()<< user << password;
+
+
+//    QDialog dlg;
+//    Ui::Dialog ui;
+//    ui.setupUi(&dlg);
+//    dlg.adjustSize();
+//    ui.siteDescription->setText(tr("%1 at %2").arg(authenticator->realm()).arg(url.host()));
+
+//    // Did the URL have information? Fill the UI
+//    // This is only relevant if the URL-supplied credentials were wrong
+//    ui.userEdit->setText(url.userName());
+//    ui.passwordEdit->setText(url.password());
+
+//    if (dlg.exec() == QDialog::Accepted) {
+//        authenticator->setUser(ui.userEdit->text());
+//        authenticator->setPassword(ui.passwordEdit->text());
+//    }
 }
 
 
