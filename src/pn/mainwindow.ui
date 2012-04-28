@@ -60,6 +60,7 @@
     <addaction name="separator"/>
     <addaction name="actionInformace_o_s_ti"/>
     <addaction name="actionP_ipojit_k_serveru"/>
+    <addaction name="actionOdpojit_od_serveru"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -198,6 +199,11 @@
   <action name="actionP_ipojit_k_serveru">
    <property name="text">
     <string>Připojit k serveru</string>
+   </property>
+  </action>
+  <action name="actionOdpojit_od_serveru">
+   <property name="text">
+    <string>Odpojit od serveru</string>
    </property>
   </action>
  </widget>

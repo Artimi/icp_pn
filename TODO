@@ -4,7 +4,7 @@ Klient:
 při prvním kliknutí se vykresluje do středu plátna - OPRAVIT
     - DONE přidáno scene->setSceneRect() do MainWindow::addTab()
 přidání hran
-    - PROBLEM - pokud se má hrana napojovat na levý horní roh,způsobuje problémy jinak ok
+    - PROBLEM - pokud se má hrana napojovat na levý horní roh Přechodu,způsobuje problémy jinak ok
 označování objektů na plátně, označit vše, označit více pomcí CTRL
     - PROBLEM - nevím jak docílit aby se kolem objektu objevoval čtverec značící označení, zatím je to červenou barvou
 zoom in/out
@@ -21,6 +21,7 @@ import z XML do DiagramScene
 ukládání a otevírání lokálně
     - DONE (pamatování si souboru a jen ukládání pomocí uložit jinak uložit jako?)
 přihlašování na server (http://doc.qt.nokia.com/4.7-snapshot/network-fortuneclient.html)
+    -PARTLY ještě login
 ukládání a otevírání na server
 konfigurace nastavení (http://qt-project.org/doc/qt-4.8/qsettings.html)
 funkce krok (více?) vpřed vzad

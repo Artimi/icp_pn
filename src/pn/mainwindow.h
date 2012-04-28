@@ -87,6 +87,9 @@ public slots:
     void connectToServer();
 
     void gotConnected();
+    void gotDisconnected();
+
+    void disconnectFromServer();
 
 };
 

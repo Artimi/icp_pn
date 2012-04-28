@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    socket = new QTcpSocket(this);
     ui->actionMouse->setChecked(true);
     ui->mainToolBar->setMovable(false);
     ui->tabWidget->setTabsClosable(true);
@@ -22,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     createMenus();
     tabCount = 0;
     addTab();
-    socket = new QTcpSocket(this);
+
 
 
 //    Message message;
@@ -40,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //        qDebug() << message2.command ;
 //    else
 //        qDebug() << "ERROR";
+
 
 }
 
@@ -96,7 +98,7 @@ void MainWindow::createActions()
     connect(ui->actionOtevrit_lokalne,SIGNAL(triggered()),this,SLOT(loadLocal()));
     connect(ui->actionInformace_o_s_ti,SIGNAL(triggered()),this, SLOT(netInformation()));
     connect(ui->actionP_ipojit_k_serveru,SIGNAL(triggered()),this,SLOT(connectToServer()));
-
+    connect(ui->actionOdpojit_od_serveru,SIGNAL(triggered()),this,SLOT(disconnectFromServer()));
 
     connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
     connect(ui->tabWidget,SIGNAL(currentChanged(int)), this, SLOT(updateToolBar(int)));
@@ -122,10 +124,12 @@ void MainWindow::createActions()
             this, SLOT(deleteItem()));
 
     connect(socket,SIGNAL(connected()),SLOT(gotConnected()));
-//    connect(socket,SIGNAL(disconnected()),SLOT(gotDisconnected()));
+    connect(socket,SIGNAL(disconnected()),SLOT(gotDisconnected()));
 //    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
 //            SLOT(gotError(QAbstractSocket::SocketError)));
 //    connect(socket, SIGNAL(readyRead()),SLOT(handleReply()));
+
+
 }
 
 
@@ -487,6 +491,16 @@ void MainWindow::connectToServer()
 void MainWindow::gotConnected()
 {
     ui->statusBar->showMessage(tr("Connected to server"));
+}
+
+void MainWindow::gotDisconnected()
+{
+    ui->statusBar->showMessage(tr("Disconnected from server."));
+}
+
+void MainWindow::disconnectFromServer()
+{
+    socket->disconnectFromHost();
 }
 
 
