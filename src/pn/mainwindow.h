@@ -16,6 +16,7 @@
 #include <QMessageBox>
 #include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>
+#include <QRegExp>
 #include "diagramscene.h"
 #include "diagramitem.h"
 #include "arrow.h"
@@ -25,7 +26,7 @@
 #include "netinformation.h"
 #include "message.h"
 #include "connect.h"
-#include "loginwindow.h"
+#include "ui_loginwindow.h"
 
 class QActionGroup;
 class QGraphicsView;
@@ -53,6 +54,7 @@ private:
 
     void createMenus();
     void createActions();
+    void printError(QString errorText);
 
     int activeTab;
 
@@ -67,6 +69,8 @@ private:
     QAction * actionDeleteItem;
 
     QTcpSocket *socket;
+
+
 
 public slots:
     int addTab(DiagramScene *scene = 0);
@@ -95,6 +99,7 @@ public slots:
     void disconnectFromServer();
 
     void login();
+    void saveRemote();
 
 };
 

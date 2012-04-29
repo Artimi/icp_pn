@@ -33,6 +33,7 @@ class DiagramScene : public QGraphicsScene
 public:
     enum Mode {InsertItem, InsertLine, MoveItem};
     DiagramScene(QMenu *placeMenu , QMenu *transitionMenu, QMenu *arrowMenu,QObject *parent =0);
+    ~DiagramScene();
 
     Mode getMode();
     DiagramItem::DiagramType getItemType();
@@ -48,6 +49,7 @@ public:
     QString getDescription()
     {return description;}
 
+
     void setName(QString str)
     {name = str;}
     void setVersion(QString str)
@@ -56,6 +58,7 @@ public:
     {author = str;}
     void setDescription(QString str)
     {description = str;}
+
 
     QMenu * myPlaceMenu;
     QMenu * myTransitionMenu;
@@ -78,7 +81,6 @@ protected:
 private:
     bool isItemChange(int type);
     bool hasArc(DiagramItem *item1, DiagramItem *item2);
-
 
     DiagramItem::DiagramType myItemType;
     Mode myMode;

@@ -6,10 +6,8 @@
   */
 #include "xmlhandler.h"
 
-XMLHandler::XMLHandler(DiagramScene * scene,Message * message)
+XMLHandler::XMLHandler()
 {
-    myScene = scene;
-    myMessage = message;
 }
 
 /**
@@ -32,6 +30,7 @@ QString XMLHandler::toStr()
   */
 void XMLHandler::saveNetToFile(QFile *file)
 {
+
     QXmlStreamWriter writer(file);
 
     writer.setAutoFormatting(true);
@@ -94,6 +93,8 @@ QString XMLHandler::writeMessage()
     case Message::LOAD:
         writePetriNet(&writer); //ve scene bude uloženo jen name, author, version
         break;
+    case Message::SIMULATE:
+        writer.writeTextElement("steps",QString::number(myMessage->simulationSteps));
     }
 
     writer.writeEndElement(); //data
@@ -117,7 +118,6 @@ int XMLHandler::readMessage(QString str)
         if(reader.isStartElement() && reader.name()=="command")
         {
             myMessage->command = (Message::Commands)reader.readElementText().toInt();
-            qDebug()<<"command";
         }
         reader.readNext();
 
@@ -126,6 +126,8 @@ int XMLHandler::readMessage(QString str)
             reader.readNext();
             switch(myMessage->command)
             {
+                case Message::SLOGIN:
+                    break;
                 case Message::CLOGIN:
                     while(!(reader.isEndElement() && reader.name() == "data"))
                     {
@@ -137,6 +139,12 @@ int XMLHandler::readMessage(QString str)
                         reader.readNext();
                     }
                     break;
+                case Message::WRONGLOGIN:
+                    break;
+                case Message::LOGGED:
+                    break;
+                case Message::CLIST:
+                    break;
                 case Message::SLIST:
                     readPetriNetList(&reader);
                     break;
@@ -144,8 +152,12 @@ int XMLHandler::readMessage(QString str)
                     readPetriNet(&reader);
                     break;
                 case Message::ERROR:
-                    if(reader.isStartDocument() && reader.name() == "error")
-                        myMessage->errorText = reader.readElementText();
+                    while(!(reader.isEndElement() && reader.name() == "data"))
+                    {
+                        if(reader.isStartElement() && reader.name() == "error")
+                            myMessage->errorText = reader.readElementText();
+                        reader.readNext();
+                    }
                     break;
                 case Message::SAVE:
                     readPetriNet(&reader);
@@ -153,6 +165,14 @@ int XMLHandler::readMessage(QString str)
                 case Message::LOAD:
                     readPetriNet(&reader);
                     break;
+            case Message::SIMULATE:
+                while(!(reader.isEndElement() && reader.name() == "data"))
+                {
+                    if (reader.isStartElement() && reader.name() == "steps")
+                        myMessage->simulationSteps = reader.readElementText().toInt();
+                    reader.readNext();
+                }
+                break;
             }
         }
     }

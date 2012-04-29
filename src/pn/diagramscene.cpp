@@ -19,6 +19,11 @@ DiagramScene::DiagramScene(QMenu *placeMenu, QMenu *transitionMenu, QMenu *arrow
     myArrowMenu = arrowMenu;
 }
 
+DiagramScene::~DiagramScene()
+{
+
+}
+
 /**
   * Nastaví mod práce ve scene
   * @param mode mod práce InsertItem|InsertLine|MoveItem

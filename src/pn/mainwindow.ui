@@ -38,29 +38,29 @@
    </property>
    <widget class="QMenu" name="menuSoubor">
     <property name="title">
-     <string>Soubor</string>
+     <string>&amp;File</string>
     </property>
-    <addaction name="actionNov"/>
-    <addaction name="actionNovakarta"/>
+    <addaction name="actionNewTab"/>
     <addaction name="separator"/>
-    <addaction name="actionOtevrit_lokalne"/>
-    <addaction name="actionUlozit_lokalne"/>
+    <addaction name="actionOpenLocally"/>
+    <addaction name="actionSaveLocally"/>
     <addaction name="separator"/>
-    <addaction name="actionOtevrit_ze_serveru"/>
-    <addaction name="actionUlozit_na_server"/>
+    <addaction name="actionOpenRemote"/>
+    <addaction name="actionSaveRemote"/>
     <addaction name="separator"/>
-    <addaction name="actionKonec"/>
+    <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuNastaven">
     <property name="title">
-     <string>Úpravy</string>
+     <string>&amp;Settings</string>
     </property>
-    <addaction name="actionZp_t"/>
-    <addaction name="actionVp_ed"/>
+    <addaction name="actionBack"/>
+    <addaction name="actionRedo"/>
     <addaction name="separator"/>
-    <addaction name="actionInformace_o_s_ti"/>
-    <addaction name="actionP_ipojit_k_serveru"/>
-    <addaction name="actionOdpojit_od_serveru"/>
+    <addaction name="actionNetInformation"/>
+    <addaction name="actionConnectToServer"/>
+    <addaction name="actionDisconnectFromServer"/>
+    <addaction name="actionLogin"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -84,33 +84,39 @@
    <addaction name="actionArc"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionOtevrit_lokalne">
+  <action name="actionOpenLocally">
    <property name="text">
-    <string>Otevřít lokálně</string>
+    <string>&amp;Open locally</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionUlozit_lokalne">
+  <action name="actionSaveLocally">
    <property name="text">
-    <string>Uložit lokálně</string>
+    <string>&amp;Save locally</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionOtevrit_ze_serveru">
+  <action name="actionOpenRemote">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>Otevřít ze serveru</string>
+    <string>Open remote</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+O</string>
    </property>
   </action>
-  <action name="actionUlozit_na_server">
+  <action name="actionSaveRemote">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>Uložit na server</string>
+    <string>Save remote</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+S</string>
@@ -160,50 +166,61 @@
     <string>Ctrl+4</string>
    </property>
   </action>
-  <action name="actionNov">
+  <action name="actionNew">
    <property name="text">
     <string>&amp;Nový</string>
    </property>
   </action>
-  <action name="actionNovakarta">
+  <action name="actionNewTab">
    <property name="text">
-    <string>Nová &amp;karta</string>
+    <string>&amp;New tab</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
    </property>
   </action>
-  <action name="actionKonec">
+  <action name="actionQuit">
    <property name="text">
-    <string>&amp;Konec</string>
+    <string>&amp;Quit</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
    </property>
   </action>
-  <action name="actionZp_t">
+  <action name="actionBack">
    <property name="text">
-    <string>Zpět</string>
+    <string>&amp;Back</string>
    </property>
   </action>
-  <action name="actionVp_ed">
+  <action name="actionRedo">
    <property name="text">
-    <string>Vpřed</string>
+    <string>&amp;Redo</string>
    </property>
   </action>
-  <action name="actionInformace_o_s_ti">
+  <action name="actionNetInformation">
    <property name="text">
-    <string>Informace o síti</string>
+    <string>Net &amp;information</string>
    </property>
   </action>
-  <action name="actionP_ipojit_k_serveru">
+  <action name="actionConnectToServer">
    <property name="text">
-    <string>Připojit k serveru</string>
+    <string>&amp;Connect to server</string>
    </property>
   </action>
-  <action name="actionOdpojit_od_serveru">
+  <action name="actionDisconnectFromServer">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>Odpojit od serveru</string>
+    <string>&amp;Disconnect from server</string>
+   </property>
+  </action>
+  <action name="actionLogin">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Login</string>
    </property>
   </action>
  </widget>

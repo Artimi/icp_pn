@@ -21,8 +21,9 @@ import z XML do DiagramScene
 ukládání a otevírání lokálně
     - DONE (pamatování si souboru a jen ukládání pomocí uložit jinak uložit jako?)
 přihlašování na server (http://doc.qt.nokia.com/4.7-snapshot/network-fortuneclient.html)
-    -PARTLY ještě login
+    - DONE na straně klienta
 ukládání a otevírání na server
+    - PARTLY jen ukládání
 konfigurace nastavení (http://qt-project.org/doc/qt-4.8/qsettings.html)
 funkce krok (více?) vpřed vzad
     -http://doc.qt.nokia.com/4.7-snapshot/tools-undoframework.html

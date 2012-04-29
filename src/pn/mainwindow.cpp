@@ -27,9 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 //    Message message;
-//    message.user = "pepe";
-//    message.password = "12345";
-//    message.command = Message::SAVE;
+//    message.simulationSteps = 15;
+//    message.command = Message::SIMULATE;
 
 //    XMLHandler xmlhandler(scenes.at(activeTab),&message);
 //    QString str = xmlhandler.writeMessage();
@@ -38,10 +37,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    XMLHandler xmlhandler2(scenes.at(activeTab),&message2);
 //    if (xmlhandler2.readMessage(str)==0 )
-//        qDebug() << message2.command ;
+//        qDebug() << message2.command << message2.simulationSteps ;
 //    else
 //        qDebug() << "ERROR";
-    login();
 
 }
 
@@ -92,13 +90,15 @@ void MainWindow::createActions()
     connect(ui->actionPlace,SIGNAL(triggered()),this, SLOT(selectPlace()));
     connect(ui->actionTransition,SIGNAL(triggered()),this, SLOT(selectTransition()));
 
-    connect(ui->actionKonec,SIGNAL(triggered()), qApp, SLOT(quit()));
-    connect(ui->actionNovakarta,SIGNAL(triggered()), this, SLOT(addTab()));
-    connect(ui->actionUlozit_lokalne,SIGNAL(triggered()),this,SLOT(saveLocal()));
-    connect(ui->actionOtevrit_lokalne,SIGNAL(triggered()),this,SLOT(loadLocal()));
-    connect(ui->actionInformace_o_s_ti,SIGNAL(triggered()),this, SLOT(netInformation()));
-    connect(ui->actionP_ipojit_k_serveru,SIGNAL(triggered()),this,SLOT(connectToServer()));
-    connect(ui->actionOdpojit_od_serveru,SIGNAL(triggered()),this,SLOT(disconnectFromServer()));
+    connect(ui->actionQuit,SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(ui->actionNewTab,SIGNAL(triggered()), this, SLOT(addTab()));
+    connect(ui->actionSaveLocally,SIGNAL(triggered()),this,SLOT(saveLocal()));
+    connect(ui->actionOpenLocally,SIGNAL(triggered()),this,SLOT(loadLocal()));
+    connect(ui->actionSaveRemote,SIGNAL(triggered()),this,SLOT(saveRemote()));
+    connect(ui->actionNetInformation,SIGNAL(triggered()),this, SLOT(netInformation()));
+    connect(ui->actionConnectToServer,SIGNAL(triggered()),this,SLOT(connectToServer()));
+    connect(ui->actionDisconnectFromServer,SIGNAL(triggered()),this,SLOT(disconnectFromServer()));
+    connect(ui->actionLogin,SIGNAL(triggered()),this,SLOT(login()));
 
     connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
     connect(ui->tabWidget,SIGNAL(currentChanged(int)), this, SLOT(updateToolBar(int)));
@@ -130,6 +130,16 @@ void MainWindow::createActions()
     connect(socket, SIGNAL(readyRead()),SLOT(handleReply()));
 
 
+}
+
+void MainWindow::printError(QString errorText)
+{
+    ui->statusBar->showMessage(errorText);
+    QMessageBox::warning(this,
+                         tr("Error"),
+                         errorText,
+                         QMessageBox::Ok,
+                         QMessageBox::Ok);
 }
 
 
@@ -250,7 +260,9 @@ void MainWindow::updateToolBar(int tab)
   */
 void MainWindow::saveLocal()
 {
-    XMLHandler xmlhandler(scenes.at(activeTab));
+    DiagramScene * scene = scenes.at(activeTab);
+    XMLHandler xmlhandler;
+    xmlhandler.setScene(scene);
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Save petri net"),
                                                     "",
@@ -262,12 +274,23 @@ void MainWindow::saveLocal()
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly))
         {
-            QMessageBox::information(this,
-                                     QString("The file can not be opened."),
-                                     file.errorString());
+            printError(tr("File can not be opened.")+file.errorString());
             return;
         }
+
     xmlhandler.saveNetToFile(&file);
+
+    //jméno sítě
+    QRegExp re(".*/(\\w+)(?:\\.*)?");
+    re.indexIn(fileName);
+    QString netName = re.cap(1);
+
+    if(scene->getName() == "")
+        scene->setName(netName);
+
+    ui->tabWidget->setTabText(activeTab,netName);
+
+    ui->statusBar->showMessage(tr("File saved"));
     file.close();
     }
 }
@@ -278,7 +301,9 @@ void MainWindow::saveLocal()
 void MainWindow::loadLocal()
 {
     int tab = addTab();
-    XMLHandler xmlhandler(scenes.at(tab));
+    DiagramScene * scene = scenes.at(tab);
+    XMLHandler xmlhandler;
+    xmlhandler.setScene(scene);
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open petri net"),
                                                     "",
@@ -291,20 +316,27 @@ void MainWindow::loadLocal()
 
         if(!file.open(QIODevice::ReadOnly))
         {
-            QMessageBox::information(this,
-                                     tr("The file can not be opened."),
-                                     file.errorString());
+            printError(tr("File can not be opened."));
             return;
         }
         if( xmlhandler.loadNetFromFile(&file) != 0)
         {
-            QMessageBox::critical(this,
-                                  tr("XML parse problem"),
-                                  tr("File can not be parsed."),
-                                  QMessageBox::Ok);
+            printError(tr("File can not be parsed. Invalid XML."));
+            return;
         }
         file.close();
-        scenes.at(tab)->update();
+
+        //jméno sítě
+        QRegExp re(".*/(\\w+)(?:\\.*)?");
+        re.indexIn(fileName);
+        QString netName = re.cap(1);
+
+        if ((scene)->getName() == "")
+            scene->setName(netName);
+
+        ui->tabWidget->setTabText(tab,netName);
+
+        scene->update();
     }
 }
 
@@ -332,11 +364,7 @@ void MainWindow::editTokens()
     {
         if(!place->setTokenString(text))
         {
-            QMessageBox::warning(this,
-                                 tr("Token input error"),
-                                 tr("Input string (%1) of tokens is not valid.\nUse only number, comma and whitespaces.").arg(text),
-                                 QMessageBox::Ok,
-                                 QMessageBox::Ok);
+            printError(tr("Input string (%1) of tokens is not valid.\nUse only number, comma and whitespaces.").arg(text));
         }
         scenes.at(activeTab)->update();
     }
@@ -366,11 +394,7 @@ void MainWindow::editGuard()
     {
         if(!transition->setGuard(text))
         {
-            QMessageBox::warning(this,
-                                 tr("Guard input error"),
-                                 tr("Input string (%1) is not valid guard.").arg(text),
-                                 QMessageBox::Ok,
-                                 QMessageBox::Ok);
+            printError(tr("Input string (%1) is not valid guard.").arg(text));
         }
         scenes.at(activeTab)->update();
     }
@@ -400,11 +424,7 @@ void MainWindow::editAction()
     {
         if(!transition->setAction(text))
         {
-            QMessageBox::warning(this,
-                                 tr("Action input error"),
-                                 tr("Input string (%1) is not valid action.").arg(text),
-                                 QMessageBox::Ok,
-                                 QMessageBox::Ok);
+            printError(tr("Input string (%1) is not valid action.").arg(text));
         }
         scenes.at(activeTab)->update();
     }
@@ -434,11 +454,7 @@ void MainWindow::editVariable()
     {
         if(!arrow->setVariable(text))
         {
-            QMessageBox::warning(this,
-                                 tr("Variable input error"),
-                                 tr("Input string (%1) is not valid variable.").arg(text),
-                                 QMessageBox::Ok,
-                                 QMessageBox::Ok);
+            printError(tr("Input string (%1) is not valid variable.").arg(text));
         }
         scenes.at(activeTab)->update();
     }
@@ -498,7 +514,13 @@ void MainWindow::connectToServer()
   */
 void MainWindow::gotConnected()
 {
-    ui->statusBar->showMessage(tr("Connected to server"));
+    ui->statusBar->showMessage(tr("Connected to server")+socket->peerName());
+    ui->actionConnectToServer->setEnabled(false);
+
+    ui->actionLogin->setEnabled(true);
+    ui->actionDisconnectFromServer->setEnabled(true);
+    ui->actionOpenRemote->setEnabled(true);
+    ui->actionSaveRemote->setEnabled(true);
 }
 
 /**
@@ -507,6 +529,12 @@ void MainWindow::gotConnected()
 void MainWindow::gotDisconnected()
 {
     ui->statusBar->showMessage(tr("Disconnected from server."));
+    ui->actionConnectToServer->setEnabled(true);
+
+    ui->actionLogin->setEnabled(false);
+    ui->actionDisconnectFromServer->setEnabled(false);
+    ui->actionOpenRemote->setEnabled(false);
+    ui->actionSaveRemote->setEnabled(false);
 }
 
 /**
@@ -528,7 +556,9 @@ void MainWindow::handleReply()
     Message message;
     DiagramScene *scene = new DiagramScene(placeMenu, transitionMenu,arrowMenu,this);
 
-    XMLHandler xmlhandler(scene,&message);
+    XMLHandler xmlhandler;
+    xmlhandler.setScene(scene);
+    xmlhandler.setMessage(&message);
     xmlhandler.readMessage(QString(rawdata));
 
     switch(message.command)
@@ -553,6 +583,8 @@ void MainWindow::handleReply()
             break;
         case Message::LOAD:
             break;
+        case Message::SIMULATE:
+            break;
     }
 }
 
@@ -564,41 +596,71 @@ void MainWindow::disconnectFromServer()
     socket->disconnectFromHost();
 }
 
+/**
+  * Vyskočí okno s výzvou k přihlášení k serveru jako uživatel s heslem, poté
+  * pošle na server žádos o přihlášení
+  */
 void MainWindow::login()
 {
-//    QDialog dlg;
-//    QString user;
-//    QString password;
 
-//    Ui::loginWindow loginWindowUI;
+    if (socket->state() == QAbstractSocket::ConnectedState)
+    {
 
-//    loginWindowUI.setupUi(&dlg);
-//    dlg.adjustSize();
+        QDialog dlg;
+        QString user;
+        QString password;
 
-//    if (dlg.exec() == QDialog::Accepted) {
-//        user = loginWindowUI.LEUser->text();
-//        password = loginWindowUI.LEPassword->text();
-//    }
+        Ui::loginWindow loginWindowUI;
 
-//    qDebug()<< user << password;
+        loginWindowUI.setupUi(&dlg);
+        dlg.adjustSize();
 
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            user = loginWindowUI.LEUser->text();
+            password = loginWindowUI.LEPassword->text();
+        }
 
-//    QDialog dlg;
-//    Ui::Dialog ui;
-//    ui.setupUi(&dlg);
-//    dlg.adjustSize();
-//    ui.siteDescription->setText(tr("%1 at %2").arg(authenticator->realm()).arg(url.host()));
+        Message message;
+        message.command = Message::CLOGIN;
+        message.user = user;
+        message.password = password;
 
-//    // Did the URL have information? Fill the UI
-//    // This is only relevant if the URL-supplied credentials were wrong
-//    ui.userEdit->setText(url.userName());
-//    ui.passwordEdit->setText(url.password());
+        XMLHandler xmlhandler;
+        xmlhandler.setMessage(&message);
+        socket->write(xmlhandler.writeMessage().toLatin1());
+        socket->flush();
+    }
+    else
+    {
+        printError("You have to be connected to server to log in.");
+    }
 
-//    if (dlg.exec() == QDialog::Accepted) {
-//        authenticator->setUser(ui.userEdit->text());
-//        authenticator->setPassword(ui.passwordEdit->text());
-//    }
 }
+
+/**
+  * Uloží aktuální síť na vzdálené uložiště
+  *
+  */
+void MainWindow::saveRemote()
+{
+    if (socket->state() == QAbstractSocket::ConnectedState)
+    {
+        Message message;
+        message.command = Message::SAVE;
+
+        XMLHandler xmlhandler;
+        xmlhandler.setScene(scenes.at(activeTab));
+        xmlhandler.setMessage(&message);
+        socket->write(xmlhandler.writeMessage().toLatin1());
+        socket->flush();
+    }
+    else
+    {
+        printError("You have to be connected to server to save Petri Net to remote repository.");
+    }
+}
+
 
 
 

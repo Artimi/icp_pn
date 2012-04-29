@@ -24,7 +24,7 @@
 class XMLHandler
 {
 public:
-    XMLHandler(DiagramScene * scene, Message *message=0);
+    XMLHandler();
 
     QString toStr();
     void saveNetToFile(QFile *file);
@@ -33,6 +33,16 @@ public:
 
     QString writeMessage();
     int readMessage(QString str);
+
+    void setScene(DiagramScene * scene)
+    {myScene = scene;}
+    void setMessage(Message * message)
+    {myMessage = message;}
+
+    Message * getMessage()
+    {return myMessage;}
+    DiagramScene * getScene()
+    {return myScene;}
 
 private:
     DiagramScene *myScene;
@@ -50,6 +60,8 @@ private:
     int readPlace(QXmlStreamReader * reader);
     int readTransition(QXmlStreamReader * reader);
     int readArc(QXmlStreamReader * reader);
+
+
 };
 
 #endif // XMLHANDLER_H
