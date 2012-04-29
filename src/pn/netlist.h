@@ -20,6 +20,11 @@ public:
 public slots:
     void updateTable();
     void find();
+    void openRemote();
+
+signals:
+    void remoteLoad(QString name,QString version, QString author);
+
 
 private:
     Ui::NetList *ui;

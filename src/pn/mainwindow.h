@@ -27,6 +27,7 @@
 #include "message.h"
 #include "connect.h"
 #include "ui_loginwindow.h"
+#include "netlist.h"
 
 class QActionGroup;
 class QGraphicsView;
@@ -70,7 +71,9 @@ private:
 
     QTcpSocket *socket;
 
-    QList<DiagramScene *> netList;
+    QList<DiagramScene *> petriNetList;
+
+    NetList *netListForm;
 
 
 
@@ -103,6 +106,8 @@ public slots:
     void login();
     void saveRemote();
     void openRemote();
+
+    void sendRemoteLoadRequest(QString name, QString version, QString author);
 
 };
 

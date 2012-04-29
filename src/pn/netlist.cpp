@@ -68,3 +68,16 @@ void NetList::find()
             ui->tableWidget->removeRow(i);
     }
 }
+
+void NetList::openRemote()
+{
+    int curRow = ui->tableWidget->currentRow();
+
+    QString name = ui->tableWidget->item(curRow,0)->text();
+    QString version = ui->tableWidget->item(curRow,1)->text();
+    QString author = ui->tableWidget->item(curRow,2)->text();
+
+    emit remoteLoad(name,version,author);
+    this->accept();
+
+}

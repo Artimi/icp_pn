@@ -91,7 +91,7 @@ QString XMLHandler::writeMessage()
         writePetriNet(&writer);
         break;
     case Message::LOAD:
-        writePetriNet(&writer); //ve scene bude uloženo jen name, author, version
+        writePetriNetInformation(&writer);
         break;
     case Message::SIMULATE:
         writer.writeTextElement("steps",QString::number(myMessage->simulationSteps));
@@ -165,14 +165,14 @@ int XMLHandler::readMessage(QString str)
                 case Message::LOAD:
                     readPetriNet(&reader);
                     break;
-            case Message::SIMULATE:
-                while(!(reader.isEndElement() && reader.name() == "data"))
-                {
-                    if (reader.isStartElement() && reader.name() == "steps")
-                        myMessage->simulationSteps = reader.readElementText().toInt();
-                    reader.readNext();
-                }
-                break;
+                case Message::SIMULATE:
+                    while(!(reader.isEndElement() && reader.name() == "data"))
+                    {
+                        if (reader.isStartElement() && reader.name() == "steps")
+                            myMessage->simulationSteps = reader.readElementText().toInt();
+                        reader.readNext();
+                    }
+                    break;
             }
         }
     }
@@ -183,6 +183,15 @@ int XMLHandler::readMessage(QString str)
     }
     reader.clear();
     return 0;
+}
+
+void XMLHandler::writePetriNetInformation(QXmlStreamWriter *writer)
+{
+    writer->writeStartElement("petrinet");
+    writer->writeAttribute("name", myMessage->netName);
+    writer->writeAttribute("version", myMessage->netVersion);
+    writer->writeAttribute("author", myMessage->netAuthor);
+    writer->writeEndElement(); //petrinet
 }
 
 /**

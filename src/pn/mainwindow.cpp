@@ -129,6 +129,9 @@ void MainWindow::createActions()
             SLOT(gotError(QAbstractSocket::SocketError)));
     connect(socket, SIGNAL(readyRead()),SLOT(handleReply()));
 
+    connect(netListForm,SIGNAL(remoteLoad(QString,QString,QString)),
+            this,SLOT(sendRemoteLoadRequest(QString,QString,QString)));
+
 
 }
 
@@ -666,7 +669,31 @@ void MainWindow::saveRemote()
   */
 void MainWindow::openRemote()
 {
+    Message message;
+    message.command = Message::CLIST;
 
+    XMLHandler xmlhandler;
+    xmlhandler.setMessage(&message);
+
+    socket->write(xmlhandler.writeMessage().toLatin1());
+    socket->flush();
+
+    netListForm = new NetList(&petriNetList);
+}
+
+void MainWindow::sendRemoteLoadRequest(QString name, QString version, QString author)
+{
+    Message message;
+    message.command = Message::LOAD;
+    message.netName = name;
+    message.netVersion = version;
+    message.netAuthor = author;
+
+    XMLHandler xmlhandler;
+    xmlhandler.setMessage(&message);
+
+    socket->write(xmlhandler.writeMessage().toLatin1());
+    socket->flush();
 }
 
 

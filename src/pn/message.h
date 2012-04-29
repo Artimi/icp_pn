@@ -15,6 +15,7 @@ public:
     QString password;
     QString netName;
     QString netVersion;
+    QString netAuthor;
     QString errorText;
     int simulationSteps;
 
