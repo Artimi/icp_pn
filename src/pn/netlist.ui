@@ -22,6 +22,13 @@
      <height>341</height>
     </rect>
    </property>
+   <property name="columnCount">
+    <number>4</number>
+   </property>
+   <column/>
+   <column/>
+   <column/>
+   <column/>
   </widget>
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">

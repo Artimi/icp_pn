@@ -70,6 +70,8 @@ private:
 
     QTcpSocket *socket;
 
+    QList<DiagramScene *> netList;
+
 
 
 public slots:
@@ -100,6 +102,7 @@ public slots:
 
     void login();
     void saveRemote();
+    void openRemote();
 
 };
 

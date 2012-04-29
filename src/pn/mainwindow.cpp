@@ -661,6 +661,14 @@ void MainWindow::saveRemote()
     }
 }
 
+/**
+  * Otevře okno s výběrem sítí a možností stažení některé
+  */
+void MainWindow::openRemote()
+{
+
+}
+
 
 
 
