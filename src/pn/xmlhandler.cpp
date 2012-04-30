@@ -285,9 +285,31 @@ void XMLHandler::writeArc(QXmlStreamWriter *writer, Arrow *arrow)
     writer->writeEndElement(); //arc
 }
 
+/**
+  * Přečte seznam petriho sítí a uloží je do QList<DiagramScene *> * myNetList
+  *
+  */
 int XMLHandler::readPetriNetList(QXmlStreamReader *reader)
 {
+    myNetList->clear();
+    while(!reader->atEnd() && !reader->hasError())
+    {
+        if(reader->isStartElement() && reader->name() == "petrinet")
+        {
+            DiagramScene * scene = new DiagramScene();
+            scene->setName(reader->attributes().value("name").toString());
+            scene->setVersion(reader->attributes().value("version").toString());
+            scene->setAuthor(reader->attributes().value("author").toString());
 
+            reader->readNext();
+            if(reader->isStartElement() && reader->name() == "description")
+            {
+                scene->setDescription(reader->readElementText());
+            }
+            myNetList->append(scene);
+        }
+        reader->readNext();
+    }
 }
 
 /**

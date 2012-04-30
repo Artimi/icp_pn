@@ -71,11 +71,12 @@ private:
 
     QTcpSocket *socket;
 
-    QList<DiagramScene *> petriNetList;
+    QList<DiagramScene *> netList;
 
     NetList *netListForm;
 
-
+signals:
+    void netListArrived();
 
 public slots:
     int addTab(DiagramScene *scene = 0);

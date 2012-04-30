@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     socket = new QTcpSocket(this);
+    netListForm = new NetList(&netList);
     ui->actionMouse->setChecked(true);
     ui->mainToolBar->setMovable(false);
     ui->tabWidget->setTabsClosable(true);
@@ -27,25 +28,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 //    Message message;
-//    message.simulationSteps = 15;
-//    message.command = Message::SIMULATE;
+//    message.command = Message::CLIST;
 
-//    XMLHandler xmlhandler(scenes.at(activeTab),&message);
+//    XMLHandler xmlhandler();
+//    xmlhandler.setMessage(&message);
 //    QString str = xmlhandler.writeMessage();
 //    qDebug() << str;
-//    Message message2;
 
-//    XMLHandler xmlhandler2(scenes.at(activeTab),&message2);
-//    if (xmlhandler2.readMessage(str)==0 )
-//        qDebug() << message2.command << message2.simulationSteps ;
-//    else
-//        qDebug() << "ERROR";
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete netListForm;
 }
 
 
@@ -95,6 +91,7 @@ void MainWindow::createActions()
     connect(ui->actionSaveLocally,SIGNAL(triggered()),this,SLOT(saveLocal()));
     connect(ui->actionOpenLocally,SIGNAL(triggered()),this,SLOT(loadLocal()));
     connect(ui->actionSaveRemote,SIGNAL(triggered()),this,SLOT(saveRemote()));
+    connect(ui->actionOpenRemote,SIGNAL(triggered()),this,SLOT(openRemote()));
     connect(ui->actionNetInformation,SIGNAL(triggered()),this, SLOT(netInformation()));
     connect(ui->actionConnectToServer,SIGNAL(triggered()),this,SLOT(connectToServer()));
     connect(ui->actionDisconnectFromServer,SIGNAL(triggered()),this,SLOT(disconnectFromServer()));
@@ -131,6 +128,7 @@ void MainWindow::createActions()
 
     connect(netListForm,SIGNAL(remoteLoad(QString,QString,QString)),
             this,SLOT(sendRemoteLoadRequest(QString,QString,QString)));
+    connect(this,SIGNAL(netListArrived()),netListForm,SLOT(updateTable()));
 
 
 }
@@ -554,7 +552,7 @@ void MainWindow::gotError(QAbstractSocket::SocketError error)
 void MainWindow::handleReply()
 {
     QByteArray rawdata = socket->readAll();
-    qDebug()<< rawdata;
+//    qDebug()<< rawdata;
 
     Message message;
     DiagramScene *scene = new DiagramScene(placeMenu, transitionMenu,arrowMenu,this);
@@ -562,6 +560,7 @@ void MainWindow::handleReply()
     XMLHandler xmlhandler;
     xmlhandler.setScene(scene);
     xmlhandler.setMessage(&message);
+    xmlhandler.setNetList(&netList);
     xmlhandler.readMessage(QString(rawdata));
 
     switch(message.command)
@@ -577,6 +576,7 @@ void MainWindow::handleReply()
         case Message::CLIST:
             break;
         case Message::SLIST:
+            emit netListArrived();
             break;
         case Message::SEND:
             break;
@@ -669,16 +669,18 @@ void MainWindow::saveRemote()
   */
 void MainWindow::openRemote()
 {
-    Message message;
-    message.command = Message::CLIST;
+//    Message message;
+//    message.command = Message::CLIST;
 
-    XMLHandler xmlhandler;
-    xmlhandler.setMessage(&message);
+//    XMLHandler xmlhandler;
+//    xmlhandler.setMessage(&message);
 
-    socket->write(xmlhandler.writeMessage().toLatin1());
+//    socket->write(xmlhandler.writeMessage().toLatin1());
+    QString data = "<message><command>5</command><data><petrinet author=\"ja\" name = \"sit\" version=\"12\"><description>some fuckin information about this goddamn net</description></petrinet><petrinet author=\"author\" name = \"pn\" version=\"18\"><description>where is your god? wher is your god now?</description></petrinet><petrinet author=\"nekdo\" name = \"za\" version=\"6\"><description>blalalbalakakaldjf alkjakldfjal</description></petrinet></data></message>";
+    socket->write(data.toLatin1());
     socket->flush();
+    netListForm->exec();
 
-    netListForm = new NetList(&petriNetList);
 }
 
 void MainWindow::sendRemoteLoadRequest(QString name, QString version, QString author)

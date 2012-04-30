@@ -41,6 +41,7 @@ void Thread::readyRead()
 
 //    qDebug() << socketDescriptor << "Data out:" << data;
     socket->write(data);
+    socket->flush();
 }
 
 void Thread::disconnected()

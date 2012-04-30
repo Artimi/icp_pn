@@ -10,9 +10,17 @@ NetList::NetList(QList<DiagramScene *> *list,QWidget *parent) :
     QStringList headerList;
     headerList << "Name" << "Version" << "Author" << "Description";
     ui->tableWidget->setHorizontalHeaderLabels(headerList);
+
+    QHeaderView *headerView = ui->tableWidget->horizontalHeader();
+    headerView->setResizeMode(0,QHeaderView::Stretch);
+    headerView->setResizeMode(1,QHeaderView::Stretch);
+    headerView->setResizeMode(2,QHeaderView::Stretch);
+    headerView->setResizeMode(3,QHeaderView::ResizeToContents);
+
     updateTable();
 
     connect(ui->PBFind,SIGNAL(clicked()),this,SLOT(find()));
+    connect(ui->PBOpen,SIGNAL(clicked()),this,SLOT(openRemote()));
 }
 
 NetList::~NetList()
@@ -28,7 +36,7 @@ void NetList::updateTable()
     int i = 0;
 
     QTableWidgetItem prototype;
-    prototype.setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    prototype.setFlags(Qt::ItemIsEnabled|Qt::ItemIsSelectable);
 
     foreach(DiagramScene * scene,*myList)
     {
@@ -53,20 +61,22 @@ void NetList::updateTable()
 
 void NetList::find()
 {
-    QList<QTableWidgetItem*> items = ui->tableWidget->findItems(ui->lineEdit->text(),Qt::MatchContains);;
-    QMap<int, int> rowsMap;
-    for(int i = 0; i < items.count(); i++)
-    {
-      rowsMap[items.at(i)->row()] = 1;
-    }
-    QList<int> rowsList = rowsMap.uniqueKeys();
-    qSort(rowsList);
+    for(int i = 0; i < ui->tableWidget->rowCount(); i++)
+        ui->tableWidget->showRow(i);
 
-    for(int i = 0 ; i < ui->tableWidget->rowCount(); i++)
+    QList<QTableWidgetItem*> items = ui->tableWidget->findItems(ui->lineEdit->text(),Qt::MatchContains);
+    QList<int> visibleRows;
+    for (int i = 0; i < items.count(); i++)
     {
-        if(!rowsList.contains(i))
-            ui->tableWidget->removeRow(i);
+        visibleRows << items.at(i)->row();
     }
+
+    for(int i = 0; i < ui->tableWidget->rowCount(); i++)
+    {
+        if (!visibleRows.contains(i))
+            ui->tableWidget->hideRow(i);
+    }
+
 }
 
 void NetList::openRemote()

@@ -38,16 +38,22 @@ public:
     {myScene = scene;}
     void setMessage(Message * message)
     {myMessage = message;}
+    void setNetList(QList<DiagramScene *> * netList)
+    {myNetList = netList;}
 
     Message * getMessage()
     {return myMessage;}
     DiagramScene * getScene()
     {return myScene;}
+    QList<DiagramScene *> * getNetList()
+    {return myNetList;}
 
 private:
     DiagramScene *myScene;
     Message *myMessage;
+    QList<DiagramScene *> *myNetList;
 
+    void writePetriNetInformation(QXmlStreamWriter * writer);
     void writePetriNetList(QXmlStreamWriter *writer);
     void writePetriNet(QXmlStreamWriter *writer);
     void writePlace(QXmlStreamWriter * writer, Place * place);
