@@ -11,6 +11,8 @@ NetList::NetList(QList<DiagramScene *> *list,QWidget *parent) :
     headerList << "Name" << "Version" << "Author" << "Description";
     ui->tableWidget->setHorizontalHeaderLabels(headerList);
 
+
+
     QHeaderView *headerView = ui->tableWidget->horizontalHeader();
     headerView->setResizeMode(0,QHeaderView::Stretch);
     headerView->setResizeMode(1,QHeaderView::Stretch);
@@ -21,6 +23,7 @@ NetList::NetList(QList<DiagramScene *> *list,QWidget *parent) :
 
     connect(ui->PBFind,SIGNAL(clicked()),this,SLOT(find()));
     connect(ui->PBOpen,SIGNAL(clicked()),this,SLOT(openRemote()));
+    connect(ui->PBUpdate,SIGNAL(clicked()),this,SIGNAL(updateNetList()));
 }
 
 NetList::~NetList()
@@ -28,6 +31,9 @@ NetList::~NetList()
     delete ui;
 }
 
+/**
+  * Aktualizuje tabulku sítí podle proměnné myList
+  */
 void NetList::updateTable()
 {
     ui->tableWidget->setColumnCount(4);
@@ -59,6 +65,10 @@ void NetList::updateTable()
     }
 }
 
+
+/**
+  * Vypíše řádky obsahující pouze slovo nacházející se v line edit
+  */
 void NetList::find()
 {
     for(int i = 0; i < ui->tableWidget->rowCount(); i++)
@@ -79,9 +89,16 @@ void NetList::find()
 
 }
 
+/**
+  * Vyšle signál remoteLoad(), aby MainWindow poslala požadavek na server na
+  * tuto síť
+  */
 void NetList::openRemote()
 {
     int curRow = ui->tableWidget->currentRow();
+    //žádná není označená
+    if (curRow < 0)
+        return;
 
     QString name = ui->tableWidget->item(curRow,0)->text();
     QString version = ui->tableWidget->item(curRow,1)->text();
@@ -91,3 +108,4 @@ void NetList::openRemote()
     this->accept();
 
 }
+

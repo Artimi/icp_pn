@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     createMenus();
     tabCount = 0;
     addTab();
+    setWindowState(Qt::WindowMaximized);
 
 
 
@@ -68,7 +69,7 @@ void MainWindow::createMenus()
 }
 
 /**
-  * Vytváří a spojuje všechnu akce hlavního
+  * Vytváří a spojuje všechny akce hlavního okna
   */
 void MainWindow::createActions()
 {
@@ -127,12 +128,16 @@ void MainWindow::createActions()
     connect(socket, SIGNAL(readyRead()),SLOT(handleReply()));
 
     connect(netListForm,SIGNAL(remoteLoad(QString,QString,QString)),
-            this,SLOT(sendRemoteLoadRequest(QString,QString,QString)));
+            this,SLOT(sendLoadRequest(QString,QString,QString)));
     connect(this,SIGNAL(netListArrived()),netListForm,SLOT(updateTable()));
+    connect(netListForm,SIGNAL(updateNetList()),this,SLOT(sendListRequest()));
 
 
 }
-
+/**
+  * Vytiskne chybovou hlášku do status baru a vyhodí warning okno
+  * @param errorText    chybová hláška, která se má vypsat
+  */
 void MainWindow::printError(QString errorText)
 {
     ui->statusBar->showMessage(errorText);
@@ -145,6 +150,22 @@ void MainWindow::printError(QString errorText)
 
 
 /**
+  * Vrátí číslo tabu, na kterém se nachází síť zadaného jména
+  * @param netName  hledané jméno sítě
+  * @return číslo tabu, -1 nenalezeno
+  */
+int MainWindow::findTab(QString netName)
+{
+    for(int i = 0; i < ui->tabWidget->count() ; i++)
+    {
+        if(scenes.at(i)->getName() == netName)
+            return i;
+    }
+    return -1;
+}
+
+
+/**
   * Slot, který přidává nový Tab do TabWidget, zároveň vytváří novou
   * DiagramScene a QGraphicsView v seznamech scenes a views. Nutno zachovat
   * pořadí
@@ -153,6 +174,8 @@ void MainWindow::printError(QString errorText)
   */
 int MainWindow::addTab(DiagramScene * scene)
 {
+    int result;
+
     if (scene == 0)
         scene = new DiagramScene(placeMenu,transitionMenu,arrowMenu,this);
 
@@ -162,7 +185,27 @@ int MainWindow::addTab(DiagramScene * scene)
     QGraphicsView *view = new QGraphicsView(scene,this);
     views.append(view);
 
-    return ui->tabWidget->addTab(view, QString("Unnamed %1").arg(++tabCount));
+    if (scene->getName() == "")
+        result = ui->tabWidget->addTab(view, QString("Unnamed %1").arg(++tabCount));
+    else
+        result = ui->tabWidget->addTab(view, scene->getName());
+    return result;
+}
+
+/**
+  * Nahradí scenu na tabu
+  * @param scene scena, kterou se bude nahrazovat
+  * @param tab  tab na kterém se nahrazovaná scéna nachází
+  */
+void MainWindow::replaceTab(DiagramScene *scene, int tab)
+{
+    DiagramScene * deleteScene = scenes.at(tab);
+    scenes.replace(tab,scene);
+    views.at(tab)->setScene(scene);
+    delete deleteScene;
+    scene->update();
+    if(scene->getName() != "")
+        ui->tabWidget->setTabText(tab,scene->getName());
 }
 
 
@@ -552,10 +595,12 @@ void MainWindow::gotError(QAbstractSocket::SocketError error)
 void MainWindow::handleReply()
 {
     QByteArray rawdata = socket->readAll();
+    int tab;
+    bool deleteScene = true;
 //    qDebug()<< rawdata;
 
     Message message;
-    DiagramScene *scene = new DiagramScene(placeMenu, transitionMenu,arrowMenu,this);
+    DiagramScene *scene = new DiagramScene(placeMenu, transitionMenu,arrowMenu,this); //memory leak
 
     XMLHandler xmlhandler;
     xmlhandler.setScene(scene);
@@ -566,10 +611,13 @@ void MainWindow::handleReply()
     switch(message.command)
     {
         case Message::SLOGIN:
+            login();
             break;
         case Message::CLOGIN:
             break;
         case Message::WRONGLOGIN:
+            printError(tr("Wrong user name or password."));
+            login();
             break;
         case Message::LOGGED:
             break;
@@ -579,16 +627,30 @@ void MainWindow::handleReply()
             emit netListArrived();
             break;
         case Message::SEND:
+            //vložím na místo souhlasně pojmenované sítě v mainWindow, pokud
+            // není žádná souhlasně pojmenovaná, vytvořím nový tab
+            if((tab = findTab(scene->getName())) >= 0)
+                replaceTab(scene,tab);
+            else
+                addTab(scene);
+            deleteScene = false;
             break;
         case Message::ERROR:
+            printError("Server sent: "+ message.errorText);
             break;
         case Message::SAVE:
             break;
         case Message::LOAD:
             break;
         case Message::SIMULATE:
+            if((tab = findTab(scene->getName())) >= 0)
+                replaceTab(scene,tab);
+            else
+                addTab(scene);
+            deleteScene = false;
             break;
     }
+    delete scene;
 }
 
 /**
@@ -655,8 +717,15 @@ void MainWindow::saveRemote()
         XMLHandler xmlhandler;
         xmlhandler.setScene(scenes.at(activeTab));
         xmlhandler.setMessage(&message);
+
+        while(scenes.at(activeTab)->getName() == "")
+        {
+            netInformation();
+            ui->statusBar->showMessage(tr("You have to insert at least name of the net."));
+        }
         socket->write(xmlhandler.writeMessage().toLatin1());
         socket->flush();
+        ui->statusBar->showMessage(tr("Net was sent to server."));
     }
     else
     {
@@ -669,27 +738,38 @@ void MainWindow::saveRemote()
   */
 void MainWindow::openRemote()
 {
-//    Message message;
-//    message.command = Message::CLIST;
-
-//    XMLHandler xmlhandler;
-//    xmlhandler.setMessage(&message);
-
-//    socket->write(xmlhandler.writeMessage().toLatin1());
+  //sendListRequest();
     QString data = "<message><command>5</command><data><petrinet author=\"ja\" name = \"sit\" version=\"12\"><description>some fuckin information about this goddamn net</description></petrinet><petrinet author=\"author\" name = \"pn\" version=\"18\"><description>where is your god? wher is your god now?</description></petrinet><petrinet author=\"nekdo\" name = \"za\" version=\"6\"><description>blalalbalakakaldjf alkjakldfjal</description></petrinet></data></message>";
+  //QString data ="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<message><command>6</command><data><petrinet name=\"aloha\" version=\"5\" author=\"ja\">\n    <description></description>\n    <place name=\"p2\">\n        <x>426</x>\n        <y>167</y>\n        <token>4</token>\n        <token>8</token>\n        <token>3</token>\n    </place>\n    <transition name=\"n1\">\n        <x>224</x>\n        <y>119</y>\n        <guard>x &gt; 5</guard>\n        <action>y = x -2</action>\n    </transition>\n    <place name=\"p1\">\n        <x>43</x>\n        <y>97</y>\n        <token>4</token>\n        <token>8</token>\n        <token>2</token>\n        <token>6</token>\n        <token>6</token>\n    </place>\n    <arc>\n        <startItem>n1</startItem>\n        <endItem>p2</endItem>\n        <variable>y</variable>\n    </arc>\n    <arc>\n        <startItem>p1</startItem>\n        <endItem>n1</endItem>\n        <variable>x</variable>\n    </arc>\n</petrinet>\n</data></message>";
     socket->write(data.toLatin1());
     socket->flush();
     netListForm->exec();
 
 }
 
-void MainWindow::sendRemoteLoadRequest(QString name, QString version, QString author)
+void MainWindow::sendLoadRequest(QString name, QString version, QString author)
 {
     Message message;
     message.command = Message::LOAD;
     message.netName = name;
     message.netVersion = version;
     message.netAuthor = author;
+
+    XMLHandler xmlhandler;
+    xmlhandler.setMessage(&message);
+
+    socket->write(xmlhandler.writeMessage().toLatin1());
+    socket->flush();
+    ui->statusBar->showMessage(tr("Request to open net was sent to server."));
+}
+
+/**
+  * Pošle žádost o seznam sítí na server
+  */
+void MainWindow::sendListRequest()
+{
+    Message message;
+    message.command = Message::CLIST;
 
     XMLHandler xmlhandler;
     xmlhandler.setMessage(&message);

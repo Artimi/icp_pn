@@ -10,6 +10,9 @@
     <height>461</height>
    </rect>
   </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
   <property name="contextMenuPolicy">
    <enum>Qt::NoContextMenu</enum>
   </property>

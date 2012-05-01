@@ -16,19 +16,26 @@ Connect::~Connect()
     delete ui;
 }
 
+/**
+  * Zažádá o vyhodnocení doménového jména, když je znám zavolá se gotIP()
+  */
 void Connect::connectToServer()
 {
     QString strAddr = ui->LEServer->text();
-    int port = ui->SBPort->value();
+    myPort = ui->SBPort->value();
 
-    QHostAddress addr;
-    if(!addr.setAddress(strAddr))
-    {
-        QMessageBox::warning(this,
-                             tr("Invalid IP adress"),
-                             tr("You have entered an invalid IP adress!"));
-        return;
-    }
-    mySocket->connectToHost(addr,port);
+    QHostInfo::lookupHost(strAddr,this,SLOT(gotIP(QHostInfo)));
+
+
+}
+
+/**
+  * Provede vlastní připojení na server
+  * @param info informace o připojovaném serveru
+  */
+void Connect::gotIP(QHostInfo info)
+{
+    QHostAddress addr = info.addresses().first();
+    mySocket->connectToHost(addr,myPort);
     this->accept();
 }

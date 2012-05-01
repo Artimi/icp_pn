@@ -7,6 +7,8 @@
 #include <QtNetwork/QTcpSocket>
 #include <QMessageBox>
 #include <QHostAddress>
+#include <QHostInfo>
+
 namespace Ui {
 class Connect;
 }
@@ -21,10 +23,13 @@ public:
 
 public slots:
     void connectToServer();
+    void gotIP(QHostInfo info);
     
 private:
     Ui::Connect *ui;
     QTcpSocket *mySocket;
+
+    int myPort;
 };
 
 #endif // CONNECT_H

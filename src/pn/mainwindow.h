@@ -56,6 +56,7 @@ private:
     void createMenus();
     void createActions();
     void printError(QString errorText);
+    int findTab(QString netName);
 
     int activeTab;
 
@@ -80,6 +81,7 @@ signals:
 
 public slots:
     int addTab(DiagramScene *scene = 0);
+    void replaceTab(DiagramScene * scene , int tab);
     void closeTab(int tab);
     void selectMouse();
     void selectArc();
@@ -108,7 +110,8 @@ public slots:
     void saveRemote();
     void openRemote();
 
-    void sendRemoteLoadRequest(QString name, QString version, QString author);
+    void sendLoadRequest(QString name, QString version, QString author);
+    void sendListRequest();
 
 };
 

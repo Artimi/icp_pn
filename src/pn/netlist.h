@@ -22,8 +22,10 @@ public slots:
     void find();
     void openRemote();
 
+
 signals:
     void remoteLoad(QString name,QString version, QString author);
+    void updateNetList();
 
 
 private:

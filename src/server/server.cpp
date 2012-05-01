@@ -5,7 +5,9 @@ Server::Server(QObject *parent) :
 {
 
 }
-
+/**
+  * Startuje server na portu 22334
+  */
 void Server::startServer()
 {
     if(!this->listen(QHostAddress::Any,22334))
@@ -18,6 +20,10 @@ void Server::startServer()
     }
 }
 
+/**
+  * Reakce na příchozí připojení
+  * @param socketDescriptor deskriptor socketu, na kterém se spojení navázalo
+  */
 void Server::incomingConnection(int socketDescriptor)
 {
     qDebug() << socketDescriptor << "Connecting...";

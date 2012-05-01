@@ -5,7 +5,9 @@ Thread::Thread(int socketDescriptor, QObject *parent) :
 {
     this->socketDescriptor = socketDescriptor;
 }
-
+/**
+  * Spouštěcí procedura vlákna
+  */
 void Thread::run()
 {
     qDebug() <<  socketDescriptor <<"Starting thread";
@@ -24,6 +26,10 @@ void Thread::run()
     exec();
 }
 
+/**
+  * volá se při příchozích datech, data převezme zpracuje a pošle odpověď pokud
+  * je třeba
+  */
 void Thread::readyRead()
 {
     QByteArray data = socket->readAll();
@@ -44,6 +50,9 @@ void Thread::readyRead()
     socket->flush();
 }
 
+/**
+  * Volá se při odhlášení klienta
+  */
 void Thread::disconnected()
 {
     qDebug() << socketDescriptor << "Disconected";

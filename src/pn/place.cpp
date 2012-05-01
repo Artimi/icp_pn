@@ -31,7 +31,7 @@ void Place::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     if(isSelected())
     {
         painter->setPen(QPen(Qt::darkBlue, 1, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
-        painter->drawRect(boundingRect().adjusted(-2,-2,2,2));
+        painter->drawRect(boundingRect());
     }
 
     painter->setPen(Qt::black);
@@ -58,12 +58,18 @@ QString Place::getTokenString()
 {
     QString result;
     QString s;
+    int tokensCount = tokens.count();
+    int i = 0;
     QList<int>::const_iterator iter = tokens.begin();
     QList<int>::const_iterator end = tokens.end();
     for(; iter != end; iter++)
     {
         s = QString::number((*iter));
+        if (i != tokensCount - 1)
             result += s + ", ";
+        else
+            result += s;
+        i++;
     }
     return result;
 }

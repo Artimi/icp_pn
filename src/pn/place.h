@@ -34,7 +34,7 @@ public:
 
     QRectF boundingRect() const
     {
-        return rectangle;
+        return rectangle.adjusted(-2,-2,2,2);
     }
 
     QPainterPath shape() const;

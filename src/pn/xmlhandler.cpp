@@ -53,6 +53,10 @@ int XMLHandler::loadNetFromFile(QFile *file)
     return 0;
 }
 
+/**
+  * Zápíše zprávu podle myMessage, podle potřeby i myScene
+  * @return sestavená zpráva
+  */
 QString XMLHandler::writeMessage()
 {
     QString result;
@@ -104,6 +108,13 @@ QString XMLHandler::writeMessage()
     return result;
 }
 
+
+/**
+  * Přečte celou zprávu z str, výsledky poukládá do myMessage, myScene, myNetList
+  * podle potřeby
+  * @param  str řetězec se zprávou, která se má přečíst
+  * @return 0 úspěch, -1 chyba
+  */
 int XMLHandler::readMessage(QString str)
 {
     QXmlStreamReader reader(str);
@@ -185,6 +196,10 @@ int XMLHandler::readMessage(QString str)
     return 0;
 }
 
+/**
+  * Zapíše informace o petriho síti(jméno, verze, autor)
+  * @param  writer  streamWriter, do kterého se má zapisovat
+  */
 void XMLHandler::writePetriNetInformation(QXmlStreamWriter *writer)
 {
     writer->writeStartElement("petrinet");
@@ -287,7 +302,7 @@ void XMLHandler::writeArc(QXmlStreamWriter *writer, Arrow *arrow)
 
 /**
   * Přečte seznam petriho sítí a uloží je do QList<DiagramScene *> * myNetList
-  *
+  * @param reader streamReader, ze kterého se čte
   */
 int XMLHandler::readPetriNetList(QXmlStreamReader *reader)
 {
