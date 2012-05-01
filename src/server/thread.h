@@ -21,6 +21,7 @@ signals:
 public slots:
     void readyRead();
     void disconnected();
+    void handleRequest();
 
 private:
     int socketDescriptor;
