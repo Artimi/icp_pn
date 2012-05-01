@@ -17,6 +17,7 @@
 #include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>
 #include <QRegExp>
+#include <QSettings>
 #include "diagramscene.h"
 #include "diagramitem.h"
 #include "arrow.h"
@@ -45,6 +46,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+
 private:
     Ui::MainWindow *ui;
     QList<DiagramScene*> scenes;
@@ -57,6 +59,9 @@ private:
     void createActions();
     void printError(QString errorText);
     int findTab(QString netName);
+
+    bool readXMLSettings(QIODevice &device, QSettings::SettingsMap &map);
+    bool writeXMLSettings(QIODevice &device, const QSettings::SettingsMap &map);
 
     int activeTab;
 
@@ -75,6 +80,9 @@ private:
     QList<DiagramScene *> netList;
 
     NetList *netListForm;
+
+    QSettings *settings;
+    QSettings::Format xmlFormat;
 
 signals:
     void netListArrived();

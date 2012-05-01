@@ -10,7 +10,8 @@
 #include <QtGui/QGraphicsPixmapItem>
 #include <QList>
 #include <QObject>
-
+#include <QColor>
+#include <QFont>
 class Arrow;
 class QGraphicsItem;
 class QGraphicsScene;
@@ -51,6 +52,9 @@ protected:
     QPolygonF myPolygon;
     QList<Arrow *> arrows;
     QString name;
+
+    QColor itemColor;
+
 
 };
 

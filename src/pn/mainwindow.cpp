@@ -26,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
     addTab();
     setWindowState(Qt::WindowMaximized);
 
+    xmlFormat = QSettings::registerFormat("xml",readXMLSettings,writeXMLSettings);
+    settings = new QSettings(xmlFormat, QSettings::UserScope,"xsebek02_xsimon14","Petri net editor",this);
 
 
 //    Message message;
@@ -43,6 +45,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete netListForm;
+    delete socket;
 }
 
 
@@ -162,6 +165,67 @@ int MainWindow::findTab(QString netName)
             return i;
     }
     return -1;
+}
+
+
+/**
+  * Načítá soubor s nastavením
+  * @param device   device obsahující soubor pro načtení nastavení
+  * @param map  mapa obsahující nastavení pro QSettings
+  * @return true v pořádku, false chyba
+  */
+bool MainWindow::readXMLSettings(QIODevice &device, QSettings::SettingsMap &map)
+{
+    QXmlStreamReader reader(&device);
+    QString key;
+    while(!reader.atEnd())
+    {
+        reader.readNext();
+        if(reader.isStartElement() && reader.tokenString() != "Settings")
+        {
+            if(reader.text().isNull())
+            {
+                if(key.isEmpty())
+                    key = reader.tokenString();
+                else
+                    key += "/" + reader.tokenString();
+            }
+            else
+            {
+                map.insert(key, reader.text().data());
+            }
+        }
+    }
+    return true;
+}
+
+/**
+  * Zapisuje do xml souboru
+  * @param device soubor, do kterého se bude zapisovat
+  * @param map  mapa, ze které se hodnoty čtou
+  * @return true v pořádku, false chyba
+  */
+bool MainWindow::writeXMLSettings(QIODevice &device, const QSettings::SettingsMap &map)
+{
+    QXmlStreamWriter writer(&device);
+    writer.setAutoFormatting(true);
+
+    writer.writeStartDocument();
+    writer.writeStartElement("Settings");
+
+    foreach(QString key, map.keys())
+    {
+        foreach(QString elementKey, key.split("/"))
+        {
+            writer.writeStartElement(elementKey);
+        }
+        writer.writeCDATA(map.value(key).toString());
+        writer.writeEndElement(); //elementKey
+    }
+    writer.writeEndElement(); // Settings
+    writer.writeEndDocument();
+
+    return true;
 }
 
 
@@ -600,7 +664,7 @@ void MainWindow::handleReply()
 //    qDebug()<< rawdata;
 
     Message message;
-    DiagramScene *scene = new DiagramScene(placeMenu, transitionMenu,arrowMenu,this); //memory leak
+    DiagramScene *scene = new DiagramScene(placeMenu, transitionMenu,arrowMenu,this);
 
     XMLHandler xmlhandler;
     xmlhandler.setScene(scene);
