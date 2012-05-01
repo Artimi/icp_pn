@@ -8,7 +8,7 @@ QT       += core
 QT       += network
 #QT       -= gui
 
-TARGET = pnserver
+TARGET = server2012
 CONFIG   += console
 CONFIG   -= app_bundle
 
@@ -25,7 +25,8 @@ SOURCES += \
     ../pn/diagramscene.cpp \
     ../pn/diagramitem.cpp \
     ../pn/arrow.cpp \
-    ../pn/message.cpp
+    ../pn/message.cpp \
+    manipulatenet.cpp
 
 HEADERS += \
     server.h \
@@ -36,4 +37,5 @@ HEADERS += \
     ../pn/diagramscene.h \
     ../pn/diagramitem.h \
     ../pn/arrow.h \
-    ../pn/message.h
+    ../pn/message.h \
+    manipulatenet.h

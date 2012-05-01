@@ -51,6 +51,59 @@ void Thread::readyRead()
 }
 
 /**
+  * Zpracuje a spravne zvoli akce podle doruceneho packetu
+  */
+void Thread::handleRequest()
+{
+    QByteArray rawdata = socket->readAll();
+
+    Message message;
+
+    XMLHandler xmlhandler;
+    //xmlhandler.setScene(scene);
+    xmlhandler.setMessage(&message);
+    //xmlhandler.setNetList(&netList);
+    xmlhandler.readMessage(QString(rawdata));
+
+    switch (message.command)
+    {
+        case Message::SLOGIN:
+            break;
+        case Message::CLOGIN:
+            //rozparsovani a potvrzeni/odmitnuti prihlaseni
+            break;
+        case Message::WRONGLOGIN:
+            break;
+        case Message::LOGGED:
+            break;
+        case Message::CLIST:
+            //vrati seznam siti
+            break;
+        case Message::SLIST:
+            break;
+        case Message::SEND:
+            break;
+        case Message::ERROR:
+            //klient udelal nejakou chybu
+            break;
+        case Message::SAVE:
+            //dorucena sit urcena k ulozeni
+            break;
+        case Message::LOAD:
+            //pozadavek na nacteni site
+            break;
+        case Message::SIMULATE:
+            //klient zada o simulaci site
+            break;
+    }
+}
+
+
+
+
+
+
+/**
   * Volá se při odhlášení klienta
   */
 void Thread::disconnected()

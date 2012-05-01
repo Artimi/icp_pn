@@ -19,13 +19,14 @@ server:
 #	qmake-qt4 -project -o $(SERVER_PATH)pnserver.pro
 	qmake-qt4 -o $(SERVER_PATH)Makefile $(SERVER_PATH)pnserver.pro
 	make -C $(SERVER_PATH)
+	mkdir -p $(SERVER_PATH)nets
 
 
 run:
 	./$(PN_PATH)pn2012
 
 runserver:
-	./$(SERVER_PATH)pnserver
+	./$(SERVER_PATH)server2012
 
 
 doxygen: Doxyfile
