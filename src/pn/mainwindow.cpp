@@ -26,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
     addTab();
     setWindowState(Qt::WindowMaximized);
 
-    xmlFormat = QSettings::registerFormat("xml",readXMLSettings,writeXMLSettings);
-    settings = new QSettings(xmlFormat, QSettings::UserScope,"xsebek02_xsimon14","Petri net editor",this);
+//    xmlFormat = QSettings::registerFormat("xml",readXMLSettings,writeXMLSettings);
+//    settings = new QSettings(xmlFormat, QSettings::UserScope,"xsebek02_xsimon14","Petri net editor",this);
 
 
 //    Message message;
