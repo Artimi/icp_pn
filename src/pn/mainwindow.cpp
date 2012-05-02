@@ -27,19 +27,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //setWindowState(Qt::WindowMaximized);
 
-    xmlFormat = QSettings::registerFormat("xml",readXMLSettings,writeXMLSettings);
-    settings = new QSettings(xmlFormat, QSettings::UserScope,"xsebek02_xsimon14","Petri net editor",this);
-    settings->setPath(xmlFormat,QSettings::UserScope,"");
+//    xmlFormat = QSettings::registerFormat("xml",readXMLSettings,writeXMLSettings);
+//    settings = new QSettings(xmlFormat, QSettings::UserScope,"xsebek02_xsimon14","Petri net editor",this);
+//    settings->setPath(xmlFormat,QSettings::UserScope,QDir::currentPath() + "/settings");
 
-    settings->setValue("mainwindow/widt",this->width());
-
-//    Message message;
-//    message.command = Message::CLIST;
-
-//    XMLHandler xmlhandler();
-//    xmlhandler.setMessage(&message);
-//    QString str = xmlhandler.writeMessage();
-//    qDebug() << str;
+//    settings->setValue("mainwindow/widt",this->width());
 
 
 }
@@ -605,10 +597,10 @@ void MainWindow::deleteItem()
 /**
   * Vyvolá formulář pro zápis informací o síti
   */
-void MainWindow::netInformation()
+int MainWindow::netInformation()
 {
     NetInformation diag(scenes.at(activeTab));
-    diag.exec();
+    return diag.exec();
 }
 
 /**
@@ -738,7 +730,7 @@ void MainWindow::login()
 
     if (socket->state() == QAbstractSocket::ConnectedState)
     {
-
+        int x;
         QDialog dlg;
         QString user;
         QString password;
@@ -748,10 +740,14 @@ void MainWindow::login()
         loginWindowUI.setupUi(&dlg);
         dlg.adjustSize();
 
-        if (dlg.exec() == QDialog::Accepted)
+        if ((x = dlg.exec()) == QDialog::Accepted)
         {
             user = loginWindowUI.LEUser->text();
             password = loginWindowUI.LEPassword->text();
+        }
+        else if (x == QDialog::Rejected)
+        {
+            return;
         }
 
         Message message;
@@ -788,7 +784,8 @@ void MainWindow::saveRemote()
 
         while(scenes.at(activeTab)->getName() == "")
         {
-            netInformation();
+            if (netInformation() == QDialog::Rejected)
+                return;
             ui->statusBar->showMessage(tr("You have to insert at least name of the net."));
         }
         socket->write(xmlhandler.writeMessage().toLatin1());

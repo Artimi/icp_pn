@@ -104,7 +104,7 @@ public slots:
     void editAction();
     void editVariable();
     void deleteItem();
-    void netInformation();
+    int netInformation();
     void connectToServer();
 
     void gotConnected();
