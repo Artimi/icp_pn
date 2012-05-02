@@ -9,6 +9,7 @@ all:
 #	qmake-qt4 -project -o $(SERVER_PATH)pnserver.pro
 	qmake-qt4 -o $(SERVER_PATH)Makefile $(SERVER_PATH)pnserver.pro
 	make -C $(SERVER_PATH)
+	mkdir -p $(SERVER_PATH)nets
 
 client:
 #	qmake-qt4 -project -o $(PN_PATH)pn2012.pro

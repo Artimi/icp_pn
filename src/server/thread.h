@@ -6,6 +6,8 @@
 #include "../pn/xmlhandler.h"
 #include "../pn/message.h"
 #include "../pn/diagramscene.h"
+#include "manipulatenet.h"
+#include <QCryptographicHash>
 
 class Thread : public QThread
 {
@@ -14,19 +16,21 @@ public:
     explicit Thread(int socketDescriptor,QObject *parent = 0);
 
     void run();
-
+    QString getUsername()
+    {   return username; }
+    bool authenticate(QString username, QString passwd);
 signals:
     void error(QTcpSocket::SocketError socketError);
 
 public slots:
-    void readyRead();
+    //void readyRead();
     void disconnected();
     void handleRequest();
 
 private:
     int socketDescriptor;
     QTcpSocket *socket;
-
+    QString username;
 
 public slots:
 
