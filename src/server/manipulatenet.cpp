@@ -21,7 +21,7 @@ ManipulateNet::ManipulateNet()
   * @param username Uzivatelske jmeno
   * @param
   */
-void ManipulateNet::saveNet(QString name, QString username,XMLHandler *xmlhandler)//FIXME---------------------
+void ManipulateNet::saveNet(QString name, QString username,XMLHandler *xmlhandler)
 {
     int version = investigateVersion(name, username);
 
@@ -50,7 +50,7 @@ void ManipulateNet::saveNet(QString name, QString username,XMLHandler *xmlhandle
         error = true;
         return;
     }
-    xmlhandler->saveNetToFile(&file);//FIXME----------------------------
+    xmlhandler->saveNetToFile(&file);
     file.close();
 }
 
@@ -75,9 +75,10 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
     else
     {
         /* Soubor se podarilo otevrit */
-        XMLHandler xmlhandler; //FIXME -----------------------------------------
+        XMLHandler xmlhandler;
+        xmlhandler.setPetriNet(resultNet);
         //xmlhandler.setScene(&resultNet); //FIXME -------------------------------------
-        if(xmlhandler.loadNetFromFile(&file) != 0) //FIXME --------------------------
+        if(xmlhandler.loadNetFromFile(&file) != 0)
         {
             /* Nepodarilo se rozparsovat soubor */
             qDebug() << "Error while parsing the file into the net";
@@ -117,8 +118,8 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
                  error = true;
                  return result;
              }
-             XMLHandler xmlhandler; //FIXME ---------------------------------------
-             //xmlhandler.setScene(&net); //FIXME ----------------------------
+             XMLHandler xmlhandler;
+             xmlhandler.setPetriNet(net);
              if(xmlhandler.loadNetFromFile(&file) != 0)
              {
                  qDebug() << "Error while parsing the file into the net";
@@ -130,6 +131,7 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
              result.append(net);
              file.close();
          }
+         return result;
      }
  }
 

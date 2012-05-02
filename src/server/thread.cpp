@@ -34,29 +34,6 @@ void Thread::run()
     exec();
 }
 
-/**
-  * volá se při příchozích datech, data převezme zpracuje a pošle odpověď pokud
-  * je třeba
-  */
-/*void Thread::readyRead()
-{
-    QByteArray data = socket->readAll();
-    qDebug() << socketDescriptor << "Data in:" << data;
-//    Message message;
-
-//    DiagramScene scene(NULL,NULL,NULL);
-
-//    XMLHandler xmlhandler(&scene,&message);
-//    xmlhandler.readMessage(QString(data));
-
-//    QString out = xmlhandler.writeMessage(); //jen zkouším parsing, mělo by se vrátit cojsem poslal
-
-//    data = out.toLatin1();
-
-//    qDebug() << socketDescriptor << "Data out:" << data;
-    socket->write(data);
-    socket->flush();
-}*/
 
 /**
   * Zpracuje a spravne zvoli akce podle doruceneho packetu
@@ -75,17 +52,15 @@ void Thread::handleRequest()
     QList<PetriNet *> netList;
 
 
-    XMLHandler xmlhandler;//FIXME -------------------------------
+    XMLHandler xmlhandler;
     //přidáno setXXX do handleru se to vkládá ručně venkem protože to tam potřebuji jen naplnit
-    xmlhandler.setMessage(&message); //FIXME ------------------------------
-//    xmlhandler.setPetriNet(petriNet); //TODO v xmlhandler
-//    xmlhandler.setPetriNetList(&netList); //TODO v xmlhandler
-    xmlhandler.readMessage(QString(rawdata));//FIXME ------------------------------------
-
-
+    xmlhandler.setMessage(&message);
+    xmlhandler.setPetriNet(petriNet);
+    xmlhandler.setNetList(&netList);
+    xmlhandler.readMessage(QString(rawdata));
 
     Message resultMsg;
-    XMLHandler resultXml;//FIXME -------------------------------
+    XMLHandler resultXml;
     QString out;
     PetriNet *resultNet = new PetriNet;
 
@@ -98,8 +73,8 @@ void Thread::handleRequest()
             if(!authenticate(message.user, message.password))
             {
                 resultMsg.command = Message::WRONGLOGIN;
-                resultXml.setMessage(&resultMsg); //FIXME ----------------------------
-                out = resultXml.writeMessage();//FIXME -------------------------
+                resultXml.setMessage(&resultMsg);
+                out = resultXml.writeMessage();
                 rawdata = out.toUtf8();
                 socket->write(rawdata);
                 socket->flush();
@@ -121,10 +96,10 @@ void Thread::handleRequest()
             else
             {
                 resultMsg.command = Message::SLIST;
-                //resultXml.setNetList(netList); //FIXME --------------------------
+                resultXml.setNetList(&netList);
             }
-            resultXml.setMessage(&resultMsg); //FIXME ------------------------------
-            out = resultXml.writeMessage(); //FIXME ----------------------------
+            resultXml.setMessage(&resultMsg);
+            out = resultXml.writeMessage();
             rawdata = out.toUtf8();
             socket->write(rawdata);
             socket->flush();
@@ -138,14 +113,14 @@ void Thread::handleRequest()
         case Message::SAVE:
             //dorucena sit urcena k ulozeni
             qDebug() << socketDescriptor << "Dorucena sit k ulozeni";
-            tool.saveNet(petriNet->getName(),this->getUsername(),&xmlhandler); //FIXME --------------------------
+            tool.saveNet(petriNet->getName(),this->getUsername(),&xmlhandler);
             if (tool.error)
             {
                 /* Nastala chyba pri ukladani */
                 resultMsg.command = Message::ERROR;
                 resultMsg.errorText = "Error while saving";
-                resultXml.setMessage(&resultMsg);//FIXME ---------------------------
-                out = resultXml.writeMessage();//FIXME ---------------------------
+                resultXml.setMessage(&resultMsg);
+                out = resultXml.writeMessage();
                 rawdata = out.toUtf8();
                 socket->write(rawdata);
                 socket->flush();
@@ -167,12 +142,12 @@ void Thread::handleRequest()
             {
                 /* Sit byla uspesne otevrena */
                 resultMsg.command = Message::SEND;
-                //resultXml.setScene(&petriNet); //FIXME ----------------------
+                resultXml.setPetriNet(petriNet);
             }
 
             /* At uz se stala chyba nebo ne, vse je treba zabalit a odeslat */
-            resultXml.setMessage(&resultMsg);//FIXME -----------------------
-            out = resultXml.writeMessage();//FIXME ----------------------------------
+            resultXml.setMessage(&resultMsg);
+            out = resultXml.writeMessage();
             rawdata = out.toUtf8();
             socket->write(rawdata);
             socket->flush();

@@ -11,7 +11,7 @@
 #include <QFile>
 #include <QDir>
 #include <QRegExp>
-#include "../pn/xmlhandler.h"
+#include "xmlhandler.h"
 #include "petrinet.h"
 
 class ManipulateNet

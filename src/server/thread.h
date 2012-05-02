@@ -3,7 +3,7 @@
 
 #include <QThread>
 #include <QtNetwork/QTcpSocket>
-#include "../pn/xmlhandler.h"
+#include "xmlhandler.h"
 #include "../pn/message.h"
 #include "manipulatenet.h"
 #include "petrinet.h"

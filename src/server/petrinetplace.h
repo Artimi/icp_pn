@@ -2,7 +2,7 @@
 #define PETRINETPLACE_H
 
 #include <QtCore>
-#include "petrinetobject.h".h"
+#include "petrinetobject.h"
 
 class PetriNetPlace : public PetriNetObject
 {

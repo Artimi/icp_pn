@@ -1,5 +1,5 @@
-#ifndef XMLHANDLER_H
-#define XMLHANDLER_H
+#ifndef XMLHANDLERSERV_H
+#define XMLHANDLERSERV_H
 
 #include <QtCore>
 #include <QXmlStreamReader>
@@ -64,4 +64,4 @@ private:
 
 };
 
-#endif // XMLHANDLER_H
+#endif // XMLHANDLERSERV_H
