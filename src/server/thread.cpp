@@ -75,18 +75,20 @@ void Thread::handleRequest()
     QList<PetriNet *> netList;
 
 
-    XMLHandler xmlhandler;
+    XMLHandler xmlhandler;//FIXME -------------------------------
     //přidáno setXXX do handleru se to vkládá ručně venkem protože to tam potřebuji jen naplnit
-    xmlhandler.setMessage(&message);
+    xmlhandler.setMessage(&message); //FIXME ------------------------------
 //    xmlhandler.setPetriNet(petriNet); //TODO v xmlhandler
 //    xmlhandler.setPetriNetList(&netList); //TODO v xmlhandler
-    xmlhandler.readMessage(QString(rawdata));
+    xmlhandler.readMessage(QString(rawdata));//FIXME ------------------------------------
 
-    //message = *(xmlhandler.getMessage());
-    //scene = xmlhandler.getScene();
-    //netList = *(xmlhandler.getNetList());
 
-    qDebug() << socketDescriptor << "rozparsoval data";
+
+    Message resultMsg;
+    XMLHandler resultXml;//FIXME -------------------------------
+    QString out;
+    PetriNet *resultNet = new PetriNet;
+
     switch (message.command)
     {
         case Message::SLOGIN:
@@ -95,11 +97,9 @@ void Thread::handleRequest()
             //rozparsovani a potvrzeni/odmitnuti prihlaseni
             if(!authenticate(message.user, message.password))
             {
-                Message errmessage;
-                XMLHandler result;
-                errmessage.command = Message::WRONGLOGIN;
-                result.setMessage(&errmessage);
-                QString out = result.writeMessage();
+                resultMsg.command = Message::WRONGLOGIN;
+                resultXml.setMessage(&resultMsg); //FIXME ----------------------------
+                out = resultXml.writeMessage();//FIXME -------------------------
                 rawdata = out.toUtf8();
                 socket->write(rawdata);
                 socket->flush();
@@ -111,55 +111,87 @@ void Thread::handleRequest()
             break;
         case Message::CLIST:
             //vrati seznam siti
-
+            netList = tool.getNetList(this->getUsername());
+            if (tool.error)
+            {
+                /* Nastala chyba pri ukladani */
+                resultMsg.command = Message::ERROR;
+                resultMsg.errorText = "Error while getting list of nets";
+            }
+            else
+            {
+                resultMsg.command = Message::SLIST;
+                //resultXml.setNetList(netList); //FIXME --------------------------
+            }
+            resultXml.setMessage(&resultMsg); //FIXME ------------------------------
+            out = resultXml.writeMessage(); //FIXME ----------------------------
+            rawdata = out.toUtf8();
+            socket->write(rawdata);
+            socket->flush();
             break;
         case Message::SLIST:
             break;
         case Message::SEND:
             break;
         case Message::ERROR:
-            //klient udelal nejakou chybu
             break;
         case Message::SAVE:
             //dorucena sit urcena k ulozeni
             qDebug() << socketDescriptor << "Dorucena sit k ulozeni";
-            tool.saveNet(petriNet->getName(),this->getUsername(),&xmlhandler);
+            tool.saveNet(petriNet->getName(),this->getUsername(),&xmlhandler); //FIXME --------------------------
             if (tool.error)
             {
                 /* Nastala chyba pri ukladani */
-                Message errmessage;
-                XMLHandler result;
-                errmessage.command = Message::ERROR;
-                errmessage.errorText = "Error while saving";
-                result.setMessage(&errmessage);
-                QString out = result.writeMessage();
+                resultMsg.command = Message::ERROR;
+                resultMsg.errorText = "Error while saving";
+                resultXml.setMessage(&resultMsg);//FIXME ---------------------------
+                out = resultXml.writeMessage();//FIXME ---------------------------
                 rawdata = out.toUtf8();
                 socket->write(rawdata);
                 socket->flush();
             }
-            else
-            {
-                /* Ulozeni probehlo v poradku */
 
-            }
             break;
         case Message::LOAD:
             //pozadavek na nacteni site
-        qDebug() << socketDescriptor << "Dorucen pozadavek na nacteni site";
+            qDebug() << socketDescriptor << "Dorucen pozadavek na nacteni site";
+
+            tool.loadNet(petriNet->getName(),this->getUsername(),petriNet->getVersion(),petriNet);
+            if (tool.error)
+            {
+                /* Nastala chyba pri cteni, sit neexistuje? */
+                resultMsg.command = Message::ERROR;
+                resultMsg.errorText = "Error while loading, perhaps the net does not exist";
+            }
+            else
+            {
+                /* Sit byla uspesne otevrena */
+                resultMsg.command = Message::SEND;
+                //resultXml.setScene(&petriNet); //FIXME ----------------------
+            }
+
+            /* At uz se stala chyba nebo ne, vse je treba zabalit a odeslat */
+            resultXml.setMessage(&resultMsg);//FIXME -----------------------
+            out = resultXml.writeMessage();//FIXME ----------------------------------
+            rawdata = out.toUtf8();
+            socket->write(rawdata);
+            socket->flush();
             break;
         case Message::SIMULATE:
             //klient zada o simulaci site
             break;
     }
     delete petriNet; // maže se opravdu vždycky?
+    delete resultNet;
 }
 
 /**
-  * Overi, jestli uzivatel zadal spravne jmeno a heslo
+  * Overi, jestli uzivatel zadal spravne jmeno a odpovidajici heslo
+  * @param username Uzivatelske jmeno
+  * @param passwd Heslo
   */
 bool Thread::authenticate(QString username, QString passwd)
 {
-    //bool result = false;
     QFile file("passwd");
     if(!file.open(QIODevice::ReadOnly))
     {
