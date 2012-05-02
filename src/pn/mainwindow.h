@@ -60,8 +60,8 @@ private:
     void printError(QString errorText);
     int findTab(QString netName);
 
-    bool readXMLSettings(QIODevice &device, QSettings::SettingsMap &map);
-    bool writeXMLSettings(QIODevice &device, const QSettings::SettingsMap &map);
+    static bool readXMLSettings(QIODevice &device, QSettings::SettingsMap &map);
+    static bool writeXMLSettings(QIODevice &device, const QSettings::SettingsMap &map);
 
     int activeTab;
 

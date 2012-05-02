@@ -68,17 +68,25 @@ void Thread::handleRequest()
     qDebug() << socketDescriptor << "Data in:" << rawdata;
     Message message;
     ManipulateNet tool;
-    DiagramScene *scene = new DiagramScene();
+    qDebug() << "pred scenou";
+
+    DiagramScene *scene = new DiagramScene;
+    qDebug()<< "za scenou";
     QList<DiagramScene *> netList;
 
+
     XMLHandler xmlhandler;
+    //přidáno setXXX do handleru se to vkládá ručně venkem protože to tam potřebuji jen naplnit
+    xmlhandler.setMessage(&message);
+    xmlhandler.setScene(scene);
+    xmlhandler.setNetList(&netList);
     xmlhandler.readMessage(QString(rawdata));
 
     //message = *(xmlhandler.getMessage());
     //scene = xmlhandler.getScene();
     //netList = *(xmlhandler.getNetList());
 
-    //qDebug() << socketDescriptor << "rozparsoval data";
+    qDebug() << socketDescriptor << "rozparsoval data";
     switch (message.command)
     {
         case Message::SLOGIN:
@@ -143,7 +151,7 @@ void Thread::handleRequest()
             //klient zada o simulaci site
             break;
     }
-    delete scene;
+    delete scene; // maže se opravdu vždycky?
 }
 
 /**

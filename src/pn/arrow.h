@@ -27,7 +27,7 @@ class Arrow : public QGraphicsLineItem
 public:
     enum {Type = UserType +4};
 
-    Arrow(DiagramItem *startItem, DiagramItem *endItem, QMenu * menu,
+    Arrow(DiagramItem *startItem, DiagramItem *endItem, QMenu * menu =0,
           QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 
 

@@ -17,7 +17,6 @@ DiagramScene::DiagramScene(QMenu *placeMenu, QMenu *transitionMenu, QMenu *arrow
     myPlaceMenu = placeMenu;
     myTransitionMenu = transitionMenu;
     myArrowMenu = arrowMenu;
-
 }
 
 DiagramScene::~DiagramScene()

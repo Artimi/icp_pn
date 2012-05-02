@@ -24,11 +24,14 @@ MainWindow::MainWindow(QWidget *parent) :
     createMenus();
     tabCount = 0;
     addTab();
-    setWindowState(Qt::WindowMaximized);
 
-//    xmlFormat = QSettings::registerFormat("xml",readXMLSettings,writeXMLSettings);
-//    settings = new QSettings(xmlFormat, QSettings::UserScope,"xsebek02_xsimon14","Petri net editor",this);
+    //setWindowState(Qt::WindowMaximized);
 
+    xmlFormat = QSettings::registerFormat("xml",readXMLSettings,writeXMLSettings);
+    settings = new QSettings(xmlFormat, QSettings::UserScope,"xsebek02_xsimon14","Petri net editor",this);
+    settings->setPath(xmlFormat,QSettings::UserScope,qApp->applicationFilePath());
+
+    settings->setValue("mainwindow/neco",2);
 
 //    Message message;
 //    message.command = Message::CLIST;
@@ -714,7 +717,8 @@ void MainWindow::handleReply()
             deleteScene = false;
             break;
     }
-    delete scene;
+    if(deleteScene)
+        delete scene;
 }
 
 /**
@@ -802,11 +806,11 @@ void MainWindow::saveRemote()
   */
 void MainWindow::openRemote()
 {
-  //sendListRequest();
-    QString data = "<message><command>5</command><data><petrinet author=\"ja\" name = \"sit\" version=\"12\"><description>some fuckin information about this goddamn net</description></petrinet><petrinet author=\"author\" name = \"pn\" version=\"18\"><description>where is your god? wher is your god now?</description></petrinet><petrinet author=\"nekdo\" name = \"za\" version=\"6\"><description>blalalbalakakaldjf alkjakldfjal</description></petrinet></data></message>";
-  //QString data ="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<message><command>6</command><data><petrinet name=\"aloha\" version=\"5\" author=\"ja\">\n    <description></description>\n    <place name=\"p2\">\n        <x>426</x>\n        <y>167</y>\n        <token>4</token>\n        <token>8</token>\n        <token>3</token>\n    </place>\n    <transition name=\"n1\">\n        <x>224</x>\n        <y>119</y>\n        <guard>x &gt; 5</guard>\n        <action>y = x -2</action>\n    </transition>\n    <place name=\"p1\">\n        <x>43</x>\n        <y>97</y>\n        <token>4</token>\n        <token>8</token>\n        <token>2</token>\n        <token>6</token>\n        <token>6</token>\n    </place>\n    <arc>\n        <startItem>n1</startItem>\n        <endItem>p2</endItem>\n        <variable>y</variable>\n    </arc>\n    <arc>\n        <startItem>p1</startItem>\n        <endItem>n1</endItem>\n        <variable>x</variable>\n    </arc>\n</petrinet>\n</data></message>";
-    socket->write(data.toLatin1());
-    socket->flush();
+    sendListRequest();
+//    //QString data = "<message><command>5</command><data><petrinet author=\"ja\" name = \"sit\" version=\"12\"><description>some fuckin information about this goddamn net</description></petrinet><petrinet author=\"author\" name = \"pn\" version=\"18\"><description>where is your god? wher is your god now?</description></petrinet><petrinet author=\"nekdo\" name = \"za\" version=\"6\"><description>blalalbalakakaldjf alkjakldfjal</description></petrinet></data></message>";
+//  //QString data ="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<message><command>6</command><data><petrinet name=\"aloha\" version=\"5\" author=\"ja\">\n    <description></description>\n    <place name=\"p2\">\n        <x>426</x>\n        <y>167</y>\n        <token>4</token>\n        <token>8</token>\n        <token>3</token>\n    </place>\n    <transition name=\"n1\">\n        <x>224</x>\n        <y>119</y>\n        <guard>x &gt; 5</guard>\n        <action>y = x -2</action>\n    </transition>\n    <place name=\"p1\">\n        <x>43</x>\n        <y>97</y>\n        <token>4</token>\n        <token>8</token>\n        <token>2</token>\n        <token>6</token>\n        <token>6</token>\n    </place>\n    <arc>\n        <startItem>n1</startItem>\n        <endItem>p2</endItem>\n        <variable>y</variable>\n    </arc>\n    <arc>\n        <startItem>p1</startItem>\n        <endItem>n1</endItem>\n        <variable>x</variable>\n    </arc>\n</petrinet>\n</data></message>";
+//    socket->write(data.toLatin1());
+//    socket->flush();
     netListForm->exec();
 
 }

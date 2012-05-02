@@ -28,7 +28,7 @@ class Place : public DiagramItem
 
 public:
     enum {Type = UserType + 16};
-    Place(QMenu *menu,QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+    Place(QMenu *menu = 0,QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
     int type() const
     {return Type;}
 
