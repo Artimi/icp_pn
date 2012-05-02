@@ -70,16 +70,16 @@ void Thread::handleRequest()
     ManipulateNet tool;
     qDebug() << "pred scenou";
 
-    DiagramScene *scene = new DiagramScene;
+    PetriNet *petriNet = new PetriNet;
     qDebug()<< "za scenou";
-    QList<DiagramScene *> netList;
+    QList<PetriNet *> netList;
 
 
     XMLHandler xmlhandler;
     //přidáno setXXX do handleru se to vkládá ručně venkem protože to tam potřebuji jen naplnit
     xmlhandler.setMessage(&message);
-    xmlhandler.setScene(scene);
-    xmlhandler.setNetList(&netList);
+//    xmlhandler.setPetriNet(petriNet); //TODO v xmlhandler
+//    xmlhandler.setPetriNetList(&netList); //TODO v xmlhandler
     xmlhandler.readMessage(QString(rawdata));
 
     //message = *(xmlhandler.getMessage());
@@ -123,7 +123,7 @@ void Thread::handleRequest()
         case Message::SAVE:
             //dorucena sit urcena k ulozeni
             qDebug() << socketDescriptor << "Dorucena sit k ulozeni";
-            tool.saveNet(scene->getName(),this->getUsername(),&xmlhandler);
+            tool.saveNet(petriNet->getName(),this->getUsername(),&xmlhandler);
             if (tool.error)
             {
                 /* Nastala chyba pri ukladani */
@@ -151,7 +151,7 @@ void Thread::handleRequest()
             //klient zada o simulaci site
             break;
     }
-    delete scene; // maže se opravdu vždycky?
+    delete petriNet; // maže se opravdu vždycky?
 }
 
 /**

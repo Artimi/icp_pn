@@ -29,9 +29,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     xmlFormat = QSettings::registerFormat("xml",readXMLSettings,writeXMLSettings);
     settings = new QSettings(xmlFormat, QSettings::UserScope,"xsebek02_xsimon14","Petri net editor",this);
-    settings->setPath(xmlFormat,QSettings::UserScope,qApp->applicationFilePath());
+    settings->setPath(xmlFormat,QSettings::UserScope,"");
 
-    settings->setValue("mainwindow/neco",2);
+    settings->setValue("mainwindow/widt",this->width());
 
 //    Message message;
 //    message.command = Message::CLIST;

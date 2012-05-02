@@ -5,8 +5,8 @@
 #include <QtNetwork/QTcpSocket>
 #include "../pn/xmlhandler.h"
 #include "../pn/message.h"
-#include "../pn/diagramscene.h"
 #include "manipulatenet.h"
+#include "petrinet.h"
 #include <QCryptographicHash>
 
 class Thread : public QThread

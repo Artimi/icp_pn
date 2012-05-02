@@ -26,7 +26,12 @@ SOURCES += \
     ../pn/diagramscene.cpp \
     ../pn/diagramitem.cpp \
     ../pn/arrow.cpp \
-    ../pn/message.cpp
+    ../pn/message.cpp \
+    petrinet.cpp \
+    petrinetitem.cpp \
+    petrinetarrow.cpp \
+    petrinetplace.cpp \
+    petrinettransition.cpp
 
 HEADERS += \
     server.h \
@@ -38,4 +43,9 @@ HEADERS += \
     ../pn/diagramscene.h \
     ../pn/diagramitem.h \
     ../pn/arrow.h \
-    ../pn/message.h
+    ../pn/message.h \
+    petrinet.h \
+    petrinetitem.h \
+    petrinetarrow.h \
+    petrinetplace.h \
+    petrinettransition.h

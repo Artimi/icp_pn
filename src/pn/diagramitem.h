@@ -53,7 +53,6 @@ protected:
     QList<Arrow *> arrows;
     QString name;
 
-    QColor itemColor;
 
 
 };
