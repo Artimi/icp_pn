@@ -77,7 +77,6 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
         /* Soubor se podarilo otevrit */
         XMLHandler xmlhandler;
         xmlhandler.setPetriNet(resultNet);
-        //xmlhandler.setScene(&resultNet); //FIXME -------------------------------------
         if(xmlhandler.loadNetFromFile(&file) != 0)
         {
             /* Nepodarilo se rozparsovat soubor */

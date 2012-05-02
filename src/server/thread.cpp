@@ -39,7 +39,6 @@ void Thread::run()
   * Zpracuje a spravne zvoli akce podle doruceneho packetu
   */
 void Thread::handleRequest()
-//void Thread::readyRead()
 {
     QByteArray rawdata = socket->readAll();
     qDebug() << socketDescriptor << "Data in:" << rawdata;
