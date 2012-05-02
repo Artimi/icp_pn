@@ -16,3 +16,23 @@ void PetriNet::addItem(PetriNetItem *item)
 {
     myItems.append(item);
 }
+
+PetriNetItem *PetriNet::getPetriNetItem(QString name)
+{
+    foreach(PetriNetItem * item, items())
+    {
+        if(item->type() == PetriNetPlace::Type)
+        {
+            PetriNetPlace * place = (PetriNetPlace *) item;
+            if(place->getName() == name)
+                return place;
+        }
+        else if(item->type() == PetriNetTransition::Type)
+        {
+            PetriNetTransition * transition = (PetriNetTransition *) item;
+            if(transition->getName() == name)
+                return transition;
+        }
+    }
+    return NULL;
+}

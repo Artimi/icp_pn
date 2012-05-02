@@ -1,9 +1,3 @@
-/**
-  * @file xmlhandler.cpp
-  *
-  * @brief Třída pro konverzi scény do xml
-  * @author xsebek02, xsimon14
-  */
 #include "xmlhandler.h"
 
 XMLHandler::XMLHandler()
@@ -52,6 +46,7 @@ int XMLHandler::loadNetFromFile(QFile *file)
         return -1;
     return 0;
 }
+
 
 /**
   * Zápíše zprávu podle myMessage, podle potřeby i myScene
@@ -108,7 +103,6 @@ QString XMLHandler::writeMessage()
     return result;
 }
 
-
 /**
   * Přečte celou zprávu z str, výsledky poukládá do myMessage, myScene, myNetList
   * podle potřeby
@@ -157,7 +151,6 @@ int XMLHandler::readMessage(QString str)
                 case Message::CLIST:
                     break;
                 case Message::SLIST:
-                    readPetriNetList(&reader);
                     break;
                 case Message::SEND:
                     readPetriNet(&reader);
@@ -215,48 +208,46 @@ void XMLHandler::writePetriNetInformation(QXmlStreamWriter *writer)
   */
 void XMLHandler::writePetriNet(QXmlStreamWriter *writer)
 {
-    QList<QGraphicsItem *> list = myScene->items();
+    QList<PetriNetItem *> list = myPetriNet->items();
 
     writer->writeStartElement("petrinet");
-    writer->writeAttribute("name",myScene->getName());
-    writer->writeAttribute("version",myScene->getVersion());
-    writer->writeAttribute("author",myScene->getAuthor());
+    writer->writeAttribute("name",myPetriNet->getName());
+    writer->writeAttribute("version",myPetriNet->getVersion());
+    writer->writeAttribute("author",myPetriNet->getAuthor());
 
-    writer->writeTextElement("description",myScene->getDescription());
+    writer->writeTextElement("description",myPetriNet->getDescription());
 
-    foreach(QGraphicsItem * item, list)
+    foreach(PetriNetItem * item, list)
     {
-        if(item->type() == Place::Type)
+        if(item->type() == PetriNetPlace::Type)
         {
-            Place * place = qgraphicsitem_cast<Place *>(item);
+            PetriNetPlace * place = (PetriNetPlace *)item;
             writePlace(writer,place);
         }
-        else if(item->type() == Transition::Type)
+        else if(item->type() == PetriNetTransition::Type)
         {
-            Transition * transition = qgraphicsitem_cast<Transition *>(item);
+            PetriNetTransition * transition = (PetriNetTransition *)item;
             writeTransition(writer,transition);
         }
     }
     //zapisuji se az posledni aby se posledni cetly -> vsechny objekty vytvořené
-    foreach(QGraphicsItem * item, list)
+    foreach(PetriNetItem * item, list)
     {
-        if(item->type() == Arrow::Type)
+        if(item->type() == PetriNetArrow::Type)
         {
-            Arrow * arrow = qgraphicsitem_cast<Arrow *>(item);
+            PetriNetArrow * arrow = (PetriNetArrow *) item;
             writeArc(writer,arrow);
         }
     }
     writer->writeEndElement();// petrinet
-
 }
-
 
 /**
   * Zapíše informace o daném místě do streamwriteru
   * @param  writer  streamwriter, do kterého se bude zapisovat
   * @param  place   místo, které má být zapsáno
   */
-void XMLHandler::writePlace(QXmlStreamWriter *writer, Place *place)
+void XMLHandler::writePlace(QXmlStreamWriter *writer, PetriNetPlace *place)
 {
     writer->writeStartElement("place");
     writer->writeAttribute("name",place->getName());
@@ -274,7 +265,7 @@ void XMLHandler::writePlace(QXmlStreamWriter *writer, Place *place)
   * @param  writer  streamwriter, do kterého se bude zapisovat
   * @param  transition  popisovaný přechod
   */
-void XMLHandler::writeTransition(QXmlStreamWriter *writer, Transition *transition)
+void XMLHandler::writeTransition(QXmlStreamWriter *writer, PetriNetTransition *transition)
 {
     writer->writeStartElement("transition");
     writer->writeAttribute("name",transition->getName());
@@ -290,7 +281,7 @@ void XMLHandler::writeTransition(QXmlStreamWriter *writer, Transition *transitio
   * @param  writer  streamwriter, do kterého se bude zapisovat
   * @param  arrow   popisovaná hrana
   */
-void XMLHandler::writeArc(QXmlStreamWriter *writer, Arrow *arrow)
+void XMLHandler::writeArc(QXmlStreamWriter *writer, PetriNetArrow *arrow)
 {
     writer->writeStartElement("arc");
     writer->writeTextElement("startItem",arrow->startItem()->getName());
@@ -299,35 +290,9 @@ void XMLHandler::writeArc(QXmlStreamWriter *writer, Arrow *arrow)
     writer->writeEndElement(); //arc
 }
 
-/**
-  * Přečte seznam petriho sítí a uloží je do QList<DiagramScene *> * myNetList
-  * @param reader streamReader, ze kterého se čte
-  */
-int XMLHandler::readPetriNetList(QXmlStreamReader *reader)
-{
-    myNetList->clear();
-    while(!reader->atEnd() && !reader->hasError())
-    {
-        if(reader->isStartElement() && reader->name() == "petrinet")
-        {
-            DiagramScene * scene = new DiagramScene();
-            scene->setName(reader->attributes().value("name").toString());
-            scene->setVersion(reader->attributes().value("version").toString());
-            scene->setAuthor(reader->attributes().value("author").toString());
-
-            reader->readNext();
-            if(reader->isStartElement() && reader->name() == "description")
-            {
-                scene->setDescription(reader->readElementText());
-            }
-            myNetList->append(scene);
-        }
-        reader->readNext();
-    }
-}
 
 /**
-  * Přečte celou petriho síť z reader a uloží ji do myScene
+  * Přečte celou petriho síť z reader a uloží ji do myPetriNet
   * @param  reader  obsahuje stream reader s xml
   * @return 0 Ok, jinak chyba
   */
@@ -338,9 +303,9 @@ int XMLHandler::readPetriNet(QXmlStreamReader *reader)
     {
         if(reader->isStartElement() && reader->name()=="petrinet")
         {
-            myScene->setName(reader->attributes().value("name").toString());
-            myScene->setVersion(reader->attributes().value("version").toString());
-            myScene->setAuthor(reader->attributes().value("author").toString());
+            myPetriNet->setName(reader->attributes().value("name").toString());
+            myPetriNet->setVersion(reader->attributes().value("version").toString());
+            myPetriNet->setAuthor(reader->attributes().value("author").toString());
 
             while(!(reader->isEndElement() && reader->name() == "petrinet") &&
                   !reader->hasError())
@@ -349,7 +314,7 @@ int XMLHandler::readPetriNet(QXmlStreamReader *reader)
                 {
                     if(reader->name() =="description")
                     {
-                        myScene->setDescription(reader->readElementText());
+                        myPetriNet->setDescription(reader->readElementText());
                     }
                     else if (reader->name() == "place" )
                     {
@@ -391,7 +356,7 @@ int XMLHandler::readPlace(QXmlStreamReader *reader)
         qreal x, y;
         x = y = 0;
 
-        Place * place = new Place(myScene->myPlaceMenu);
+        PetriNetPlace * place = new PetriNetPlace;
 
         place->setName(reader->attributes().value("name").toString());
         reader->readNext();
@@ -406,17 +371,18 @@ int XMLHandler::readPlace(QXmlStreamReader *reader)
                 else if(reader->name() == "x")
                 {
                     x = reader->readElementText().toDouble();
+                    place->setX(x);
                 }
                 else if (reader->name() == "y")
                 {
                     y = reader->readElementText().toDouble();
+                    place->setY(y);
                 }
             }
             reader->readNext();
         }
 
-        myScene->addItem(place);
-        place->setPos(QPointF(x,y));
+        myPetriNet->addItem(place);
     }
     return 0;
 }
@@ -433,7 +399,7 @@ int XMLHandler::readTransition(QXmlStreamReader *reader)
         qreal x, y;
         x = y = 0;
 
-        Transition * transition = new Transition(myScene->myTransitionMenu);
+        PetriNetTransition * transition = new PetriNetTransition;
 
         transition->setName(reader->attributes().value("name").toString());
         reader->readNext();
@@ -452,20 +418,22 @@ int XMLHandler::readTransition(QXmlStreamReader *reader)
                 else if(reader->name() == "x")
                 {
                     x = reader->readElementText().toDouble();
+                    transition->setX(x);
                 }
                 else if (reader->name() == "y")
                 {
                     y = reader->readElementText().toDouble();
+                    transition->setY(y);
                 }
             }
             reader->readNext();
         }
 
-        myScene->addItem(transition);
-        transition->setPos(QPointF(x,y));
+        myPetriNet->addItem(transition);
     }
     return 0;
 }
+
 
 /**
   * Přečte hranu z Xml
@@ -500,24 +468,24 @@ int XMLHandler::readArc(QXmlStreamReader *reader)
             }
             reader->readNext();
         }
-        DiagramItem * startItem =  myScene->getDiagramItem(startItemStr);
-        DiagramItem * endItem = myScene->getDiagramItem(endItemStr);
+        PetriNetObject * startItem = (PetriNetObject *) myPetriNet->getPetriNetItem(startItemStr);
+        PetriNetObject * endItem = (PetriNetObject *) myPetriNet->getPetriNetItem(endItemStr);
 
         if(startItem == NULL || endItem == NULL)
         {
             return -1;
         }
 
-        Arrow * arrow = new Arrow(startItem,endItem, myScene->myArrowMenu);
+        PetriNetArrow * arrow = new PetriNetArrow(startItem,endItem);
         arrow->setVariable(variable);
 
         startItem->addArrow(arrow);
         endItem->addArrow(arrow);
-        myScene->addItem(arrow);
-        arrow->updatePosition();
+        myPetriNet->addItem(arrow);
     }
     return 0;
 }
+
 /**
   * Vypíše všechny petriho sítě jednoho uživatele na serveru do xml
   */
@@ -525,5 +493,3 @@ void XMLHandler::writePetriNetList(QXmlStreamWriter *writer)
 {
 
 }
-
-

@@ -3,6 +3,9 @@
 
 #include <QtCore>
 #include "petrinetitem.h"
+#include "petrinetobject.h"
+#include "petrinetplace.h"
+#include "petrinettransition.h"
 
 class PetriNet
 {
@@ -32,6 +35,9 @@ public:
     {author = str;}
     void setDescription(QString str)
     {description = str;}
+
+
+    PetriNetItem* getPetriNetItem(QString name);
 
 private:
     QString name;

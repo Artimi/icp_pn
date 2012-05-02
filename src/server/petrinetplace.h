@@ -2,9 +2,9 @@
 #define PETRINETPLACE_H
 
 #include <QtCore>
-#include "petrinetitem.h"
+#include "petrinetobject.h".h"
 
-class PetriNetPlace : public PetriNetItem
+class PetriNetPlace : public PetriNetObject
 {
 public:
     enum {Type = 2};
@@ -15,6 +15,7 @@ public:
 
     QList<int> getTokens()
     {return tokens;}
+
 
 private:
     QList<int> tokens;

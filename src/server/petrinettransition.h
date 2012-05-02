@@ -3,9 +3,9 @@
 
 
 #include <QtCore>
-#include "petrinetitem.h"
+#include "petrinetobject.h"
 
-class PetriNetTransition : public PetriNetItem
+class PetriNetTransition : public PetriNetObject
 {
 public:
     enum {Type = 3};
@@ -23,9 +23,12 @@ public:
     bool setAction(QString str);
 
 
+
 private:
     QString guard;
     QString action;
+
+
 };
 
 #endif // PETRINETTRANSITION_H

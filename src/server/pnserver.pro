@@ -20,32 +20,24 @@ SOURCES += \
     thread.cpp \
     servermain.cpp \
     manipulatenet.cpp \
-    ../pn/xmlhandler.cpp \
-    ../pn/transition.cpp  \
-    ../pn/place.cpp \
-    ../pn/diagramscene.cpp \
-    ../pn/diagramitem.cpp \
-    ../pn/arrow.cpp \
     ../pn/message.cpp \
     petrinet.cpp \
     petrinetitem.cpp \
     petrinetarrow.cpp \
     petrinetplace.cpp \
-    petrinettransition.cpp
+    petrinettransition.cpp \
+    xmlhandler.cpp \
+    petrinetobject.cpp
 
 HEADERS += \
     server.h \
     thread.h \
     manipulatenet.h \
-    ../pn/xmlhandler.h \
-    ../pn/transition.h  \
-    ../pn/place.h \
-    ../pn/diagramscene.h \
-    ../pn/diagramitem.h \
-    ../pn/arrow.h \
     ../pn/message.h \
     petrinet.h \
     petrinetitem.h \
     petrinetarrow.h \
     petrinetplace.h \
-    petrinettransition.h
+    petrinettransition.h \
+    xmlhandler.h \
+    petrinetobject.h
