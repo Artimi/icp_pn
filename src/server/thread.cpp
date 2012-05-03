@@ -70,11 +70,11 @@ void Thread::handleRequest()
             {
                 resultMsg.command = Message::WRONGLOGIN;
                 resultXml.setMessage(&resultMsg);
-
             }
             else
             {
                 resultMsg.command = Message::LOGGED;
+                resultXml.setMessage(&resultMsg);
             }
             out = resultXml.writeMessage();
             rawdata = out.toUtf8();
@@ -105,6 +105,12 @@ void Thread::handleRequest()
             rawdata = out.toUtf8();
             socket->write(rawdata);
             socket->flush();
+            /* Dealokuju seznam siti */
+            for (int i = 0; i < netList.size(); i++)
+            {
+                delete netList.at(i);
+            }
+            netList.clear();
             break;
         case Message::SLIST:
             break;
@@ -189,12 +195,13 @@ bool Thread::authenticate(QString username, QString passwd)
             if (name == username)
             {
                 /* Jsem na spravne radce */
-                //pass = QString(QCryptographicHash::hash(rx.cap(2).toLocal8Bit(),QCryptographicHash::Md5).toHex());
                 pass = rx.cap(2);
                 if (passwd == pass)
                 {
                     /* Heslo uzivatele odpovida */
                     this->username = username;
+                    qDebug() << socketDescriptor << "Logged as user" << username;
+                    file.close();
                     return true;
                 }
                 else
@@ -213,7 +220,7 @@ bool Thread::authenticate(QString username, QString passwd)
     }
 
     file.close();
-    return true;
+    return false;
 }
 
 
