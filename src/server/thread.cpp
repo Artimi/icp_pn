@@ -104,6 +104,7 @@ void Thread::handleRequest()
             resultXml.setMessage(&resultMsg);
             out = resultXml.writeMessage();
             rawdata = out.toUtf8();
+            qDebug() << socketDescriptor << "Sended lists:" << rawdata;
             socket->write(rawdata);
             socket->flush();
             /* Dealokuju seznam siti */

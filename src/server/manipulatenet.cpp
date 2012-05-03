@@ -79,7 +79,7 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
 {
     QString filename = apppath + "nets/" + username + "/" + name + "_" + version + ".xml"; //.xml?
     QFile file(filename);
-    if (file.open(QIODevice::ReadOnly))
+    if (!file.open(QIODevice::ReadOnly))
     {
         /* Soubor se nepodarilo otevrit pro cteni */
         qDebug() << "Error while opening file for reading";
