@@ -3,6 +3,7 @@
 
 PetriNetTransition::PetriNetTransition()
 {
+    chosen = false;
 }
 
 bool PetriNetTransition::setGuard(QString str)

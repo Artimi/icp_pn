@@ -99,6 +99,7 @@ QString XMLHandler::writeMessage()
         break;
     case Message::SIMULATE:
         writer.writeTextElement("steps",QString::number(myMessage->simulationSteps));
+        writePetriNet(&writer);
     }
 
     writer.writeEndElement(); //data
@@ -181,6 +182,8 @@ int XMLHandler::readMessage(QString str)
                     {
                         if (reader.isStartElement() && reader.name() == "steps")
                             myMessage->simulationSteps = reader.readElementText().toInt();
+                        else if(reader.isStartElement() && reader.name() == "petrinet")
+                            readPetriNet(&reader);
                         reader.readNext();
                     }
                     break;
@@ -278,6 +281,12 @@ void XMLHandler::writeTransition(QXmlStreamWriter *writer, Transition *transitio
 {
     writer->writeStartElement("transition");
     writer->writeAttribute("name",transition->getName());
+
+    if(transition->chosen)
+        writer->writeAttribute("chosen","true");
+    else
+        writer->writeAttribute("chosen","false");
+
     writer->writeTextElement("x",QString("%1").arg(transition->x()));
     writer->writeTextElement("y",QString("%1").arg(transition->y()));
     writer->writeTextElement("guard", transition->getGuard());
@@ -436,6 +445,8 @@ int XMLHandler::readTransition(QXmlStreamReader *reader)
         Transition * transition = new Transition(myScene->myTransitionMenu);
 
         transition->setName(reader->attributes().value("name").toString());
+        if(reader->attributes().value("chosen").toString() == "true")
+            transition->chosen = true;
         reader->readNext();
         while (!(reader->isEndElement() && reader->name() == "transition"))
         {

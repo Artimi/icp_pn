@@ -58,7 +58,10 @@ public:
 
     bool setAction(QString str);
 
+    bool chosen;
+
 private:
+
     QRectF rectangle;
     QRectF guardRectangle;
     QRectF actionRectangle;

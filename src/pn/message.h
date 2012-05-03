@@ -18,7 +18,7 @@ public:
     QString netAuthor;
     QString errorText;
     int simulationSteps;
-
+    QString activeTransitionName;
     QString messageText;
 };
 

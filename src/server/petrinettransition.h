@@ -22,7 +22,10 @@ public:
 
     bool setAction(QString str);
 
+    bool chosen;
 
+    int type()
+    {return Type;}
 
 private:
     QString guard;

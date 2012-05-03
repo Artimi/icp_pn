@@ -24,6 +24,7 @@ Transition::Transition(QMenu *menu,QGraphicsItem *parent, QGraphicsScene *scene)
     guard = "";
     action = "";
     myMenu = menu;
+    chosen = false;
 }
 
 /**

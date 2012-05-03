@@ -24,7 +24,6 @@ QString XMLHandler::toStr()
   */
 void XMLHandler::saveNetToFile(QFile *file)
 {
-
     QXmlStreamWriter writer(file);
 
     writer.setAutoFormatting(true);
@@ -271,6 +270,12 @@ void XMLHandler::writeTransition(QXmlStreamWriter *writer, PetriNetTransition *t
 {
     writer->writeStartElement("transition");
     writer->writeAttribute("name",transition->getName());
+
+    if(transition->chosen)
+        writer->writeAttribute("chosen","true");
+    else
+        writer->writeAttribute("chosen","false");
+
     writer->writeTextElement("x",QString("%1").arg(transition->x()));
     writer->writeTextElement("y",QString("%1").arg(transition->y()));
     writer->writeTextElement("guard", transition->getGuard());
@@ -404,6 +409,8 @@ int XMLHandler::readTransition(QXmlStreamReader *reader)
         PetriNetTransition * transition = new PetriNetTransition;
 
         transition->setName(reader->attributes().value("name").toString());
+        if(reader->attributes().value("chosen").toString() == "true")
+            transition->chosen = true;
         reader->readNext();
         while (!(reader->isEndElement() && reader->name() == "transition"))
         {

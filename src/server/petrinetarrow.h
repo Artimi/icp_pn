@@ -21,6 +21,9 @@ public:
 
     bool setVariable(QString str);
 
+    int type()
+    {return Type;}
+
 private:
     PetriNetItem * myStartItem;
     PetriNetItem * myEndItem;

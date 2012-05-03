@@ -290,7 +290,7 @@ void MainWindow::closeTab(int tab)
     delete view;
 
     if(scenes.isEmpty())
-        activeTab = -1;
+         activeTab = -1;
 }
 
 /**
@@ -884,13 +884,13 @@ void MainWindow::sendListRequest()
   */
 void MainWindow::simulate()
 {
-    if(activeTab <=0)
+    if(activeTab >=0)
     {
         if (socket->state() == QAbstractSocket::ConnectedState)
         {
             Message message;
             message.command = Message::SIMULATE;
-            message.simulationSteps = 1;
+            message.simulationSteps = 0;
 
             XMLHandler xmlhandler;
             xmlhandler.setMessage(&message);
@@ -917,7 +917,7 @@ void MainWindow::simulate()
   */
 void MainWindow::simulateStep()
 {
-    if(activeTab <=0)
+    if(activeTab >=0)
     {
         if (socket->state() == QAbstractSocket::ConnectedState)
         {
@@ -930,9 +930,12 @@ void MainWindow::simulateStep()
                 return;
             }
 
+            Transition * transition =qgraphicsitem_cast<Transition *>(list.first());
+            transition->chosen = true;
+
             Message message;
             message.command = Message::SIMULATE;
-            message.simulationSteps = 0;
+            message.simulationSteps = 1;
 
             XMLHandler xmlhandler;
             xmlhandler.setMessage(&message);

@@ -17,7 +17,7 @@ public:
     void setName(QString str)
     {name = str;}
 
-    int type()
+    virtual int type()
     {return Type;}
 
 private:
