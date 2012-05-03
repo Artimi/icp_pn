@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabWidget->setTabsClosable(true);
     createActions();
     createMenus();
-    userName = "host";
+    userName = "guest";
     tabCount = 0;
     activeTab = -1;
 
@@ -1022,7 +1022,7 @@ void MainWindow::loadSettings()
 
     LINECOLOR = mySettings->value("lineColor","#000080").value<QColor>();
     DASHLINECOLOR = mySettings->value("dashLineColor","#000000").value<QColor>();
-    FONT = mySettings->value("font","").value<QFont>();
+    FONT = mySettings->value("font","Sans Serif,10,-1,5,50,0,0,0,0,0").value<QFont>();
     qDebug()<< FONT;
 //    FONTSIZE = mySettings->value("fontSize",10).toInt();
 //    OBJECTSIZE = mySettings->value("objectSize",100).toInt();

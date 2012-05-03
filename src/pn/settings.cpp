@@ -25,7 +25,7 @@ void Settings::fontSettings()
 {
     bool ok;
     myFont = QFontDialog::getFont(&ok,
-                                  QFont("Times",10),
+                                  mySettings->value("font","Sans Serif,10,-1,5,50,0,0,0,0,0").value<QFont>(),
                                   this);
 }
 
@@ -44,6 +44,6 @@ void Settings::saveSettings()
 //    mySettings->setValue("fontSize",ui->SBFontSize->value());
     mySettings->setValue("lineColor",myLineColor);
     mySettings->setValue("dashLineColor",myDashLineColor);
-    mySettings->setValue("fone",myFont);
+    mySettings->setValue("font",myFont);
 //    mySettings->setValue("mainWindowMaximized",ui->CBMaximized->isChecked());
 }

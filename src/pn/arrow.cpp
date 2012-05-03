@@ -141,6 +141,7 @@ void Arrow::paint(QPainter *painter,
     painter->drawLine(line());
     painter->drawLine(QLineF(destPoint, arrowP1));
     painter->drawLine(QLineF(destPoint, arrowP2));
+    painter->setFont(MainWindow::FONT);
     painter->drawText(QRectF(center.x()-10,center.y() + 10, 50,50),variable);
     if (isSelected())
     {
