@@ -14,7 +14,7 @@ DiagramScene::DiagramScene(QMenu *placeMenu, QMenu *transitionMenu, QMenu *arrow
 {
     myMode = MoveItem;
     line = 0;
-    version = "0";
+    version = "1";
 
     myPlaceMenu = placeMenu;
     myTransitionMenu = transitionMenu;

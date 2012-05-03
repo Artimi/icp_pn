@@ -10,11 +10,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-//QMenu MainWindow::*PLACEMENU = NULL;
-//QMenu MainWindow::*TRANSITIONMENU = NULL;
-//QMenu MainWindow::*ARROWMENU = NULL;
 
-//int MainWindow::FONTSIZE = 10;
 int MainWindow::OBJECTSIZE = 100;
 QFont MainWindow::FONT = QFont("times",10);
 QColor MainWindow::LINECOLOR = Qt::black;
@@ -143,6 +139,8 @@ void MainWindow::createActions()
 
     connect(ui->actionSimulate,SIGNAL(triggered()), this, SLOT(simulate()));
     connect(ui->actionSimulate_Step,SIGNAL(triggered()),this,SLOT(simulateStep()));
+
+    connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(disconnectFromServer()));
 
 }
 /**
