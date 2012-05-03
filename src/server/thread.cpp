@@ -189,7 +189,7 @@ bool Thread::authenticate(QString username, QString passwd)
                 if (passwd == pass)
                 {
                     /* Heslo uzivatele odpovida */
-                    username = username;
+                    this->username = username;
                     return true;
                 }
                 else
