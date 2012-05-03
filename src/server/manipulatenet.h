@@ -20,7 +20,7 @@ public:
     ManipulateNet();
     bool error;
     QString apppath;
-    void saveNet(QString name, QString username, XMLHandler *xmlhandler);
+    void saveNet(QString name, QString userlogin, XMLHandler *xmlhandler);
     void loadNet(QString name, QString username, QString version, PetriNet *resultNet);
     void getNetList(QString username, QList<PetriNet *> *result);
 private:

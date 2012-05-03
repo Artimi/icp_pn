@@ -61,6 +61,9 @@ void ManipulateNet::saveNet(QString name, QString username,XMLHandler *xmlhandle
     }
 
     qDebug() << "The net has been saved into file " << filename;
+
+    xmlhandler->getPetriNet()->setAuthor(username);
+    xmlhandler->getPetriNet()->setVersion(QString::number(version));
     xmlhandler->saveNetToFile(&file);
     file.close();
 }
@@ -165,7 +168,7 @@ int ManipulateNet::investigateVersion(QString name, QString username)
     {
         /* Uzivatel jeste nema nic ulozeno */
         nets.mkdir(username);
-        return 0;
+        return 1;
     }
     else
     {

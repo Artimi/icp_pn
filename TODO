@@ -58,8 +58,8 @@ autentizace a autorizace uživatelů
 
 Makefile:
 
-clean
-pack
+clean DONE
+pack DONE
 run FIXED
 runserver FIXED
 

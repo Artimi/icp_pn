@@ -10,7 +10,7 @@ Thread::Thread(int socketDescriptor, QObject *parent) :
     QThread(parent)
 {
     this->socketDescriptor = socketDescriptor;
-    this->username = "host";
+    this->username = "guest";
     this->apppath = QFileInfo(QCoreApplication::applicationFilePath()).path() + "/";
 }
 
