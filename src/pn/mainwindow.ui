@@ -75,6 +75,9 @@
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -85,6 +88,9 @@
    <addaction name="actionPlace"/>
    <addaction name="actionTransition"/>
    <addaction name="actionArc"/>
+   <addaction name="separator"/>
+   <addaction name="actionSimulate"/>
+   <addaction name="actionSimulate_Step"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenLocally">
@@ -224,6 +230,16 @@
    </property>
    <property name="text">
     <string>&amp;Login</string>
+   </property>
+  </action>
+  <action name="actionSimulate">
+   <property name="text">
+    <string>Simulate</string>
+   </property>
+  </action>
+  <action name="actionSimulate_Step">
+   <property name="text">
+    <string>Simulate Step</string>
    </property>
   </action>
  </widget>

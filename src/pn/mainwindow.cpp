@@ -130,6 +130,8 @@ void MainWindow::createActions()
     connect(this,SIGNAL(netListArrived()),netListForm,SLOT(updateTable()));
     connect(netListForm,SIGNAL(updateNetList()),this,SLOT(sendListRequest()));
 
+    connect(ui->actionSimulate,SIGNAL(triggered()), this, SLOT(simulate()));
+    connect(ui->actionSimulate_Step,SIGNAL(triggered()),this,SLOT(simulateStep()));
 
 }
 /**
@@ -617,13 +619,16 @@ void MainWindow::connectToServer()
   */
 void MainWindow::gotConnected()
 {
-    ui->statusBar->showMessage(tr("Connected to server")+socket->peerName());
+    ui->statusBar->showMessage(tr("Connected to server ")+socket->peerName());
     ui->actionConnectToServer->setEnabled(false);
 
     ui->actionLogin->setEnabled(true);
     ui->actionDisconnectFromServer->setEnabled(true);
     ui->actionOpenRemote->setEnabled(true);
     ui->actionSaveRemote->setEnabled(true);
+
+    ui->actionSimulate->setEnabled(true);
+    ui->actionSimulate_Step->setEnabled(true);
 }
 
 /**
@@ -638,6 +643,9 @@ void MainWindow::gotDisconnected()
     ui->actionDisconnectFromServer->setEnabled(false);
     ui->actionOpenRemote->setEnabled(false);
     ui->actionSaveRemote->setEnabled(false);
+
+    ui->actionSimulate->setEnabled(false);
+    ui->actionSimulate_Step->setEnabled(false);
 }
 
 /**
@@ -841,6 +849,61 @@ void MainWindow::sendListRequest()
 
     socket->write(xmlhandler.writeMessage().toLatin1());
     socket->flush();
+}
+
+/**
+  *
+  */
+void MainWindow::simulate()
+{
+    if (socket->state() == QAbstractSocket::ConnectedState)
+    {
+        Message message;
+        message.command = Message::SIMULATE;
+        message.simulationSteps = 1;
+
+        XMLHandler xmlhandler;
+        xmlhandler.setMessage(&message);
+        xmlhandler.setScene(scenes.at(activeTab));
+
+        socket->write(xmlhandler.writeMessage().toUtf8());
+        socket->flush();
+    }
+    else
+    {
+        printError(tr("You have to be connected to server to simulate net."));
+    }
+}
+
+void MainWindow::simulateStep()
+{
+    if (socket->state() == QAbstractSocket::ConnectedState)
+    {
+        DiagramScene * scene = scenes.at(activeTab);
+        QList<QGraphicsItem *> list = scene->selectedItems();
+
+        if(list.isEmpty() || list.first()->type() != Transition::Type)
+        {
+            printError(tr("You have to choose transition to simulate one step of petri net"));
+            return;
+        }
+
+
+        Message message;
+        message.command = Message::SIMULATE;
+        message.simulationSteps = 0;
+
+        XMLHandler xmlhandler;
+        xmlhandler.setMessage(&message);
+        xmlhandler.setScene(scenes.at(activeTab));
+
+        socket->write(xmlhandler.writeMessage().toUtf8());
+        socket->flush();
+    }
+    else
+    {
+        printError(tr("You have to be connected to server to simulate net."));
+    }
 }
 
 

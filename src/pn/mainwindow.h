@@ -121,6 +121,9 @@ public slots:
     void sendLoadRequest(QString name, QString version, QString author);
     void sendListRequest();
 
+    void simulate();
+    void simulateStep();
+
 };
 
 #endif // MAINWINDOW_H
