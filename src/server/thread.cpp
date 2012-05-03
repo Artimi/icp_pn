@@ -70,11 +70,16 @@ void Thread::handleRequest()
             {
                 resultMsg.command = Message::WRONGLOGIN;
                 resultXml.setMessage(&resultMsg);
-                out = resultXml.writeMessage();
-                rawdata = out.toUtf8();
-                socket->write(rawdata);
-                socket->flush();
+
             }
+            else
+            {
+                resultMsg.command = Message::LOGGED;
+            }
+            out = resultXml.writeMessage();
+            rawdata = out.toUtf8();
+            socket->write(rawdata);
+            socket->flush();
             break;
         case Message::WRONGLOGIN:
             break;
