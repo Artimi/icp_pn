@@ -82,16 +82,14 @@ void Arrow::updatePosition()
 
         if (myStartItem->type() == Place::Type)
         {
-            Place * place = qgraphicsitem_cast<Place *>(myStartItem);
-            QPointF edgeOffset((line.dx() * place->size/2) / length, (line.dy() * place->size / 2) / length);
+            QPointF edgeOffset((line.dx() * MainWindow::OBJECTSIZE/2) / length, (line.dy() * MainWindow::OBJECTSIZE/ 2) / length);
             sourcePoint = line.p1() + edgeOffset;
             destPoint = getIntersectionPoint(line,myEndItem);
 
         }
         else
         {
-            Place * place = qgraphicsitem_cast<Place *>(myEndItem);
-            QPointF edgeOffset((line.dx() * place->size/2) / length, (line.dy() * place->size / 2) / length);
+            QPointF edgeOffset((line.dx() * MainWindow::OBJECTSIZE/2) / length, (line.dy() *MainWindow::OBJECTSIZE / 2) / length);
             destPoint = line.p2() - edgeOffset;
             sourcePoint = getIntersectionPoint(line,myStartItem);
         }

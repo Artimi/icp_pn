@@ -52,7 +52,7 @@ public:
 //    static QMenu *ARROWMENU;
 
 //    static int FONTSIZE;
-//    static int OBJECTSIZE;
+    static int OBJECTSIZE;
     static QFont FONT;
     static QColor LINECOLOR;
     static QColor DASHLINECOLOR;

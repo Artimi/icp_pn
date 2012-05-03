@@ -12,9 +12,8 @@ int Transition::count = 0;
 Transition::Transition(QMenu *menu,QGraphicsItem *parent, QGraphicsScene *scene)
     :DiagramItem(DiagramItem::Transition,parent,scene)
 {
-    size = 100;
+    size = MainWindow::OBJECTSIZE;
     rectangle.setRect(0,0,size,size);
-    rectangle.toRect();
 
     guardRectangle.setRect(2,2,size-2,size/2 -2);
     actionRectangle.setRect(2,size/2 + 2 ,size - 2,size -2 );
@@ -33,6 +32,10 @@ Transition::Transition(QMenu *menu,QGraphicsItem *parent, QGraphicsScene *scene)
   */
 void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    size = MainWindow::OBJECTSIZE;
+    rectangle.setRect(0,0,size,size);
+    guardRectangle.setRect(2,2,size-2,size/2 -2);
+    actionRectangle.setRect(2,size/2 + 2 ,size - 2,size -2 );
     if(isSelected())
     {
         painter->setPen(QPen(MainWindow::DASHLINECOLOR, 1, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));

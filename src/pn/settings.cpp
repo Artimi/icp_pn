@@ -14,6 +14,8 @@ Settings::Settings(QSettings * settings,QWidget *parent) :
     connect(ui->PBFont,SIGNAL(clicked()),this,SLOT(fontSettings()));
     connect(this,SIGNAL(accepted()),this,SLOT(saveSettings()));
 
+    ui->SBObjectSize->setValue(mySettings->value("objectSize",100).toInt());
+
 }
 
 Settings::~Settings()
@@ -41,9 +43,8 @@ void Settings::dashLineColorSettings()
 
 void Settings::saveSettings()
 {
-//    mySettings->setValue("fontSize",ui->SBFontSize->value());
     mySettings->setValue("lineColor",myLineColor);
     mySettings->setValue("dashLineColor",myDashLineColor);
     mySettings->setValue("font",myFont);
-//    mySettings->setValue("mainWindowMaximized",ui->CBMaximized->isChecked());
+    mySettings->setValue("objectSize",ui->SBObjectSize->value());
 }

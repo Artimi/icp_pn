@@ -13,7 +13,7 @@ int Place::count = 0;
 Place::Place(QMenu *menu, QGraphicsItem *parent, QGraphicsScene *scene) :
     DiagramItem(DiagramItem::Place,parent, scene)
 {
-    size = 100;
+    size = MainWindow::OBJECTSIZE;
     rectangle.setRect(0,0,size,size);
     textRectangle.setRect(size/4,size/4,3*size/4,3*size/4);
     myPolygon = QPolygonF(boundingRect());
@@ -29,6 +29,9 @@ Place::Place(QMenu *menu, QGraphicsItem *parent, QGraphicsScene *scene) :
   */
 void Place::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    size = MainWindow::OBJECTSIZE;
+    rectangle.setRect(0,0,size,size);
+    textRectangle.setRect(size/4,size/4,3*size/4,3*size/4);
     if(isSelected())
     {
         painter->setPen(QPen(MainWindow::DASHLINECOLOR, 1, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));

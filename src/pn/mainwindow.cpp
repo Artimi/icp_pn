@@ -15,7 +15,7 @@
 //QMenu MainWindow::*ARROWMENU = NULL;
 
 //int MainWindow::FONTSIZE = 10;
-//int MainWindow::OBJECTSIZE = 100;
+int MainWindow::OBJECTSIZE = 100;
 QFont MainWindow::FONT = QFont("times",10);
 QColor MainWindow::LINECOLOR = Qt::black;
 QColor MainWindow::DASHLINECOLOR= Qt::darkBlue;
@@ -1010,23 +1010,14 @@ void MainWindow::settingsWindow()
     sett.exec();
     loadSettings();
     scenes.at(activeTab)->update();
-
 }
 
 void MainWindow::loadSettings()
 {
-    if(mySettings->value("mainWindowMaximized","false").toBool())
-        setWindowState(Qt::WindowMaximized);
-    else
-        setWindowState(Qt::WindowNoState);
-
     LINECOLOR = mySettings->value("lineColor","#000080").value<QColor>();
     DASHLINECOLOR = mySettings->value("dashLineColor","#000000").value<QColor>();
     FONT = mySettings->value("font","Sans Serif,10,-1,5,50,0,0,0,0,0").value<QFont>();
-    qDebug()<< FONT;
-//    FONTSIZE = mySettings->value("fontSize",10).toInt();
-//    OBJECTSIZE = mySettings->value("objectSize",100).toInt();
-
+    OBJECTSIZE = mySettings->value("objectSize",100).toInt();
 }
 
 
