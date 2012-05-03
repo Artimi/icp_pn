@@ -57,22 +57,27 @@
     <property name="title">
      <string>&amp;Settings</string>
     </property>
-    <addaction name="actionBack"/>
-    <addaction name="actionRedo"/>
-    <addaction name="separator"/>
     <addaction name="actionNetInformation"/>
-    <addaction name="actionConnectToServer"/>
-    <addaction name="actionDisconnectFromServer"/>
-    <addaction name="actionLogin"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
      <string>About</string>
     </property>
+    <addaction name="actionAbout_application"/>
+    <addaction name="actionHelp"/>
+   </widget>
+   <widget class="QMenu" name="menuServer">
+    <property name="title">
+     <string>Server</string>
+    </property>
+    <addaction name="actionConnectToServer"/>
+    <addaction name="actionDisconnectFromServer"/>
+    <addaction name="actionLogin"/>
    </widget>
    <addaction name="menuSoubor"/>
    <addaction name="menuNastaven"/>
+   <addaction name="menuServer"/>
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -245,7 +250,20 @@
   </action>
   <action name="actionSettings">
    <property name="text">
-    <string>Settings</string>
+    <string>Configure</string>
+   </property>
+  </action>
+  <action name="actionAbout_application">
+   <property name="text">
+    <string>About application</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Help</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
  </widget>

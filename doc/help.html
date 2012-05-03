@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN""http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Nápověda petriho sítě</title>
+</head>
+<body>
+
+<h1>Nápověda k editoru a emulátoru petriho sítí</h1>
+<p>Toto je nápověda pro školní projekt do předmětu Seminář C++ (ICP) na Vysokém učení technickém v Brně Fakultě informačních technologií. Aplikace se skládá z klientské a serverové části. Klientská část má na starosti editaci petriho sítí, jejich lokální uložení. Serverová část obsluhuje klienta při simulacích petriho sítí a ukládá je na vzdálené uložiště</p>
+
+<h2>Klient</h2>
+<p>Po spuštění klienta vidíme hlavní okno, ve kterém probíhá editace sítí. V hlavním menu v záložce File můžeme přidávat další záložku s plátnem, ukládat nebo nahrávat síť z místního uložiště, ukládat nebo nahrávat síť ze serverového uložiště. Záložka settings nám dovoluje zapisovat údaje o síti jako její jméno a popis (o autora a verzi se stará server). Volbou Configure se provádí nastavení aplikace jako barvy kreslených objektů a fonty popisků. Pod záložkou server se skrývají možnosti komunikace se serverem jako připojení, odpojení a login. </p>
+
+<p>V nástrojovém panelu si můžeme vybrat z nástrojů manipulující s plátnem. Mouse pro označování a posunování objektů a Place, Transition, Arc pro kreslení příslušných objektů. V druhé částí vidíme možnosti pro simulaci a simulaci krokem, ty jsou možné až po přihlášení k serveru.</p>
+
+<p>Hlavní plátno je opatřeno záložkami, které jsou pojmenovány podle sítí, které zobrazují. Pokud přijde síť ze strany serveru, přepíše se ta se stejným jménem nebo pokud taková žádná není otevře se nový panel. Objekty na plátně lze intuitivně posouvat při výběru nástroje Mouse. Při zaškrtnutí jiného objektu se po kliknutí do plátna tento objekt vloží. Hrana mezi místem a přechodem se vkládá stisknutím levého tlačítka myši na počátečním objektu a uvolněním na cílovém. Pokud klikneme pravým tlačítkem na některý z objektů, objeví se kontextové menu, které nám dovolí upravovat obsah předmětů (jako např. tokeny u místa). Označené objekty lze mazat at už z kontextového menu nebo stiskem klávesy delete.</p>
+
+<p>Na spodní liště se nachází status bar, ve kterém se zobrazují důležité prováděné události, hlavně komunikace se serverem, a chybové hlášení, které se zobrazí i ve vyskakovacím dialogu.</p>
+
+<h3>Klávesové zkratky</h3>
+<p>Klient podporuje rozličné klávesové zkratky, tady je jejich seznam a krátky popis:</p>
+<table>
+<thead><tr><td>Zkratka</td><td>Popis</td></tr></thead>
+<tr><td>Ctrl+O</td><td>Otevře lokálně uloženou síť</td> </tr>
+<tr><td>Ctrl+S</td><td>Uloží aktuálně otevřou síť na místní disk</td> </tr>
+<tr><td>Ctrl+Alt+O</td><td>Otevře síť ze vzdáleného uložiště</td> </tr>
+<tr><td>Ctrl+Alt+S</td><td>Uloží aktuální síť na server</td> </tr>
+<tr><td>Ctrl+1</td><td>Vybere myš z toolbaru</td> </tr>
+<tr><td>Ctrl+2</td><td>Vybere místo z toolbaru</td> </tr>
+<tr><td>Ctrl+3</td><td>Vybere přechod z toolbaru</td> </tr>
+<tr><td>Ctrl+4</td><td>Vybere hranu z toolbaru</td> </tr>
+<tr><td>Ctrl+N</td><td>Otevře novou kartu</td> </tr>
+<tr><td>Ctrl+Q</td><td>Zavře celý editor</td> </tr>
+<tr><td>Delete</td><td>Smaže vybrané objekty</td> </tr>
+<tr><td>F1</td><td>Zobrazí tuto nápovědu</td> </tr>
+
+</table>
+
+
+<h2>Server</h2>
+<p>Po spuštění serveru tento začne poslouchat na výchozím portu 22334. Připojí-li se klient zpracovává jeho požadavky a zasílá mu odpovědi. Je možno připojit se na server s více klienty najednou. Server běží v nekonečné smyčce a čeká na klienty a jejich žádosti až do ukončení. Pokud se na serveru vyskytne nějaká chyba související s komunikací s klientem dá mu zprávou vědět a klient tuto chybovou zprávu zobrazí uživateli.</p>
+
+</body>
+</html>

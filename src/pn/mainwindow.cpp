@@ -142,6 +142,8 @@ void MainWindow::createActions()
 
     connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(disconnectFromServer()));
 
+    connect(ui->actionHelp,SIGNAL(triggered()),this,SLOT(showHelp()));
+
 }
 /**
   * Vytiskne chybovou hlášku do status baru a vyhodí warning okno
@@ -1016,6 +1018,13 @@ void MainWindow::loadSettings()
     DASHLINECOLOR = mySettings->value("dashLineColor","#000000").value<QColor>();
     FONT = mySettings->value("font","Sans Serif,10,-1,5,50,0,0,0,0,0").value<QFont>();
     OBJECTSIZE = mySettings->value("objectSize",100).toInt();
+}
+
+void MainWindow::showHelp()
+{
+//    qDebug() << QApplication::applicationDirPath();
+//    qDebug() << QDesktopServices::openUrl( QUrl(QString("file//")+QApplication::applicationDirPath() +QString("../../doc/help.html"), QUrl::TolerantMode));
+//TODO
 }
 
 

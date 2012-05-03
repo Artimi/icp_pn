@@ -148,6 +148,8 @@ public slots:
 
     void loadSettings();
 
+    void showHelp();
+
 };
 
 #endif // MAINWINDOW_H
