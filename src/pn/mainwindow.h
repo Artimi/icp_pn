@@ -84,6 +84,8 @@ private:
     QSettings *settings;
     QSettings::Format xmlFormat;
 
+    QString userName;
+
 signals:
     void netListArrived();
 

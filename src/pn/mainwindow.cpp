@@ -707,6 +707,7 @@ void MainWindow::handleReply()
             login();
             break;
         case Message::LOGGED:
+            ui->statusBar->showMessage(tr("Logged as: ") + userName);
             break;
         case Message::CLIST:
             break;
@@ -778,6 +779,8 @@ void MainWindow::login()
         {
             return;
         }
+
+        userName = user;
 
         Message message;
         message.command = Message::CLOGIN;
