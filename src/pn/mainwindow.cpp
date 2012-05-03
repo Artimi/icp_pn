@@ -771,7 +771,8 @@ void MainWindow::login()
         if ((x = dlg.exec()) == QDialog::Accepted)
         {
             user = loginWindowUI.LEUser->text();
-            password = loginWindowUI.LEPassword->text();
+//            password = loginWindowUI.LEPassword->text();
+            password = QString(QCryptographicHash::hash(loginWindowUI.LEPassword->text().toLocal8Bit(),QCryptographicHash::Md5).toHex());
         }
         else if (x == QDialog::Rejected)
         {
