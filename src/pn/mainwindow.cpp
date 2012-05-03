@@ -785,7 +785,7 @@ void MainWindow::login()
 
         XMLHandler xmlhandler;
         xmlhandler.setMessage(&message);
-        socket->write(xmlhandler.writeMessage().toLatin1());
+        socket->write(xmlhandler.writeMessage().toUtf8());
         socket->flush();
     }
     else
@@ -818,7 +818,7 @@ void MainWindow::saveRemote()
                     return;
                 ui->statusBar->showMessage(tr("You have to insert at least name of the net."));
             }
-            socket->write(xmlhandler.writeMessage().toLatin1());
+            socket->write(xmlhandler.writeMessage().toUtf8());
             socket->flush();
             ui->statusBar->showMessage(tr("Net was sent to server."));
         }
@@ -859,7 +859,7 @@ void MainWindow::sendLoadRequest(QString name, QString version, QString author)
     XMLHandler xmlhandler;
     xmlhandler.setMessage(&message);
 
-    socket->write(xmlhandler.writeMessage().toLatin1());
+    socket->write(xmlhandler.writeMessage().toUtf8());
     socket->flush();
     ui->statusBar->showMessage(tr("Request to open net was sent to server."));
 }
@@ -875,7 +875,7 @@ void MainWindow::sendListRequest()
     XMLHandler xmlhandler;
     xmlhandler.setMessage(&message);
 
-    socket->write(xmlhandler.writeMessage().toLatin1());
+    socket->write(xmlhandler.writeMessage().toUtf8());
     socket->flush();
 }
 
