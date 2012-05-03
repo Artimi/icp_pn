@@ -102,10 +102,10 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
   * Vrati seznam vsech siti ulozenych danym uzivatelem
   * @param username Uzivatelske jmeno
   */
- void ManipulateNet::getNetList(QString username, QList<PetriNet*> result)
+ void ManipulateNet::getNetList(QString username, QList<PetriNet*>* result)
  {
      //QList<PetriNet *> result;
-     result.clear();
+     result->clear();
      QString userdir = apppath + "nets/" + username;
      QDir dir(userdir);
      if (!dir.exists())
@@ -144,7 +144,7 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
                      return;
                  }
 
-                 result << net;
+                 *result << net;
                  file.close();
              }
          }

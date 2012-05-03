@@ -88,7 +88,7 @@ void Thread::handleRequest()
         case Message::CLIST:
             /* Pozadavek na seznam siti */
             qDebug() << socketDescriptor << "Request for list of nets";
-            tool.getNetList(this->getUsername(),netList);
+            tool.getNetList(this->getUsername(),&netList);
             if (tool.error)
             {
                 /* Nastala chyba pri ukladani */
@@ -99,6 +99,7 @@ void Thread::handleRequest()
             {
                 resultMsg.command = Message::SLIST;
                 resultXml.setNetList(&netList);
+                resultXml.setMessage(&resultMsg);
             }
             resultXml.setMessage(&resultMsg);
             out = resultXml.writeMessage();
