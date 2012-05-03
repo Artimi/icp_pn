@@ -12,6 +12,7 @@
 ManipulateNet::ManipulateNet()
 {
     error = false;
+    apppath = QFileInfo(QCoreApplication::applicationFilePath()).path() + "/";
 }
 
 
@@ -33,16 +34,24 @@ void ManipulateNet::saveNet(QString name, QString username,XMLHandler *xmlhandle
         return;
     }
 
-    QDir nets("nets");
-    QDir userdir("nets/" + username);
+    QDir nets(apppath + "nets");
+    QString userdirname = apppath + "nets/" + username;
+    QDir userdir(userdirname);
     if (!userdir.exists())
     {
         /* Vytvori uzivatelsky adresar, pokud neexistuje */
-        qDebug() << "Created dir \"nets/" << userdir << "\"";
-        nets.mkdir(username);
+        if(!nets.mkpath(username))
+        {
+            /* Nepodarilo se vytvorit adresar uzivatele */
+            qDebug() << "Error while creating user dir";
+            error = true;
+            return;
+        }
+        qDebug() << "Created dir" << userdirname;
     }
 
-    QFile file(username + "_" + QString::number(version));
+    QString filename = userdirname + "/" + name + "_" + QString::number(version) + ".xml";
+    QFile file(filename);
     if (!file.open(QIODevice::WriteOnly))
     {
         /* Nepodarilo se otevrit soubor */
@@ -50,6 +59,8 @@ void ManipulateNet::saveNet(QString name, QString username,XMLHandler *xmlhandle
         error = true;
         return;
     }
+
+    qDebug() << "The net has been saved into file " << filename;
     xmlhandler->saveNetToFile(&file);
     file.close();
 }
@@ -63,7 +74,7 @@ void ManipulateNet::saveNet(QString name, QString username,XMLHandler *xmlhandle
   */
 void ManipulateNet::loadNet(QString name, QString username, QString version, PetriNet * resultNet)
 {
-    QString filename = "nets/" + username + "/" + name + "_" + version; //.xml?
+    QString filename = apppath + "nets/" + username + "/" + name + "_" + version + ".xml"; //.xml?
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly))
     {
@@ -94,7 +105,7 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
  QList<PetriNet *> ManipulateNet::getNetList(QString username)
  {
      QList<PetriNet *> result;
-     QString userdir = "nets/" + username;
+     QString userdir = apppath + "nets/" + username;
      QDir dir(userdir);
      if (!dir.exists())
      {
@@ -105,30 +116,36 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
      {
          /* Uzivatel ma slozku, pridam vsechny site do seznamu */
          QStringList files = dir.entryList();
+         QRegExp rx;
+         rx.setPattern("^(.+)_([^_]+).xml$");
          for (int i = 0; i< files.size(); i++)
          {
-             //nactu z xml do PetriNet
-             PetriNet * net;
-             QFile file(userdir + "/" + files.at(i));
-             if (!file.open(QIODevice::ReadOnly))
+             if (rx.indexIn(files.at(i)) != -1)
              {
-                 /* Nepodarilo se otevrit soubor pro cteni */
-                 qDebug() << "Error while opening file for reading";
-                 error = true;
-                 return result;
-             }
-             XMLHandler xmlhandler;
-             xmlhandler.setPetriNet(net);
-             if(xmlhandler.loadNetFromFile(&file) != 0)
-             {
-                 qDebug() << "Error while parsing the file into the net";
-                 error = true;
-                 file.close();
-                 return result;
-             }
+                 /* Zajimaji me jen site, ktere odpovidaji predpisu */
+                 PetriNet * net;
+                 qDebug() << userdir + "" + files.at(i);
+                 QFile file(userdir + "" + files.at(i));
+                 if (!file.open(QIODevice::ReadOnly))
+                 {
+                     /* Nepodarilo se otevrit soubor pro cteni */
+                     qDebug() << "Error while opening file for reading";
+                     error = true;
+                     return result;
+                 }
+                 XMLHandler xmlhandler;
+                 xmlhandler.setPetriNet(net);
+                 if(xmlhandler.loadNetFromFile(&file) != 0)
+                 {
+                     qDebug() << "Error while parsing the file into the net";
+                     error = true;
+                     file.close();
+                     return result;
+                 }
 
-             result.append(net);
-             file.close();
+                 result.append(net);
+                 file.close();
+             }
          }
          return result;
      }
@@ -141,8 +158,8 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
   */
 int ManipulateNet::investigateVersion(QString name, QString username)
 {
-    QDir nets("nets");
-    QDir userdir("nets/" + username);
+    QDir nets(apppath + "nets");
+    QDir userdir(apppath + "nets/" + username);
     if (!userdir.exists())
     {
         /* Uzivatel jeste nema nic ulozeno */
@@ -155,7 +172,7 @@ int ManipulateNet::investigateVersion(QString name, QString username)
         QStringList files = userdir.entryList();
         int lastVersion = 0;
         QRegExp rx;
-        rx.setPattern("^(.+)_([^_]+)$");
+        rx.setPattern("^(.+)_([^_]+).xml$");
         QString netname, version;
         int ver;
         bool b;
@@ -170,7 +187,6 @@ int ManipulateNet::investigateVersion(QString name, QString username)
                 {
                     /* Soubor je spravna sit */
                     version = rx.cap(2);
-                    qDebug() << version;
                     ver = version.toInt(&b,10);
                     if(b && ver > lastVersion)
                     {
@@ -178,12 +194,8 @@ int ManipulateNet::investigateVersion(QString name, QString username)
                     }
                 }
             }
-            else
-            {
-                /* Soubor neodpovida predpisu, je chybny?*/
-                return -1;
-            }
+
         }
-        return lastVersion;
+        return lastVersion + 1;
     }
 }

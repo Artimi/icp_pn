@@ -42,17 +42,13 @@ void Thread::handleRequest()
 {
     QByteArray rawdata = socket->readAll();
     qDebug() << socketDescriptor << "Data in:" << rawdata;
+
     Message message;
     ManipulateNet tool;
-    qDebug() << "pred scenou";
-
     PetriNet *petriNet = new PetriNet;
-    qDebug()<< "za scenou";
+    XMLHandler xmlhandler;
     QList<PetriNet *> netList;
 
-
-    XMLHandler xmlhandler;
-    //přidáno setXXX do handleru se to vkládá ručně venkem protože to tam potřebuji jen naplnit
     xmlhandler.setMessage(&message);
     xmlhandler.setPetriNet(petriNet);
     xmlhandler.setNetList(&netList);
@@ -68,7 +64,7 @@ void Thread::handleRequest()
         case Message::SLOGIN:
             break;
         case Message::CLOGIN:
-            //rozparsovani a potvrzeni/odmitnuti prihlaseni
+            /* Pozadavek na prihlaseni uzivatele */
             if(!authenticate(message.user, message.password))
             {
                 resultMsg.command = Message::WRONGLOGIN;
@@ -84,7 +80,8 @@ void Thread::handleRequest()
         case Message::LOGGED:
             break;
         case Message::CLIST:
-            //vrati seznam siti
+            /* Pozadavek na seznam siti */
+            qDebug() << socketDescriptor << "Request for list of nets";
             netList = tool.getNetList(this->getUsername());
             if (tool.error)
             {
@@ -110,8 +107,8 @@ void Thread::handleRequest()
         case Message::ERROR:
             break;
         case Message::SAVE:
-            //dorucena sit urcena k ulozeni
-            qDebug() << socketDescriptor << "Dorucena sit k ulozeni";
+            /* Pozadavek na ulozeni site */
+            qDebug() << socketDescriptor << "Request for save a net";
             tool.saveNet(petriNet->getName(),this->getUsername(),&xmlhandler);
             if (tool.error)
             {
@@ -127,8 +124,8 @@ void Thread::handleRequest()
 
             break;
         case Message::LOAD:
-            //pozadavek na nacteni site
-            qDebug() << socketDescriptor << "Dorucen pozadavek na nacteni site";
+            /* Pozadavek na nacteni site */
+            qDebug() << socketDescriptor << "Request for load the net";
 
             tool.loadNet(petriNet->getName(),this->getUsername(),petriNet->getVersion(),petriNet);
             if (tool.error)
@@ -152,7 +149,7 @@ void Thread::handleRequest()
             socket->flush();
             break;
         case Message::SIMULATE:
-            //klient zada o simulaci site
+            /* Pozadavek na simulaci */
             break;
     }
     delete petriNet; // maže se opravdu vždycky?
