@@ -11,6 +11,7 @@ Thread::Thread(int socketDescriptor, QObject *parent) :
 {
     this->socketDescriptor = socketDescriptor;
     this->username = "host";
+    this->apppath = QFileInfo(QCoreApplication::applicationFilePath()).path() + "/";
 }
 
 /**
@@ -82,7 +83,7 @@ void Thread::handleRequest()
         case Message::CLIST:
             /* Pozadavek na seznam siti */
             qDebug() << socketDescriptor << "Request for list of nets";
-            netList = tool.getNetList(this->getUsername());
+            tool.getNetList(this->getUsername(),netList);
             if (tool.error)
             {
                 /* Nastala chyba pri ukladani */
@@ -163,7 +164,8 @@ void Thread::handleRequest()
   */
 bool Thread::authenticate(QString username, QString passwd)
 {
-    QFile file("passwd");
+    QString path = getPath();
+    QFile file(path + "passwd");
     if(!file.open(QIODevice::ReadOnly))
     {
         return false;
@@ -182,10 +184,12 @@ bool Thread::authenticate(QString username, QString passwd)
             if (name == username)
             {
                 /* Jsem na spravne radce */
-                pass = QString(QCryptographicHash::hash(rx.cap(2).toLocal8Bit(),QCryptographicHash::Md5).toHex());
+                //pass = QString(QCryptographicHash::hash(rx.cap(2).toLocal8Bit(),QCryptographicHash::Md5).toHex());
+                pass = rx.cap(2);
                 if (passwd == pass)
                 {
                     /* Heslo uzivatele odpovida */
+                    username = username;
                     return true;
                 }
                 else

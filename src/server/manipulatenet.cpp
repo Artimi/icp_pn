@@ -102,15 +102,16 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
   * Vrati seznam vsech siti ulozenych danym uzivatelem
   * @param username Uzivatelske jmeno
   */
- QList<PetriNet *> ManipulateNet::getNetList(QString username)
+ void ManipulateNet::getNetList(QString username, QList<PetriNet*> result)
  {
-     QList<PetriNet *> result;
+     //QList<PetriNet *> result;
+     result.clear();
      QString userdir = apppath + "nets/" + username;
      QDir dir(userdir);
      if (!dir.exists())
      {
          /* Uzivatel nema jeste nic ulozeneho */
-         return result;
+         return;
      }
      else
      {
@@ -123,16 +124,16 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
              if (rx.indexIn(files.at(i)) != -1)
              {
                  /* Zajimaji me jen site, ktere odpovidaji predpisu */
-                 PetriNet * net;
-                 qDebug() << userdir + "" + files.at(i);
-                 QFile file(userdir + "" + files.at(i));
+                 PetriNet *net = new PetriNet;
+                 QFile file(userdir + "/" + files.at(i));
                  if (!file.open(QIODevice::ReadOnly))
                  {
                      /* Nepodarilo se otevrit soubor pro cteni */
                      qDebug() << "Error while opening file for reading";
                      error = true;
-                     return result;
+                     return;
                  }
+                 qDebug() << userdir + "/" + files.at(i);
                  XMLHandler xmlhandler;
                  xmlhandler.setPetriNet(net);
                  if(xmlhandler.loadNetFromFile(&file) != 0)
@@ -140,14 +141,14 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
                      qDebug() << "Error while parsing the file into the net";
                      error = true;
                      file.close();
-                     return result;
+                     return;
                  }
 
-                 result.append(net);
+                 result << net;
                  file.close();
              }
          }
-         return result;
+         return;
      }
  }
 

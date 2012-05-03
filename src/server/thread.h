@@ -16,6 +16,8 @@ public:
     explicit Thread(int socketDescriptor,QObject *parent = 0);
 
     void run();
+    QString getPath()
+    {   return apppath; }
     QString getUsername()
     {   return username; }
     bool authenticate(QString username, QString passwd);
@@ -23,7 +25,6 @@ signals:
     void error(QTcpSocket::SocketError socketError);
 
 public slots:
-    //void readyRead();
     void disconnected();
     void handleRequest();
 
@@ -31,6 +32,7 @@ private:
     int socketDescriptor;
     QTcpSocket *socket;
     QString username;
+    QString apppath;
 
 public slots:
 

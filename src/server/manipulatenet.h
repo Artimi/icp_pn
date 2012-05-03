@@ -22,7 +22,7 @@ public:
     QString apppath;
     void saveNet(QString name, QString username, XMLHandler *xmlhandler);
     void loadNet(QString name, QString username, QString version, PetriNet *resultNet);
-    QList<PetriNet *> getNetList(QString username);
+    void getNetList(QString username, QList<PetriNet *> result);
 private:
 
     int investigateVersion(QString name, QString username);
