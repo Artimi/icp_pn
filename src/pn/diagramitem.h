@@ -46,12 +46,27 @@ public:
     void removeArrows();
     void addArrow(Arrow *arrow);
 
+    void setLineColor(QColor *lineColor)
+    {myLineColor = lineColor;}
+    void setDashLineColor(QColor *dashLineColor)
+    {myDashLineColor = dashLineColor;}
+    void setFontSize(int * fontSize)
+    {myFontSize = fontSize;}
+    void setObjectSize(int * objectSize)
+    {myObjectSize = objectSize;}
+
+
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
     DiagramType myDiagramType;
     QPolygonF myPolygon;
     QList<Arrow *> arrows;
     QString name;
+
+    QColor *myLineColor;
+    QColor *myDashLineColor;
+    int *myFontSize;
+    int *myObjectSize;
 
 
 

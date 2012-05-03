@@ -6,6 +6,7 @@
   */
 
 #include "arrow.h"
+#include "mainwindow.h"
 #include <math.h>
 
 const qreal Pi = 3.14;
@@ -23,7 +24,7 @@ Arrow::Arrow(DiagramItem *startItem, DiagramItem *endItem, QMenu *menu,
     variable = "";
 
     setFlag(QGraphicsItem::ItemIsSelectable, true);
-    setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ));
+
     myMenu = menu;
 
     updatePosition();
@@ -136,13 +137,14 @@ void Arrow::paint(QPainter *painter,
                                     -cos(angle + Pi - Pi / 3) * arrowSize);
 
     QPointF center = (line().p1() + line().p2()) / 2;
+    painter->setPen(QPen(MainWindow::LINECOLOR, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ));
     painter->drawLine(line());
     painter->drawLine(QLineF(destPoint, arrowP1));
     painter->drawLine(QLineF(destPoint, arrowP2));
     painter->drawText(QRectF(center.x()-10,center.y() + 10, 50,50),variable);
     if (isSelected())
     {
-        painter->setPen(QPen(Qt::darkBlue,1,Qt::DashLine));
+        painter->setPen(QPen(MainWindow::DASHLINECOLOR,1,Qt::DashLine));
         QLineF myLine = line();
         myLine.translate(0, 4.0);
         painter->drawLine(myLine);

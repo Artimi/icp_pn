@@ -10,6 +10,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//QMenu MainWindow::*PLACEMENU = NULL;
+//QMenu MainWindow::*TRANSITIONMENU = NULL;
+//QMenu MainWindow::*ARROWMENU = NULL;
+
+//int MainWindow::FONTSIZE = 10;
+//int MainWindow::OBJECTSIZE = 100;
+QFont MainWindow::FONT = QFont("times",10);
+QColor MainWindow::LINECOLOR = Qt::black;
+QColor MainWindow::DASHLINECOLOR= Qt::darkBlue;
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -22,17 +33,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabWidget->setTabsClosable(true);
     createActions();
     createMenus();
+    userName = "host";
     tabCount = 0;
     activeTab = -1;
+
+    xmlFormat = QSettings::registerFormat("xml",readXMLSettings,writeXMLSettings);
+    mySettings = new QSettings("settings.xml",xmlFormat,this);
+    loadSettings();
+
     addTab();
-
-    //setWindowState(Qt::WindowMaximized);
-
-//    xmlFormat = QSettings::registerFormat("xml",readXMLSettings,writeXMLSettings);
-//    settings = new QSettings(xmlFormat, QSettings::UserScope,"xsebek02_xsimon14","Petri net editor",this);
-//    settings->setPath(xmlFormat,QSettings::UserScope,QDir::currentPath() + "/settings");
-
-//    settings->setValue("mainwindow/widt",this->width());
 
 
 }
@@ -96,6 +105,7 @@ void MainWindow::createActions()
     connect(ui->actionConnectToServer,SIGNAL(triggered()),this,SLOT(connectToServer()));
     connect(ui->actionDisconnectFromServer,SIGNAL(triggered()),this,SLOT(disconnectFromServer()));
     connect(ui->actionLogin,SIGNAL(triggered()),this,SLOT(login()));
+    connect(ui->actionSettings,SIGNAL(triggered()),this,SLOT(settingsWindow()));
 
     connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
     connect(ui->tabWidget,SIGNAL(currentChanged(int)), this, SLOT(updateToolBar(int)));
@@ -173,27 +183,41 @@ int MainWindow::findTab(QString netName)
   * @return true v pořádku, false chyba
   */
 bool MainWindow::readXMLSettings(QIODevice &device, QSettings::SettingsMap &map)
-{
-    QXmlStreamReader reader(&device);
-    QString key;
-    while(!reader.atEnd())
+{// http://www.openshots.de/2011/03/qsettings-mit-xml-format/
+    QXmlStreamReader xmlReader(&device);
+    QStringList elements;
+
+    while (!xmlReader.atEnd() && !xmlReader.hasError())
     {
-        reader.readNext();
-        if(reader.isStartElement() && reader.tokenString() != "Settings")
+        xmlReader.readNext();
+
+        if (xmlReader.isStartElement() && xmlReader.name() != "settings")
         {
-            if(reader.text().isNull())
-            {
-                if(key.isEmpty())
-                    key = reader.tokenString();
-                else
-                    key += "/" + reader.tokenString();
+            elements.append(xmlReader.name().toString());
+        }
+        else if (xmlReader.isEndElement())
+        {
+            if(!elements.isEmpty()) elements.removeLast();
+        }
+        else if (xmlReader.isCharacters() && !xmlReader.isWhitespace())
+        {
+            QString key;
+
+            for(int i = 0; i < elements.size(); i++) {
+                if(i != 0) key += "/";
+                key += elements.at(i);
             }
-            else
-            {
-                map.insert(key, reader.text().data());
-            }
+
+            map[key] = xmlReader.text().toString();
         }
     }
+
+    if (xmlReader.hasError())
+    {
+        qWarning() << xmlReader.errorString();
+        return false;
+    }
+
     return true;
 }
 
@@ -205,23 +229,47 @@ bool MainWindow::readXMLSettings(QIODevice &device, QSettings::SettingsMap &map)
   */
 bool MainWindow::writeXMLSettings(QIODevice &device, const QSettings::SettingsMap &map)
 {
-    QXmlStreamWriter writer(&device);
-    writer.setAutoFormatting(true);
+        QXmlStreamWriter xmlWriter(&device);
+    xmlWriter.setAutoFormatting(true);
+    xmlWriter.writeStartDocument();
+    xmlWriter.writeStartElement("settings");
 
-    writer.writeStartDocument();
-    writer.writeStartElement("Settings");
+    QStringList prev_elements;
+    QSettings::SettingsMap::ConstIterator map_i;
 
-    foreach(QString key, map.keys())
+    for (map_i = map.begin(); map_i != map.end(); map_i++)
     {
-        foreach(QString elementKey, key.split("/"))
+
+        QStringList elements = map_i.key().split("/");
+
+        int x = 0;
+        while(x < prev_elements.size() && elements.at(x) == prev_elements.at(x))
         {
-            writer.writeStartElement(elementKey);
+            x++;
         }
-        writer.writeCDATA(map.value(key).toString());
-        writer.writeEndElement(); //elementKey
+
+        for(int i = prev_elements.size() - 1; i >= x; i--)
+        {
+            xmlWriter.writeEndElement();
+        }
+
+        for (int i = x; i < elements.size(); i++)
+        {
+            xmlWriter.writeStartElement(elements.at(i));
+        }
+
+        xmlWriter.writeCharacters(map_i.value().toString());
+
+        prev_elements = elements;
     }
-    writer.writeEndElement(); // Settings
-    writer.writeEndDocument();
+
+    for(int i = 0; i < prev_elements.size(); i++)
+    {
+        xmlWriter.writeEndElement();
+    }
+
+    xmlWriter.writeEndElement();
+    xmlWriter.writeEndDocument();
 
     return true;
 }
@@ -615,7 +663,7 @@ int MainWindow::netInformation()
 {
     if(activeTab >= 0)
     {
-        NetInformation diag(scenes.at(activeTab));
+        NetInformation diag(scenes.at(activeTab),userName, this);
         return diag.exec();
     }
     else
@@ -684,7 +732,7 @@ void MainWindow::handleReply()
     QByteArray rawdata = socket->readAll();
     int tab;
     bool deleteScene = true;
-//    qDebug()<< rawdata;
+//    qDebug()<< "Handle reply: " << rawdata;
 
     Message message;
     DiagramScene *scene = new DiagramScene(placeMenu, transitionMenu,arrowMenu,this);
@@ -844,10 +892,6 @@ void MainWindow::saveRemote()
 void MainWindow::openRemote()
 {
     sendListRequest();
-//    //QString data = "<message><command>5</command><data><petrinet author=\"ja\" name = \"sit\" version=\"12\"><description>some fuckin information about this goddamn net</description></petrinet><petrinet author=\"author\" name = \"pn\" version=\"18\"><description>where is your god? wher is your god now?</description></petrinet><petrinet author=\"nekdo\" name = \"za\" version=\"6\"><description>blalalbalakakaldjf alkjakldfjal</description></petrinet></data></message>";
-//  //QString data ="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<message><command>6</command><data><petrinet name=\"aloha\" version=\"5\" author=\"ja\">\n    <description></description>\n    <place name=\"p2\">\n        <x>426</x>\n        <y>167</y>\n        <token>4</token>\n        <token>8</token>\n        <token>3</token>\n    </place>\n    <transition name=\"n1\">\n        <x>224</x>\n        <y>119</y>\n        <guard>x &gt; 5</guard>\n        <action>y = x -2</action>\n    </transition>\n    <place name=\"p1\">\n        <x>43</x>\n        <y>97</y>\n        <token>4</token>\n        <token>8</token>\n        <token>2</token>\n        <token>6</token>\n        <token>6</token>\n    </place>\n    <arc>\n        <startItem>n1</startItem>\n        <endItem>p2</endItem>\n        <variable>y</variable>\n    </arc>\n    <arc>\n        <startItem>p1</startItem>\n        <endItem>n1</endItem>\n        <variable>x</variable>\n    </arc>\n</petrinet>\n</data></message>";
-//    socket->write(data.toLatin1());
-//    socket->flush();
     netListForm->exec();
 
 }
@@ -960,9 +1004,30 @@ void MainWindow::simulateStep()
     }
 }
 
+void MainWindow::settingsWindow()
+{
+    Settings sett(mySettings);
+    sett.exec();
+    loadSettings();
+    scenes.at(activeTab)->update();
 
+}
 
+void MainWindow::loadSettings()
+{
+    if(mySettings->value("mainWindowMaximized","false").toBool())
+        setWindowState(Qt::WindowMaximized);
+    else
+        setWindowState(Qt::WindowNoState);
 
+    LINECOLOR = mySettings->value("lineColor","#000080").value<QColor>();
+    DASHLINECOLOR = mySettings->value("dashLineColor","#000000").value<QColor>();
+    FONT = mySettings->value("font","").value<QFont>();
+    qDebug()<< FONT;
+//    FONTSIZE = mySettings->value("fontSize",10).toInt();
+//    OBJECTSIZE = mySettings->value("objectSize",100).toInt();
+
+}
 
 
 

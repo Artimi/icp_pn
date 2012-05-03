@@ -29,6 +29,7 @@
 #include "connect.h"
 #include "ui_loginwindow.h"
 #include "netlist.h"
+#include "settings.h"
 
 class QActionGroup;
 class QGraphicsView;
@@ -45,6 +46,16 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+//    static QMenu *PLACEMENU;
+//    static QMenu *TRANSITIONMENU;
+//    static QMenu *ARROWMENU;
+
+//    static int FONTSIZE;
+//    static int OBJECTSIZE;
+    static QFont FONT;
+    static QColor LINECOLOR;
+    static QColor DASHLINECOLOR;
 
 
 private:
@@ -81,10 +92,17 @@ private:
 
     NetList *netListForm;
 
-    QSettings *settings;
+    QSettings *mySettings;
     QSettings::Format xmlFormat;
+//    QColor myLineColor;
+//    QColor myDashLineColor;
+//    int myFontSize;
+//    int myObjectSize;
 
     QString userName;
+
+
+
 
 signals:
     void netListArrived();
@@ -125,6 +143,10 @@ public slots:
 
     void simulate();
     void simulateStep();
+
+    void settingsWindow();
+
+    void loadSettings();
 
 };
 

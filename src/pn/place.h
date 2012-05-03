@@ -16,6 +16,8 @@
 #include "diagramitem.h"
 #include <QRegExp>
 
+class MainWindow;
+
 class QRectF;
 class QPainter;
 class QString;

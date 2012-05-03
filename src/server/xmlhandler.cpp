@@ -345,6 +345,7 @@ int XMLHandler::readPetriNet(QXmlStreamReader *reader)
 
     if (reader->hasError())
     {
+        qDebug() << "reader->hasErrror()" << reader->errorString();
         return -1;
     }
     reader->clear();
@@ -500,5 +501,14 @@ int XMLHandler::readArc(QXmlStreamReader *reader)
   */
 void XMLHandler::writePetriNetList(QXmlStreamWriter *writer)
 {
+    foreach(PetriNet * petriNet, *myNetList)
+    {
+        writer->writeStartElement("petrinet");
+        writer->writeAttribute("name",petriNet->getName());
+        writer->writeAttribute("version",petriNet->getVersion());
+        writer->writeAttribute("author",petriNet->getAuthor());
 
+        writer->writeTextElement("description",petriNet->getDescription());
+        writer->writeEndElement();
+    }
 }

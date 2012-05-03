@@ -6,6 +6,7 @@
   */
 #include "place.h"
 #include <QMessageBox>
+#include "mainwindow.h"
 
 int Place::count = 0;
 
@@ -30,14 +31,16 @@ void Place::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 {
     if(isSelected())
     {
-        painter->setPen(QPen(Qt::darkBlue, 1, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+        painter->setPen(QPen(MainWindow::DASHLINECOLOR, 1, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
         painter->drawRect(boundingRect());
     }
 
-    painter->setPen(Qt::black);
+    painter->setPen(MainWindow::LINECOLOR);
 
     painter->setRenderHint(QPainter::Antialiasing);
     painter->drawEllipse(rectangle);
+
+    painter->setFont(MainWindow::FONT);
     painter->drawText(textRectangle,getTokenString());
 }
 

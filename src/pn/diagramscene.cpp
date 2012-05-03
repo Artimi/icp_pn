@@ -7,12 +7,14 @@
   */
 
 #include "diagramscene.h"
+#include "mainwindow.h"
 
 DiagramScene::DiagramScene(QMenu *placeMenu, QMenu *transitionMenu, QMenu *arrowMenu, QObject *parent)
     :   QGraphicsScene(parent)
 {
     myMode = MoveItem;
     line = 0;
+    version = "0";
 
     myPlaceMenu = placeMenu;
     myTransitionMenu = transitionMenu;
@@ -94,7 +96,7 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     case InsertLine:
         line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(), mouseEvent->scenePos()));
-        line->setPen(QPen(Qt::black));
+        line->setPen(QPen(MainWindow::LINECOLOR));
         addItem(line);
         break;
     case MoveItem:

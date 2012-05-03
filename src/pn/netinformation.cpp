@@ -7,16 +7,18 @@
 #include "netinformation.h"
 #include "ui_netinformation.h"
 
-NetInformation::NetInformation(DiagramScene  *scene, QWidget *parent) :
+NetInformation::NetInformation(DiagramScene  *scene, QString author, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::netinformation)
 {
     ui->setupUi(this);
     myScene = scene;
 
-    ui->LEAuthor->setText(myScene->getAuthor());
+    ui->LEAuthor->setText(author);
+    ui->LEAuthor->setReadOnly(true);
     ui->LEName->setText(myScene->getName());
     ui->LEVersion->setText(myScene->getVersion());
+    ui->LEVersion->setReadOnly(true);
     ui->TEDescription->setPlainText(myScene->getDescription());
     connect(ui->buttonBox,SIGNAL(accepted()),
                                  this, SLOT(saveInformation()));

@@ -382,6 +382,7 @@ int XMLHandler::readPetriNet(QXmlStreamReader *reader)
 
     if (reader->hasError())
     {
+
         return -1;
     }
     reader->clear();

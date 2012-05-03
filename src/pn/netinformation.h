@@ -22,7 +22,7 @@ class NetInformation : public QDialog
     Q_OBJECT
     
 public:
-    explicit NetInformation(DiagramScene * scene ,QWidget *parent = 0);
+    explicit NetInformation(DiagramScene * scene ,QString author, QWidget *parent = 0);
     ~NetInformation();
     
 private:

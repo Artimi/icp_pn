@@ -6,8 +6,9 @@ při prvním kliknutí se vykresluje do středu plátna - OPRAVIT
 přidání hran
     - PROBLEM - pokud se má hrana napojovat na levý horní roh Přechodu,způsobuje problémy jinak ok
 označování objektů na plátně, označit vše, označit více pomcí CTRL
-    - PROBLEM - nevím jak docílit aby se kolem objektu objevoval čtverec značící označení, zatím je to červenou barvou
+    - DONE
 zoom in/out
+    - kašlat na to
 místo/vedle nápisů v toolbaru, v menu dát ikonky
 posouvání objektů na plátně
     -DONE
@@ -21,17 +22,19 @@ import z XML do DiagramScene
 ukládání a otevírání lokálně
     - DONE (pamatování si souboru a jen ukládání pomocí uložit jinak uložit jako?)
 přihlašování na server (http://doc.qt.nokia.com/4.7-snapshot/network-fortuneclient.html)
-    - DONE na straně klienta
+    - DONE
 ukládání a otevírání na server
-    - PARTLY jen ukládání
+    - DONE - dodělat aby se zobrazovala hlavně poslední verze (kravina)
 konfigurace nastavení (http://qt-project.org/doc/qt-4.8/qsettings.html)
 funkce krok (více?) vpřed vzad
     -http://doc.qt.nokia.com/4.7-snapshot/tools-undoframework.html
+    - na to asi kašlem
 dialog na uložení při zavírání změněné scene (pomocí undoframework a clean state)
 menu About, představení editoru
 doprovodné informace k síti (autor, název, verze, stručný popis - spíše u serveru, ale zadáno na straně klienta)
     - DONE
 vyhledávání sítě pomocí klíčových slov (na serveru)
+    -DONE
 prohlížení nápovědy přes externí prohlížeč
 
 memory leak: addTab() 330 000 B
@@ -39,14 +42,19 @@ memory leak: addTab() 330 000 B
 
 Server: 
 
-konkurentní server (http://doc.qt.nokia.com/4.7-snapshot/network-threadedfortuneserver.html) DONE
-načítání XML souboru do interní třídy Petri Net - DONE
-Petri Net -> XML - DONE
+konkurentní server (http://doc.qt.nokia.com/4.7-snapshot/network-threadedfortuneserver.html)
+    - DONE
+načítání XML souboru do interní třídy Petri Net
+    - DONE
+Petri Net -> XML
+    - DONE
+    - TODO!!!! doplnit změnu verze zapisovaného souboru, to samé i a autorem
 simulace po kroku, do konce (http://doc.qt.nokia.com/4.7-snapshot/statemachine-api.html ?)
-správa verzí - PARTLY DONE, hotovo na urovni souboru
+správa verzí
+    - PARTLY DONE, hotovo na urovni souboru
 logování přístupu na server a spouštění simulací atd.
-autentizace a autorizace uživatelů - PARTLY DONE, potreba dodelat zabezpeceny prenos
-segfault pri parsovani zpravy, neco zrejme nealokuju - co? muzes se na to podivat?
+autentizace a autorizace uživatelů 
+    - DONE 
 
 Makefile:
 

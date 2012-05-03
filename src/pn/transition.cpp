@@ -5,6 +5,7 @@
   * @author xsebek02, xsimon14
   */
 #include "transition.h"
+#include "mainwindow.h"
 
 int Transition::count = 0;
 
@@ -34,11 +35,11 @@ void Transition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 {
     if(isSelected())
     {
-        painter->setPen(QPen(Qt::darkBlue, 1, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+        painter->setPen(QPen(MainWindow::DASHLINECOLOR, 1, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
         painter->drawRect(boundingRect());
     }
 
-    painter->setPen(Qt::black);
+    painter->setPen(MainWindow::LINECOLOR);
 
     painter->setRenderHint(QPainter::Antialiasing);
     painter->drawRect(rectangle);

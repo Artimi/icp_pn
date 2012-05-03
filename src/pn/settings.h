@@ -2,7 +2,9 @@
 #define SETTINGS_H
 
 #include <QDialog>
+#include <QSettings>
 #include <QFontDialog>
+#include <QColorDialog>
 
 namespace Ui {
 class Settings;
@@ -13,11 +15,25 @@ class Settings : public QDialog
     Q_OBJECT
     
 public:
-    explicit Settings(QWidget *parent = 0);
+    explicit Settings(QSettings *settings,QWidget *parent = 0);
     ~Settings();
     
+public slots:
+    void fontSettings();
+    void lineColorSettings();
+    void dashLineColorSettings();
+
+    void saveSettings();
+
 private:
     Ui::Settings *ui;
+
+    QFont myFont;
+    QColor myLineColor;
+    QColor myDashLineColor;
+    bool myMainWindowMaximized;
+
+    QSettings *mySettings;
 };
 
 #endif // SETTINGS_H

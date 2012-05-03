@@ -1,14 +1,49 @@
 #include "settings.h"
 #include "ui_settings.h"
 
-Settings::Settings(QWidget *parent) :
+Settings::Settings(QSettings * settings,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Settings)
 {
     ui->setupUi(this);
+
+    mySettings = settings;
+
+    connect(ui->PBLineColor,SIGNAL(clicked()),this,SLOT(lineColorSettings()));
+    connect(ui->PBDashLineColor,SIGNAL(clicked()),this,SLOT(dashLineColorSettings()));
+    connect(ui->PBFont,SIGNAL(clicked()),this,SLOT(fontSettings()));
+    connect(this,SIGNAL(accepted()),this,SLOT(saveSettings()));
+
 }
 
 Settings::~Settings()
 {
     delete ui;
+}
+
+void Settings::fontSettings()
+{
+    bool ok;
+    myFont = QFontDialog::getFont(&ok,
+                                  QFont("Times",10),
+                                  this);
+}
+
+void Settings::lineColorSettings()
+{
+    myLineColor = QColorDialog::getColor(mySettings->value("lineColor","#000080").value<QColor>(),this);
+}
+
+void Settings::dashLineColorSettings()
+{
+    myDashLineColor = QColorDialog::getColor(mySettings->value("dashLineColor","#000000").value<QColor>(),this);
+}
+
+void Settings::saveSettings()
+{
+//    mySettings->setValue("fontSize",ui->SBFontSize->value());
+    mySettings->setValue("lineColor",myLineColor);
+    mySettings->setValue("dashLineColor",myDashLineColor);
+    mySettings->setValue("fone",myFont);
+//    mySettings->setValue("mainWindowMaximized",ui->CBMaximized->isChecked());
 }
