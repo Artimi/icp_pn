@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     createActions();
     createMenus();
     tabCount = 0;
+    activeTab = -1;
     addTab();
 
     //setWindowState(Qt::WindowMaximized);
@@ -287,6 +288,9 @@ void MainWindow::closeTab(int tab)
     scenes.removeAt(tab);
     delete scene;
     delete view;
+
+    if(scenes.isEmpty())
+        activeTab = -1;
 }
 
 /**
@@ -365,38 +369,46 @@ void MainWindow::updateToolBar(int tab)
   */
 void MainWindow::saveLocal()
 {
-    DiagramScene * scene = scenes.at(activeTab);
-    XMLHandler xmlhandler;
-    xmlhandler.setScene(scene);
-    QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Save petri net"),
-                                                    "",
-                                                    tr("All Files(*)"));
-    if(fileName.isEmpty())
-        return;
+    if(activeTab >= 0)
+    {
+        DiagramScene * scene = scenes.at(activeTab);
+        XMLHandler xmlhandler;
+        xmlhandler.setScene(scene);
+        QString fileName = QFileDialog::getSaveFileName(this,
+                                                        tr("Save petri net"),
+                                                        "",
+                                                        tr("All Files(*)"));
+        if(fileName.isEmpty())
+            return;
+        else
+        {
+            QFile file(fileName);
+            if (!file.open(QIODevice::WriteOnly))
+            {
+                printError(tr("File can not be opened.")+file.errorString());
+                return;
+            }
+
+        xmlhandler.saveNetToFile(&file);
+
+        //jméno sítě
+        QRegExp re(".*/(\\w+)(?:\\.*)?");
+        re.indexIn(fileName);
+        QString netName = re.cap(1);
+
+        if(scene->getName() == "")
+            scene->setName(netName);
+
+        ui->tabWidget->setTabText(activeTab,netName);
+
+        ui->statusBar->showMessage(tr("File saved"));
+        file.close();
+        }
+    }
     else
     {
-        QFile file(fileName);
-        if (!file.open(QIODevice::WriteOnly))
-        {
-            printError(tr("File can not be opened.")+file.errorString());
-            return;
-        }
-
-    xmlhandler.saveNetToFile(&file);
-
-    //jméno sítě
-    QRegExp re(".*/(\\w+)(?:\\.*)?");
-    re.indexIn(fileName);
-    QString netName = re.cap(1);
-
-    if(scene->getName() == "")
-        scene->setName(netName);
-
-    ui->tabWidget->setTabText(activeTab,netName);
-
-    ui->statusBar->showMessage(tr("File saved"));
-    file.close();
+        printError(tr("No scene to handle"));
+        return;
     }
 }
 
@@ -601,8 +613,16 @@ void MainWindow::deleteItem()
   */
 int MainWindow::netInformation()
 {
-    NetInformation diag(scenes.at(activeTab));
-    return diag.exec();
+    if(activeTab >= 0)
+    {
+        NetInformation diag(scenes.at(activeTab));
+        return diag.exec();
+    }
+    else
+    {
+        printError(tr("No scene to handle"));
+        return -1;
+    }
 }
 
 /**
@@ -781,28 +801,36 @@ void MainWindow::login()
   */
 void MainWindow::saveRemote()
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
+    if(activeTab >= 0)
     {
-        Message message;
-        message.command = Message::SAVE;
-
-        XMLHandler xmlhandler;
-        xmlhandler.setScene(scenes.at(activeTab));
-        xmlhandler.setMessage(&message);
-
-        while(scenes.at(activeTab)->getName() == "")
+        if (socket->state() == QAbstractSocket::ConnectedState)
         {
-            if (netInformation() == QDialog::Rejected)
-                return;
-            ui->statusBar->showMessage(tr("You have to insert at least name of the net."));
+            Message message;
+            message.command = Message::SAVE;
+
+            XMLHandler xmlhandler;
+            xmlhandler.setScene(scenes.at(activeTab));
+            xmlhandler.setMessage(&message);
+
+            while(scenes.at(activeTab)->getName() == "")
+            {
+                if (netInformation() == QDialog::Rejected)
+                    return;
+                ui->statusBar->showMessage(tr("You have to insert at least name of the net."));
+            }
+            socket->write(xmlhandler.writeMessage().toLatin1());
+            socket->flush();
+            ui->statusBar->showMessage(tr("Net was sent to server."));
         }
-        socket->write(xmlhandler.writeMessage().toLatin1());
-        socket->flush();
-        ui->statusBar->showMessage(tr("Net was sent to server."));
+        else
+        {
+            printError("You have to be connected to server to save Petri Net to remote repository.");
+        }
     }
     else
     {
-        printError("You have to be connected to server to save Petri Net to remote repository.");
+        printError(tr("No scene to handle"));
+        return;
     }
 }
 
@@ -852,57 +880,76 @@ void MainWindow::sendListRequest()
 }
 
 /**
-  *
+  * Pošle serveru žádost o simulaci aktivní scény až do konce
   */
 void MainWindow::simulate()
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
+    if(activeTab <=0)
     {
-        Message message;
-        message.command = Message::SIMULATE;
-        message.simulationSteps = 1;
+        if (socket->state() == QAbstractSocket::ConnectedState)
+        {
+            Message message;
+            message.command = Message::SIMULATE;
+            message.simulationSteps = 1;
 
-        XMLHandler xmlhandler;
-        xmlhandler.setMessage(&message);
-        xmlhandler.setScene(scenes.at(activeTab));
+            XMLHandler xmlhandler;
+            xmlhandler.setMessage(&message);
+            xmlhandler.setScene(scenes.at(activeTab));
 
-        socket->write(xmlhandler.writeMessage().toUtf8());
-        socket->flush();
+            socket->write(xmlhandler.writeMessage().toUtf8());
+            socket->flush();
+        }
+        else
+        {
+            printError(tr("You have to be connected to server to simulate net."));
+        }
     }
     else
     {
-        printError(tr("You have to be connected to server to simulate net."));
+        printError(tr("No scene to handle"));
+        return;
     }
 }
 
+/**
+  * Pošle serveru žádost o simulaci aktivní scény o jeden krok, nejdříve je
+  * třeba vybrat prováděný přechod
+  */
 void MainWindow::simulateStep()
 {
-    if (socket->state() == QAbstractSocket::ConnectedState)
+    if(activeTab <=0)
     {
-        DiagramScene * scene = scenes.at(activeTab);
-        QList<QGraphicsItem *> list = scene->selectedItems();
-
-        if(list.isEmpty() || list.first()->type() != Transition::Type)
+        if (socket->state() == QAbstractSocket::ConnectedState)
         {
-            printError(tr("You have to choose transition to simulate one step of petri net"));
-            return;
+            DiagramScene * scene = scenes.at(activeTab);
+            QList<QGraphicsItem *> list = scene->selectedItems();
+
+            if(list.isEmpty() || list.first()->type() != Transition::Type)
+            {
+                printError(tr("You have to choose transition to simulate one step of petri net"));
+                return;
+            }
+
+            Message message;
+            message.command = Message::SIMULATE;
+            message.simulationSteps = 0;
+
+            XMLHandler xmlhandler;
+            xmlhandler.setMessage(&message);
+            xmlhandler.setScene(scene);
+
+            socket->write(xmlhandler.writeMessage().toUtf8());
+            socket->flush();
         }
-
-
-        Message message;
-        message.command = Message::SIMULATE;
-        message.simulationSteps = 0;
-
-        XMLHandler xmlhandler;
-        xmlhandler.setMessage(&message);
-        xmlhandler.setScene(scenes.at(activeTab));
-
-        socket->write(xmlhandler.writeMessage().toUtf8());
-        socket->flush();
+        else
+        {
+            printError(tr("You have to be connected to server to simulate net."));
+        }
     }
     else
     {
-        printError(tr("You have to be connected to server to simulate net."));
+        printError(tr("No scene to handle"));
+        return;
     }
 }
 
