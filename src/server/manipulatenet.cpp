@@ -7,7 +7,7 @@
 #include "manipulatenet.h"
 
 /**
-  * Inicializuje manipulacni strukturu
+  * Kontruktor manipulacni struktury
   */
 ManipulateNet::ManipulateNet()
 {
@@ -20,7 +20,7 @@ ManipulateNet::ManipulateNet()
   * Ulozi sit do souboru s posledni verzi
   * @param name Jmeno site
   * @param username Uzivatelske jmeno
-  * @param
+  * @param xmlhandler Struktura drzici Petriho sit se vsemi potrebnymi metadaty
   */
 void ManipulateNet::saveNet(QString name, QString username,XMLHandler *xmlhandler)
 {
@@ -104,6 +104,7 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
 /**
   * Vrati seznam vsech siti ulozenych danym uzivatelem
   * @param username Uzivatelske jmeno
+  * @param result Adresa na seznam Petriho siti pro ulozeni vysledku
   */
  void ManipulateNet::getNetList(QString username, QList<PetriNet*>* result)
  {

@@ -6,6 +6,9 @@
   */
 #include "thread.h"
 
+/**
+  * Konstruktor vlakna
+  */
 Thread::Thread(int socketDescriptor, QObject *parent) :
     QThread(parent)
 {
