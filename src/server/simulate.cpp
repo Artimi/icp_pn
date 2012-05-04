@@ -15,11 +15,11 @@ Simulate::Simulate()
 
 
 /**
-  * Odsimuluje sit az do konce
+  * Odsimuluje jeden krok simulace
   */
 void Simulate::SimulateStep(PetriNet *petriNet)
 {
-    qDebug() << "Cela simulace";
+    qDebug() << "Jeden krok simulace";
     PetriNetTransition * transition;
     QList<PetriNetArrow *> inArrows;
     QList<PetriNetArrow *> outArrows;
@@ -40,6 +40,11 @@ void Simulate::SimulateStep(PetriNet *petriNet)
                 if(!this->error)
                 {
                     /* Vsecko probehlo v poradku, navazano je, pokracuju */
+//                    transitionAction(pairs,transition->getAction());
+//                    if(!error)
+//                    {
+//                        removeTokens(pairs);
+//                    }
                 }
                 else
                 {
@@ -104,11 +109,48 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
 
 
 /**
-  * Odsimuluje jeden krok podle zvoleneho prechodu
+  * Odsimuluje celou petriho síť
   */
-void Simulate::SimulateAll(PetriNet *petriNet)
+bool Simulate::SimulateAll(PetriNet *petriNet)
 {
-    qDebug() << "Jeden krok";
+    qDebug() << "Cela simulace";
+
+    int stepsDone = 0;
+    int maxSteps = 20;
+    QList<PetriNetItem *> netItemList = petriNet->items();
+    PetriNetTransition * transition;
+
+    while(stepsDone < maxSteps && !error)
+    {
+        for(int i = 0; i < netItemList.count(); i++)
+        {
+            if(netItemList.at(i)->type() == PetriNetTransition::Type)
+            {
+                transition = (PetriNetTransition *) netItemList.at(i);
+                transition->chosen = true;
+                if(!simulateStep(petriNet))
+                {
+                    if(error)
+                    {
+                        //nějaká sémantická chyba
+                        return false;
+                    }
+                }
+                else
+                {
+                    stepsDone++;
+                }
+                transition->chosen = false;
+            }
+            if(stepsDone >= maxSteps)
+                break;
+        }
+    }
+
+    if(error)
+        return false;
+    else
+        return true;
 }
 
 
@@ -235,5 +277,16 @@ int Simulate::getFactor(QMap<PetriNetArrow *, int> *map,int count)
         i++;
     }
     return factor;
+}
+
+void Simulate::removeTokens(QMap<PetriNetArrow *, int> *map)
+{
+    QList<PetriNetArrow *> arrows = map->keys();
+
+    foreach(PetriNetArrow * arrow, arrows)
+    {
+        PetriNetPlace * place = (PetriNetPlace *) arrow->startItem();
+        place->removeToken((*map)[arrow]);
+    }
 }
 
