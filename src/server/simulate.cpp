@@ -73,7 +73,7 @@ bool Simulate::simulateStep(PetriNet *petriNet)
 /**
   * Vrati QMap uspesneho prechodu
   */
-void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow*,int>* pairs)
+bool Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow*,int>* pairs)
 {
     int arc;
     int i;
@@ -82,7 +82,9 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
     //naplnění pairs key value
     for(arc = 0; arc < inArrows.count(); arc++)
     {
-        (*pairs)[inArrows[arc]]=0;
+        PetriNetPlace * place = (PetriNetPlace *) inArrows[arc]->startItem();
+        if(place->getTokens().count() > 0)
+            (*pairs)[inArrows[arc]]=0;
     }
 
     int itemStates = getFactor(pairs,pairs->count());
@@ -93,6 +95,9 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
         for(arc = 0; arc < inArrows.count(); arc++)
         {
             PetriNetPlace * place = (PetriNetPlace *) inArrows[arc]->startItem();
+            if(place->getTokens().count() <= 0)
+                continue;
+
             factor = getFactor(pairs,arc);
 
             if(factor == 0)
@@ -114,11 +119,11 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
     if (i == itemStates)
     {
         /* Pokud jsem prošel všechny stavy a žádný nevyhovoval je chyba, nemám co navázat */
-        this->error = true;
+        return false;
     }
     else
     {
-        return;
+        return true;
     }
 }
 
@@ -466,6 +471,7 @@ int Simulate::getFactor(QMap<PetriNetArrow *, int> *map,int count)
         i++;
         iter++;
     }
+//    qDebug() << "count"<<count << "factor" << factor;
     return factor;
 }
 

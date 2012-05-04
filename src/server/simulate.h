@@ -23,7 +23,7 @@ public:
 
     bool simulateStep(PetriNet * petriNet);
     bool simulateAll(PetriNet * petriNet);
-    void getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow *, int> *pairs);
+    bool getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow *, int> *pairs);
 
 
 private:

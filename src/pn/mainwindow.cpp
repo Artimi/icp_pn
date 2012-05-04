@@ -450,7 +450,7 @@ void MainWindow::saveLocal()
         if(scene->getName() == "")
             scene->setName(netName);
 
-        ui->tabWidget->setTabText(activeTab,netName);
+        ui->tabWidget->setTabText(activeTab,netName+":"+scene->getVersion());
 
         ui->statusBar->showMessage(tr("File saved"));
         file.close();
@@ -773,12 +773,20 @@ void MainWindow::handleReply()
         case Message::SEND:
             //vložím na místo souhlasně pojmenované sítě v mainWindow, pokud
             // není žádná souhlasně pojmenovaná, vytvořím nový tab
-            if((tab = findTab(scene->getName())) >= 0)
-                replaceTab(scene,tab);
-            else if (scenes.at(activeTab)->items().isEmpty())
-                replaceTab(scene,activeTab);
+            if(activeTab >= 0)
+            {
+                if((tab = findTab(scene->getName())) >= 0)
+                    replaceTab(scene,tab);
+                else if (scenes.at(activeTab)->items().isEmpty())
+                    replaceTab(scene,activeTab);
+                else
+                    addTab();
+            }
             else
+            {
                 addTab(scene);
+            }
+
             deleteScene = false;
             break;
         case Message::ERROR:
