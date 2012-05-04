@@ -37,8 +37,9 @@ bool Simulate::simulateStep(PetriNet *petriNet)
                 outArrows = transition->getOutArrows();
                 QMap<PetriNetArrow*,int>  pairs;
                 QMap<PetriNetArrow *,int>  output;
-                getPairs(inArrows,transition->getGuard(),&pairs);
-                if(!this->error)
+                //getPairs(inArrows,transition->getGuard(),&pairs);
+               //if(!this->error)
+                if(getPairs(inArrows,transition->getGuard(),&pairs))
                 {
                     /* Vsecko probehlo v poradku, navazano je, pokracuju */
                     for(int arc = 0; arc < outArrows.count(); arc++)
@@ -58,9 +59,14 @@ bool Simulate::simulateStep(PetriNet *petriNet)
                         return false;
                     }
                 }
+                else if(this->error)
+                {
+                    /* Zrejme semanticka chyba nekde v prubehu */
+                    return false;
+                }
                 else
                 {
-                    /* Nepodarilo se navazat, vracim chybu */
+                    /* Nepodarilo se navazat */
                     return false;
                 }
                 break;
@@ -154,6 +160,7 @@ bool Simulate::simulateAll(PetriNet *petriNet)
 
     while(!this->error)
     {
+        qDebug()<<"vstoupil jsem do smycky";
         changed = 0;
         for (int i = 0; i < transitionListCount; i++)
         {
@@ -161,9 +168,11 @@ bool Simulate::simulateAll(PetriNet *petriNet)
             transitionList.at(i)->chosen = true;
             if (!simulateStep(petriNet))
             {
+                qDebug()<<"neprobehl prechod";
                 if(this->error)
                 {
                     /* Semanticka chyba */
+                    qDebug() << "skoncil se semantickou chybou";
                     return false;
                 }
             }
@@ -173,6 +182,7 @@ bool Simulate::simulateAll(PetriNet *petriNet)
             }
             transitionList.at(i)->chosen = false;
         }
+        qDebug() << "changed na konci smycky" << changed;
         if (changed == 0)
         {
             /* Neprobehla zadna zmena v prechodech a ani jeden nebyl proveditelny -> uspesny konec */
