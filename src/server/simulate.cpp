@@ -89,7 +89,6 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
 
     int itemStates = getFactor(pairs,pairs->count());
 
-
     for (i = 0 ; i < itemStates; i++)
     {
         arc = 0;
@@ -98,9 +97,9 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
             PetriNetPlace * place = (PetriNetPlace *) inArrows[arc]->startItem();
 
             (*pairs)[inArrows[arc]] = place->getTokens().at((i/getFactor(pairs,arc))%place->getTokens().count());
-
-            arc++;
+//            qDebug()<< "hrana s promennou" <<inArrows[arc]->getVariable() << place->getTokens().at((i/getFactor(pairs,arc))%place->getTokens().count());
         }
+//        qDebug() << "-----------------------------------------------------------";
 
         if(transitionGuard(pairs,guard))
         {
@@ -361,6 +360,7 @@ int Simulate::getFactor(QMap<PetriNetArrow *, int> *map,int count)
 
         factor *= tokenCount;
         i++;
+        iter++;
     }
     return factor;
 }
