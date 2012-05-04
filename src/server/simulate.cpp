@@ -138,12 +138,11 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
 {
     QList<QString> guards = guardGot.split("&");
     QString guard;
-    int set1, set2, op1, op2;
     for(int x = 0; x < guards.size(); x++)
     {
+        /* Projdu vsechny casti vyroku rozdelene podle & */
         guard = guards.at(x);
-
-        QRegExp rx("^//s*([^//s])//s*([^//s])//s*([^//s])//s*$");
+        QRegExp rx("^//s*([^//s]+)//s*([^//s]+)//s*([^//s]+)//s*$");
         if(rx.indexIn(guard) != -1)
         {
             /* Odpovida predpisu */
@@ -152,6 +151,7 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
             op1Var = rx.cap(1);
             op2Var = rx.cap(3);
 
+            int set1, set2, op1, op2;
             set1 = set2 = op1 = op2 = 0;
             QList<PetriNetArrow *> keys = map->keys();
             for (int i = 0; i < keys.size(); i++)
