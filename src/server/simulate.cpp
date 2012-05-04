@@ -188,25 +188,96 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
     return true;
 }
 
-void Simulate::transitionAction(QMap<PetriNetArrow *, int> *map, QString actionGot)
+
+void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNetArrow*,int> *output, QString actionGot)
 {
     QList<QString> actions = actionGot.split(",");
-
     QString action;
 
     foreach(action, actions)
     {
+        /* Pro kazdou akci rozdelene podle , */
         QRegExp rx("^//s*([a-zA-Z]+)//s*=//s*(.*)$");
 
         if(rx.indexIn(action) >= 0 )
         {
+            /* Jestlize vyhovuje akce predpisu */
             QString target = rx.cap(1);
             QString expression = rx.cap(2);
+            QList<PetriNetArrow *> keysIn = input->keys();
+            QList<PetriNetArrow *> keysOut = output->keys();
 
+            /* Projdu akce prechodu a navazu vysledky */
+            int result = 0;
+            QList<QString> scitance = expression.split("+");
+            int var = 0;
+            for (int i = 0;i < scitance.size(); i++)
+            {
+                int partialResult = 0;
+                /* Tady jsou jen pole, mezi kteryma je + */
+                QList<QString> odcitance = scitance.at(i).split("-");
+                if(odcitance.size() > 1)
+                {
+                    /* Kdyz jsou tam jeste nejake - */
+                    for(int x = 0; x < odcitance.size(); x++)
+                    {
+                        bool test = false;
+                        for(int n = 0; n < keysIn.size(); n++)
+                        {
+                            if (keysIn.at(n)->getVariable() == odcitance.at(x))
+                            {
+                                /* Jsem na indexu, kde odpovida promenne, takze vytahnu hodnotu */
+                                var = input->value(keysIn.at(i));
+                                test = true;
+                            }
+                        }
+                        if(!test)
+                        {
+                            /* Promenna neni drive definovana -> chyba*/
+                            error = true;
+                            return;
+                        }
+                        partialResult -= var;
+                    }
+                }
+                else
+                {
+                    bool test = false;
+                    for(int n = 0; n < keysIn.size(); n++)
+                    {
+                        if (keysIn.at(n)->getVariable() == odcitance.at(0))
+                        {
+                            /* Jsem na indexu, kde odpovida promenne, takze vytahnu hodnotu */
+                            var = input->value(keysIn.at(n));
+                            test = true;
+                        }
+                    }
+
+                    if(!test)
+                    {
+                        /* Promenna neni drive definovana -> chyba*/
+                        error = true;
+                        return;
+                    }
+                    partialResult += var;
+                }
+
+                result += partialResult;
+            }
+
+            /* Ulozim do spravne mista vysledny item */
+            for(int i = 0; i < keysOut.size(); i++)
+            {
+                if(keysOut.at(i)->getVariable() == target)
+                {
+                    ((PetriNetPlace *)(keysOut.at(i)->endItem()))->addToken(result);
+                }
+            }
         }
         else
         {
-
+            error = true;
+            return;
             //chyba parsování action
         }
     }
