@@ -62,13 +62,7 @@ void Simulate::SimulateAll(PetriNet *petriNet)
   */
 void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow*,int>* pairs)
 {
-    //tady by mohla byt nejaka kontrola
-    QMap<Arrow*,int> workingPairs;
-    for(int i = 0; i < inArrows; i++)
-    {
-        /* Projdu vsechny vstupni hrany */
-    }
-
+    int itemStates = getFactor(pairs,pairs->count);
 
 }
 
@@ -107,5 +101,29 @@ bool Simulate::checkCondition(QString oper, int op1, int op2)
 bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guard)
 {
 
+}
+
+
+
+
+
+int Simulate::getFactor(QMap<PetriNetArrow *, int> *map, count)
+{
+    int factor = 1;
+    int i = 0;
+    int tokenCount;
+    QMap<PetriNetArrow*,int>::const_iterator iter = map->begin();
+    while((iter != map->end()) || i < count)
+    {
+        PetriNetPlace *place = (PetriNetPlace *) iter.key()->startItem();
+        tokenCount = place->getTokens().count();
+
+        if(tokenCount == 0)
+            tokenCount = 1; //?? nesmím násobit nulou nebo by to bylo špatně, je jednička dobrý nápad?
+
+        factor *= tokenCount;
+        i++;
+    }
+    return factor;
 }
 
