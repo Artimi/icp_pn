@@ -264,6 +264,7 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
         {
             /* Jestlize vyhovuje akce predpisu */
             QString target = rx.cap(1);
+            qDebug()<< "target je"<<target;
             QString expression = rx.cap(2);
             QList<PetriNetArrow *> keysIn = input->keys();
             QList<PetriNetArrow *> keysOut = output->keys();
@@ -304,9 +305,10 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
                 else
                 {
                     bool test = false;
+                    qDebug() << "hledam promennou"<<odcitance.at(0).trimmed();
                     for(int n = 0; n < keysIn.size(); n++)
                     {
-                        if (keysIn.at(n)->getVariable() == odcitance.at(0))
+                        if (keysIn.at(n)->getVariable() == odcitance.at(0).trimmed())
                         {
                             /* Jsem na indexu, kde odpovida promenne, takze vytahnu hodnotu */
                             var = input->value(keysIn.at(n));
@@ -317,6 +319,7 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
                     if(!test)
                     {
                         /* Promenna neni drive definovana -> chyba*/
+                        qDebug() << "nedefinovana promenna";
                         error = true;
                         return;
                     }
@@ -331,12 +334,14 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
             {
                 if(keysOut.at(i)->getVariable() == target)
                 {
+                    qDebug() << "ukladam hodnotu" << result << "do promenne" << target;
                     ((PetriNetPlace *)(keysOut.at(i)->endItem()))->addToken(result);
                 }
             }
         }
         else
         {
+            qDebug() << "chyba parsovani pravidel";
             error = true;
             return;
             //chyba parsování action
