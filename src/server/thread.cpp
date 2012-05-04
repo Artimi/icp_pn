@@ -176,7 +176,10 @@ void Thread::handleRequest()
             }
             else
             {
-                simulate.simulateStep(petriNet);
+                if(!simulate.simulateStep(petriNet))
+                {
+                    simulate.error = true;
+                }
             }
 
             if (simulate.error)
