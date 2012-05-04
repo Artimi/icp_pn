@@ -131,7 +131,7 @@ bool Simulate::checkCondition(QString oper, int op1, int op2)
 
 bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot)
 {
-    QList guards = guardGot.split("&");
+    QList<QString> guards = guardGot.split("&");
     QString guard;
     int set1,set2;
     for(int x = 0; x < guards.size(); x++)
