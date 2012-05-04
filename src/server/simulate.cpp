@@ -64,6 +64,7 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
 {
     pairs= new QMap<PetriNetArrow*,int>;
     int arc;
+    int i;
 
     //naplnění pairs key value
     for(arc = 0; arc < inArrows.count(); arc++)
@@ -74,7 +75,7 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
     int itemStates = getFactor(pairs,pairs->count());
 
 
-    for (int i = 0 ; i < itemStates; i++)
+    for (i = 0 ; i < itemStates; i++)
     {
         arc = 0;
         for(arc = 0; arc < inArrows.count(); arc++)
@@ -87,7 +88,11 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
         }
 
         if(transitionGuard(pairs,guard))
-            break; //nasel jsem v pairs je sprváná kombinace tokenů
+        {
+            qDebug() << "Correct token combination" << (*pairs);
+            break; //nasel jsem v pairs je správná kombinace tokenů
+        }
+
     }
     if (i == itemStates)
         error = true; //pokud jsem prošel všechny stavy a žádný nevyhovoval je chyba, nemám co navázat
