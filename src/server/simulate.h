@@ -21,8 +21,8 @@ public:
 
     bool error;
 
-    void SimulateStep();
-    void SimulateAll();
+    void SimulateStep(PetriNet * petriNet);
+    void SimulateAll(PetriNet * petriNet);
 private:
 
 };
