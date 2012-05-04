@@ -41,8 +41,6 @@ bool Simulate::SimulateStep(PetriNet *petriNet)
                 if(!this->error)
                 {
                     /* Vsecko probehlo v poradku, navazano je, pokracuju */
-
-
                     for(int arc = 0; arc < outArrows.count(); arc++)
                     {
                         output[inArrows[arc]]=0; //garbage hodnota
@@ -195,6 +193,9 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
 {
     QList<QString> guards = guardGot.split("&");
     QString guard;
+
+        qDebug()<<map->keys();
+        qDebug()<<map->values();
     for(int x = 0; x < guards.size(); x++)
     {
         /* Projdu vsechny casti vyroku rozdelene podle & */
@@ -207,7 +208,7 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
             oper = rx.cap(2);
             op1Var = rx.cap(1);
             op2Var = rx.cap(3);
-
+            qDebug() << op1Var << oper << op2Var;
             int set1, set2, op1, op2;
             set1 = set2 = op1 = op2 = 0;
             QList<PetriNetArrow *> keys = map->keys();
@@ -219,18 +220,21 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
                     /* Jsem na indexu, kde odpovida promena 1, takze vytahnu hodnotu */
                     op1 = map->value(keys.at(i));
                     set1 = 1;
+                    qDebug() << "op1 prirazena hodnota" << op1;
                 }
 
                 if (keys.at(i)->getVariable() == op2Var)
                 {
                     /* Jsem na indexu, kde odpovida promena 2, takze vytahnu hodnotu */
                     op2 = map->value(keys.at(i));
+                    qDebug() << "op2 prirazena hodnota" << op2;
                     set2 = 1;
                 }
             }
             if (set1 == 0 || set2 == 0 || !checkCondition(oper,op1,op2))
             {
                 /* Jestli neplati byt jen jedno pravidlo, vracim chybu */
+                qDebug() << "nevyhovuje pravidlo";
                 return false;
             }
         }
@@ -242,6 +246,7 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
     }
 
     /* Jestli jsem se dostal az sem, je vsechno v poradku */
+    qDebug() << "nasel jsem spravnou kombinaci";
     return true;
 }
 
