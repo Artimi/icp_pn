@@ -48,10 +48,10 @@ načítání XML souboru do interní třídy Petri Net
     - DONE
 Petri Net -> XML
     - DONE
-    - TODO!!!! doplnit změnu verze zapisovaného souboru, to samé i a autorem
+    - doplnit změnu verze zapisovaného souboru, to samé i a autorem DONE
 simulace po kroku, do konce (http://doc.qt.nokia.com/4.7-snapshot/statemachine-api.html ?)
 správa verzí
-    - PARTLY DONE, hotovo na urovni souboru
+    - DONE
 logování přístupu na server a spouštění simulací atd.
 autentizace a autorizace uživatelů 
     - DONE 

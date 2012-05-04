@@ -5,6 +5,7 @@
   * @author xsebek02, xsimon14
   */
 #include "thread.h"
+#include "simulate.h"
 
 /**
   * Konstruktor vlakna
@@ -53,16 +54,18 @@ void Thread::handleRequest()
     XMLHandler xmlhandler;
     QList<PetriNet *> netList;
 
+    qDebug() << "jedna";
     xmlhandler.setMessage(&message);
     xmlhandler.setPetriNet(petriNet);
     xmlhandler.setNetList(&netList);
     xmlhandler.readMessage(QString(rawdata));
-
+    qDebug() << "dva";
     Message resultMsg;
     XMLHandler resultXml;
     QString out;
-    PetriNet *resultNet = new PetriNet;
-
+    //PetriNet *resultNet = new PetriNet;
+    Simulate simulate;
+    qDebug() << "tri";
     switch (message.command)
     {
         case Message::SLOGIN:
@@ -107,7 +110,6 @@ void Thread::handleRequest()
             resultXml.setMessage(&resultMsg);
             out = resultXml.writeMessage();
             rawdata = out.toUtf8();
-            qDebug() << socketDescriptor << "Sended lists:" << rawdata;
             socket->write(rawdata);
             socket->flush();
             /* Dealokuju seznam siti */
@@ -167,10 +169,39 @@ void Thread::handleRequest()
             break;
         case Message::SIMULATE:
             /* Pozadavek na simulaci */
+            qDebug() << socketDescriptor << "Request for the simulation";
+            if (message.simulationSteps == 0)
+            {
+                simulate.SimulateAll();
+            }
+            else
+            {
+                simulate.SimulateStep();
+            }
+
+            if (simulate.error)
+            {
+                /* Nastala chyba pri simulaci */
+                resultMsg.command = Message::ERROR;
+                resultMsg.errorText = "Error while simulation, perhaps there aren't any possible steps";
+            }
+            else
+            {
+                /* Sit byla v poradku odsimulovana */
+                resultMsg.command = Message::SEND;
+                resultXml.setPetriNet(petriNet);
+            }
+
+            /* Zprava bude odeslana */
+            resultXml.setMessage(&resultMsg);
+            out = resultXml.writeMessage();
+            rawdata = out.toUtf8();
+            socket->write(rawdata);
+            socket->flush();
             break;
     }
     delete petriNet; // maže se opravdu vždycky?
-    delete resultNet;
+    //delete resultNet;
 }
 
 /**

@@ -27,7 +27,8 @@ SOURCES += \
     petrinetplace.cpp \
     petrinettransition.cpp \
     petrinetobject.cpp \
-    xmlhandler.cpp
+    xmlhandler.cpp \
+    simulate.cpp
 
 HEADERS += \
     server.h \
@@ -40,4 +41,5 @@ HEADERS += \
     petrinetplace.h \
     petrinettransition.h \
     petrinetobject.h \
-    xmlhandler.h
+    xmlhandler.h \
+    simulate.h

@@ -137,7 +137,6 @@ void ManipulateNet::loadNet(QString name, QString username, QString version, Pet
                      error = true;
                      return;
                  }
-                 qDebug() << userdir + "/" + files.at(i);
                  XMLHandler xmlhandler;
                  xmlhandler.setPetriNet(net);
                  if(xmlhandler.loadNetFromFile(&file) != 0)
