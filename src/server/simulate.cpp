@@ -20,8 +20,49 @@ Simulate::Simulate()
 void Simulate::SimulateAll(PetriNet *petriNet)
 {
     qDebug() << "Cela simulace";
-    petriNet->setAuthor("Uzivatel po simulaci");
-    petriNet->setDescription("The end state of simulation");
+    PetriNetTransition * transition;
+    QList<PetriNetArrow *> inArrows;
+    QList<PetriNetArrow *> outArrows;
+    QList<PetriNetItem *> netItemList = petriNet->items();
+    for (int i = 0; i < netItemList.size(); i++)
+    {
+        if (netItemList.at(i)->type() == PetriNetTransition::type())
+        {
+            /* Item je prechod */
+            transition = (PetriNetTransition *) netItemList.at(i);
+            if (transition->chosen)
+            {
+                /* Prechod, ktery me zajima */
+                inArrows = transition->inArrows;
+                outArrows = transition->outArrows;
+                QMap<Arrow*,int> * pairs;
+                getPairs(inArrows,transition->getGuard(),&pairs);
+                if(!this->error)
+                {
+                    /* Vsecko probehlo v poradku, navazano je, pokracuju */
+                }
+                else
+                {
+                    /* Nepodarilo se navaz, vracim chybu */
+
+                }
+
+
+                break;
+            }
+        }
+    }
+    //petriNet->setAuthor("Uzivatel po simulaci");
+    //petriNet->setDescription("The end state of simulation");
+
+}
+
+/**
+  * Vrati QMap vsech moznych navazni prechodu
+  */
+void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Arrow*,int>* pairs)
+{
+    //
 
 }
 
