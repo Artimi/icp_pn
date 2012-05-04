@@ -17,7 +17,7 @@ Simulate::Simulate()
 /**
   * Odsimuluje sit az do konce
   */
-void Simulate::SimulateAll(PetriNet *petriNet)
+void Simulate::SimulateStep(PetriNet *petriNet)
 {
     qDebug() << "Cela simulace";
     PetriNetTransition * transition;
@@ -62,7 +62,30 @@ void Simulate::SimulateAll(PetriNet *petriNet)
   */
 void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow*,int>* pairs)
 {
-    int itemStates = getFactor(pairs,pairs->count);
+    pairs= new QMap<PetriNetArrow*,int>*;
+//    QMap<PetriNetArrow *,int>::const_iterator iter;
+    QList<PetriNetArrow *>::const_iterator iter;
+
+    int itemStates = getFactor(pairs,pairs->count());
+    int arc;
+
+    for (int i = 0 ; i < itemStates; i++)
+    {
+        arc = 0;
+        iter = inArrows->begin();
+        while (iter != inArrows->end())
+        {
+            PetriNetPlace * place = (PetriNetPlace *) iter.key()->startItem();
+
+            pairs[iter.key()] = place->getTokens().at((i/getFactor(pairs,arc))%place->getTokens().count());
+
+//            pairs[iter] = iter.key()->startItem()->getTokens()[(i/getFactor(pairs,arc))%iter.key()->startItem()->getTokens().count()];
+//            i/getFactor(pairs,arc);
+            iter++;
+            arc++;
+        }
+
+    }
 
 }
 
@@ -72,7 +95,7 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
 /**
   * Odsimuluje jeden krok podle zvoleneho prechodu
   */
-void Simulate::SimulateStep(PetriNet *petriNet)
+void Simulate::SimulateAll(PetriNet *petriNet)
 {
     qDebug() << "Jeden krok";
 }
@@ -138,13 +161,13 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guard)
 
 
 
-int Simulate::getFactor(QMap<PetriNetArrow *, int> *map, count)
+int Simulate::getFactor(QMap<PetriNetArrow *, int> *map,int count)
 {
     int factor = 1;
     int i = 0;
     int tokenCount;
     QMap<PetriNetArrow*,int>::const_iterator iter = map->begin();
-    while((iter != map->end()) || i < count)
+    while((iter != map->end()) && i < count)
     {
         PetriNetPlace *place = (PetriNetPlace *) iter.key()->startItem();
         tokenCount = place->getTokens().count();

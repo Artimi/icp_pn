@@ -23,14 +23,14 @@ public:
 
     void SimulateStep(PetriNet * petriNet);
     void SimulateAll(PetriNet * petriNet);
-    void getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow *, int> *pairs);
+    void getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<const PetriNetArrow *, int> *pairs);
 
 
 private:
     bool checkCondition(QString oper, int op1, int op2);
     bool transitionGuard(QMap<PetriNetArrow *,int> * map,QString guard);
 
-    int getFactor(QMap<PetriNetArrow *,int> *map, count);
+    int getFactor(QMap<PetriNetArrow *,int> *map, int count);
 
 };
 
