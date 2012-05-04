@@ -43,7 +43,7 @@ bool Simulate::SimulateStep(PetriNet *petriNet)
                     /* Vsecko probehlo v poradku, navazano je, pokracuju */
                     for(int arc = 0; arc < outArrows.count(); arc++)
                     {
-                        output[inArrows[arc]]=0; //garbage hodnota
+                        output[outArrows[arc]]=0; //garbage hodnota
                     }
 
                     transitionAction(&pairs,&output,transition->getAction());

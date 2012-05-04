@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<petrinet name="Test net" version="2" author="user">
+    <description></description>
+    <place name="p5">
+        <x>-61</x>
+        <y>25</y>
+        <token>3</token>
+        <token>8</token>
+        <token>10</token>
+    </place>
+    <place name="p6">
+        <x>145</x>
+        <y>19</y>
+        <token>5</token>
+    </place>
+    <place name="p7">
+        <x>354</x>
+        <y>23</y>
+        <token>2</token>
+        <token>1</token>
+    </place>
+    <place name="p8">
+        <x>136</x>
+        <y>443</y>
+    </place>
+    <transition name="n2" chosen="true">
+        <x>137</x>
+        <y>235</y>
+        <guard>x &gt; y &amp; y &gt; z</guard>
+        <action>a = x + y + z</action>
+    </transition>
+    <arc>
+        <startItem>p5</startItem>
+        <endItem>n2</endItem>
+        <variable>x</variable>
+    </arc>
+    <arc>
+        <startItem>p6</startItem>
+        <endItem>n2</endItem>
+        <variable>y</variable>
+    </arc>
+    <arc>
+        <startItem>p7</startItem>
+        <endItem>n2</endItem>
+        <variable>z</variable>
+    </arc>
+    <arc>
+        <startItem>n2</startItem>
+        <endItem>p8</endItem>
+        <variable>a</variable>
+    </arc>
+</petrinet>
