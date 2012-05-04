@@ -21,7 +21,7 @@ public:
 
     bool error;
 
-    void SimulateStep(PetriNet * petriNet);
+    bool SimulateStep(PetriNet * petriNet);
     bool SimulateAll(PetriNet * petriNet);
     void getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow *, int> *pairs);
 

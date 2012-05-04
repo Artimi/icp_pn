@@ -17,7 +17,7 @@ Simulate::Simulate()
 /**
   * Odsimuluje jeden krok simulace
   */
-void Simulate::SimulateStep(PetriNet *petriNet)
+bool Simulate::SimulateStep(PetriNet *petriNet)
 {
     qDebug() << "Jeden krok simulace";
     PetriNetTransition * transition;
@@ -35,21 +35,31 @@ void Simulate::SimulateStep(PetriNet *petriNet)
                 /* Prechod, ktery me zajima */
                 inArrows = transition->getInArrows();
                 outArrows = transition->getOutArrows();
-                QMap<PetriNetArrow*,int> * pairs;
-                getPairs(inArrows,transition->getGuard(),pairs);
+                QMap<PetriNetArrow*,int>  pairs;
+                QMap<PetriNetArrow *,int>  output;
+                getPairs(inArrows,transition->getGuard(),&pairs);
                 if(!this->error)
                 {
                     /* Vsecko probehlo v poradku, navazano je, pokracuju */
-//                    transitionAction(pairs,transition->getAction());
-//                    if(!error)
-//                    {
-//                        removeTokens(pairs);
-//                    }
+
+
+                    for(int arc = 0; arc < outArrows.count(); arc++)
+                    {
+                        output[inArrows[arc]]=0; //garbage hodnota
+                    }
+
+                    transitionAction(&pairs,&output,transition->getAction());
+                    if(!error)
+                    {
+                        removeTokens(&pairs);
+                    }
+                    else
+                        return false;
                 }
                 else
                 {
                     /* Nepodarilo se navaz, vracim chybu */
-
+                    return false;
                 }
 
 
@@ -57,6 +67,7 @@ void Simulate::SimulateStep(PetriNet *petriNet)
             }
         }
     }
+    return true;
     //petriNet->setAuthor("Uzivatel po simulaci");
     //petriNet->setDescription("The end state of simulation");
 
@@ -67,7 +78,6 @@ void Simulate::SimulateStep(PetriNet *petriNet)
   */
 void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow*,int>* pairs)
 {
-    pairs= new QMap<PetriNetArrow*,int>;
     int arc;
     int i;
 
@@ -128,7 +138,7 @@ bool Simulate::SimulateAll(PetriNet *petriNet)
             {
                 transition = (PetriNetTransition *) netItemList.at(i);
                 transition->chosen = true;
-                if(!simulateStep(petriNet))
+                if(!SimulateStep(petriNet))
                 {
                     if(error)
                     {

@@ -16,6 +16,8 @@ public:
     QList<int> getTokens()
     {return tokens;}
 
+    bool removeToken(int token);
+
     int type()
     {return Type;}
 private:
