@@ -26,17 +26,17 @@ void Simulate::SimulateAll(PetriNet *petriNet)
     QList<PetriNetItem *> netItemList = petriNet->items();
     for (int i = 0; i < netItemList.size(); i++)
     {
-        if (netItemList.at(i)->type() == PetriNetTransition::type())
+        if (netItemList.at(i)->type() == PetriNetTransition::Type)
         {
             /* Item je prechod */
             transition = (PetriNetTransition *) netItemList.at(i);
             if (transition->chosen)
             {
                 /* Prechod, ktery me zajima */
-                inArrows = transition->inArrows;
-                outArrows = transition->outArrows;
+                inArrows = transition->getInArrows();
+                outArrows = transition->getOutArrows();
                 QMap<Arrow*,int> * pairs;
-                getPairs(inArrows,transition->getGuard(),&pairs);
+                getPairs(inArrows,transition->getGuard(),pairs);
                 if(!this->error)
                 {
                     /* Vsecko probehlo v poradku, navazano je, pokracuju */
