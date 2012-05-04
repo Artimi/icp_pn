@@ -125,40 +125,54 @@ bool Simulate::checkCondition(QString oper, int op1, int op2)
 
 }
 
-bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guard)
+bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot)
 {
-    QRegExp rx("^([^//s])//s*([^//s])//s*([^//s])$");
-    if(rx.indexIn(guard) != -1)
+    QList guards = guardGot.split("&");
+    QString guard;
+    for(int x = 0; x < guards.size(); x++)
     {
-        /* Odpovida predpisu */
-        QString op1Var,op2Var,oper;
-        oper = rx.cap(2);
-        op1Var = rx.cap(1);
-        op2Var = rx.cap(3);
-        int op1,op2;
-        QList<PetriNetArrow *> keys = map->keys();
-        for (int i = 0; i < keys.size(); i++)
-        {
-            /* Projdu vsechny prvky */
-            if (keys.at(i)->getVariable() == op1Var)
-            {
-                /* Jsem na indexu, kde odpovida promena 1, takze vytahnu hodnotu */
-                op1 = map->value(keys.at(i));
-            }
+        guard = guards.at(i);
 
-            if (keys.at(i)->getVariable() == op2Var)
+        QRegExp rx("^//s*([^//s])//s*([^//s])//s*([^//s])//s*$");
+        if(rx.indexIn(guard) != -1)
+        {
+            /* Odpovida predpisu */
+            QString op1Var,op2Var,oper;
+            oper = rx.cap(2);
+            op1Var = rx.cap(1);
+            op2Var = rx.cap(3);
+            int op1,op2;
+            QList<PetriNetArrow *> keys = map->keys();
+            for (int i = 0; i < keys.size(); i++)
             {
-                /* Jsem na indexu, kde odpovida promena 2, takze vytahnu hodnotu */
-                op2 = map->value(keys.at(i));
+                /* Projdu vsechny prvky */
+                if (keys.at(i)->getVariable() == op1Var)
+                {
+                    /* Jsem na indexu, kde odpovida promena 1, takze vytahnu hodnotu */
+                    op1 = map->value(keys.at(i));
+                }
+
+                if (keys.at(i)->getVariable() == op2Var)
+                {
+                    /* Jsem na indexu, kde odpovida promena 2, takze vytahnu hodnotu */
+                    op2 = map->value(keys.at(i));
+                }
+            }
+            if (!checkCondition(oper,op1,op2))
+            {
+                /* Jestli neplati byt jen jedno pravidlo, vracim chybu */
+                return false;
             }
         }
-        return checkCondition(oper,op1,op2);
+        else
+        {
+            /* Nektere pravido neodpovida predpisu */
+            return false;
+        }
     }
-    else
-    {
-        /* Neodpovida predpisu */
-        return false;
-    }
+
+    /* Jestli jsem se dostal az sem, je vsechno v poradku */
+    return true;
 }
 
 
