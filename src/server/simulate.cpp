@@ -141,7 +141,7 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
     int set1,set2;
     for(int x = 0; x < guards.size(); x++)
     {
-        guard = guards.at(i);
+        guard = guards.at(x);
 
         QRegExp rx("^//s*([^//s])//s*([^//s])//s*([^//s])//s*$");
         if(rx.indexIn(guard) != -1)
