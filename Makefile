@@ -44,7 +44,7 @@ clean:
 
 pack:
 	rm -f $(ARCHNAME)
-	tar -czf $(ARCHNAME) src/*/*.{cpp,h,pro,ui} Doxyfile examples/* README.txt Makefile
+	tar -czf $(ARCHNAME) src/*/*.{cpp,h,pro,ui} Doxyfile examples/* README.txt Makefile settings.xml doc/help.html
 	
 testarchive:
 	rm -rf $(TESTDIR)

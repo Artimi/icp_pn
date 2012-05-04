@@ -143,8 +143,8 @@ bool Simulate::simulateAll(PetriNet *petriNet)
 {
     qDebug() << "Cela simulace";
 
-    //int stepsDone = 0;
-    //int maxSteps = 20;
+    int stepsDone = 0;
+    int maxSteps = 50;
     QList<PetriNetItem *> netItemList = petriNet->items();
     //PetriNetTransition * transition;
 
@@ -184,13 +184,21 @@ bool Simulate::simulateAll(PetriNet *petriNet)
             else
             {
                 changed++;
+                stepsDone++;
             }
             transitionList.at(i)->chosen = false;
         }
         qDebug() << "changed na konci smycky" << changed;
-        if (changed == 0)
+
+        if (changed == 0 || stepsDone >= maxSteps)
         {
-            /* Neprobehla zadna zmena v prechodech a ani jeden nebyl proveditelny -> uspesny konec */
+            if (stepsDone == 0)
+            {
+                /* Simulace skoncila, ale ani jeden prechod se neprovedl -> chyba*/
+                this->error = true;
+                return false;
+            }
+            /* Neprobehla zadna zmena v prechodech -> uspesny konec */
             break;
         }
     }
