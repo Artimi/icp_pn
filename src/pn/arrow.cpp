@@ -50,7 +50,9 @@ QRectF Arrow::boundingRect() const
   */
 QPainterPath Arrow::shape() const
 {
+
     QPainterPath path;
+    path.addPolygon(arrowHead);
     QPainterPathStroker stroker;
     stroker.setWidth(20);
     path.moveTo(line().p1());
@@ -148,9 +150,9 @@ void Arrow::paint(QPainter *painter,
     {
         painter->setPen(QPen(MainWindow::DASHLINECOLOR,1,Qt::DashLine));
         QLineF myLine = line();
-        myLine.translate(0, 4.0);
+        myLine.translate(sin(angle)*4, cos(angle)*4);
         painter->drawLine(myLine);
-        myLine.translate(0,-8.0);
+        myLine.translate(-sin(angle)*8, -cos(angle)*8);
         painter->drawLine(myLine);
     }
 }

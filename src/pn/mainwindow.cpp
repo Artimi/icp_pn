@@ -795,6 +795,7 @@ void MainWindow::handleReply()
             else
                 addTab(scene);
             deleteScene = false;
+            ui->statusBar->showMessage(tr("Simulation succeded."));
             break;
     }
     if(deleteScene)
