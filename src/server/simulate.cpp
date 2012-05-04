@@ -154,29 +154,6 @@ bool Simulate::simulateAll(PetriNet *petriNet)
 
     while(!this->error)
     {
-        /*for(int i = 0; i < netItemList.size(); i++)
-        {
-            if(netItemList.at(i)->type() == PetriNetTransition::Type)
-            {
-                transition = (PetriNetTransition *) netItemList.at(i);
-                transition->chosen = true;
-                if(!SimulateStep(petriNet))
-                {
-                    if(error)
-                    {
-                        //nějaká sémantická chyba
-                        return false;
-                    }
-                }
-                else
-                {
-                    stepsDone++;
-                }
-                transition->chosen = false;
-            }
-            if(stepsDone >= maxSteps)
-                break;
-        }*/
         changed = 0;
         for (int i = 0; i < transitionListCount; i++)
         {
