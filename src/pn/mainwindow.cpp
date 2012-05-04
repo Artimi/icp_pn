@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionMouse->setChecked(true);
     ui->mainToolBar->setMovable(false);
     ui->tabWidget->setTabsClosable(true);
+    ui->actionSimulate->setEnabled(false);
+    ui->actionSimulate_Step->setEnabled(false);
     createActions();
     createMenus();
     userName = "guest";
