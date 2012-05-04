@@ -75,6 +75,7 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
 {
     int arc;
     int i;
+    int factor;
 
     //naplnění pairs key value
     for(arc = 0; arc < inArrows.count(); arc++)
@@ -90,15 +91,16 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
         for(arc = 0; arc < inArrows.count(); arc++)
         {
             PetriNetPlace * place = (PetriNetPlace *) inArrows[arc]->startItem();
+            factor = getFactor(pairs,arc);
 
-            (*pairs)[inArrows[arc]] = place->getTokens().at((i/getFactor(pairs,arc))%place->getTokens().count());
-//            qDebug()<< "hrana s promennou" <<inArrows[arc]->getVariable() << place->getTokens().at((i/getFactor(pairs,arc))%place->getTokens().count());
+            if(factor == 0) // pokud nemá žádný token, smažu ho ze vstupních, stejně tam nemá co přijít
+                pairs->remove(inArrows[arc]);
+            else
+                (*pairs)[inArrows[arc]] = place->getTokens().at((i/getFactor(pairs,arc))%place->getTokens().count());
         }
-//        qDebug() << "-----------------------------------------------------------";
 
         if(transitionGuard(pairs,guard))
         {
-            qDebug() << "Correct token combination" << (*pairs);
             break; //nasel jsem v pairs je správná kombinace tokenů
         }
 
@@ -371,9 +373,6 @@ int Simulate::getFactor(QMap<PetriNetArrow *, int> *map,int count)
     {
         PetriNetPlace *place = (PetriNetPlace *) iter.key()->startItem();
         tokenCount = place->getTokens().count();
-
-        if(tokenCount == 0)
-            tokenCount = 1; //?? nesmím násobit nulou nebo by to bylo špatně, je jednička dobrý nápad?
 
         factor *= tokenCount;
         i++;
