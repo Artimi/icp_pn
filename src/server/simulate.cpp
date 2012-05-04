@@ -133,6 +133,7 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
 {
     QList guards = guardGot.split("&");
     QString guard;
+    int set1,set2;
     for(int x = 0; x < guards.size(); x++)
     {
         guard = guards.at(i);
@@ -146,6 +147,7 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
             op1Var = rx.cap(1);
             op2Var = rx.cap(3);
             int op1,op2;
+            set1 = set2 = 0;
             QList<PetriNetArrow *> keys = map->keys();
             for (int i = 0; i < keys.size(); i++)
             {
@@ -154,15 +156,17 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
                 {
                     /* Jsem na indexu, kde odpovida promena 1, takze vytahnu hodnotu */
                     op1 = map->value(keys.at(i));
+                    set1 = 1;
                 }
 
                 if (keys.at(i)->getVariable() == op2Var)
                 {
                     /* Jsem na indexu, kde odpovida promena 2, takze vytahnu hodnotu */
                     op2 = map->value(keys.at(i));
+                    set2 = 1;
                 }
             }
-            if (!checkCondition(oper,op1,op2))
+            if (set1 == 0 || set2 == 0 || !checkCondition(oper,op1,op2))
             {
                 /* Jestli neplati byt jen jedno pravidlo, vracim chybu */
                 return false;
