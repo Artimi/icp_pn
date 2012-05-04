@@ -157,6 +157,12 @@ void Arrow::paint(QPainter *painter,
     }
 }
 
+
+/**
+  * Vrátí bod průniku mezi line a item
+  * @param  line    čára která má pronikat item
+  * @param  item    item který je pronikán čarou
+  */
 QPointF Arrow::getIntersectionPoint(QLineF line, DiagramItem *item)
 {
     QPolygonF transitionPolygon;
@@ -176,7 +182,9 @@ QPointF Arrow::getIntersectionPoint(QLineF line, DiagramItem *item)
     return result;
 }
 
-
+/**
+  * Vyskočení right-click menu
+  */
 void Arrow::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
     scene()->clearSelection();

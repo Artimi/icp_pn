@@ -23,6 +23,9 @@ Settings::~Settings()
     delete ui;
 }
 
+/**
+  * Otevře dialog s nastavením fontu, ten je potom uložen do myFont
+  */
 void Settings::fontSettings()
 {
     bool ok;
@@ -31,16 +34,26 @@ void Settings::fontSettings()
                                   this);
 }
 
+/**
+  * Otevře dialog s nastavením barvy čáry
+  */
 void Settings::lineColorSettings()
 {
     myLineColor = QColorDialog::getColor(mySettings->value("lineColor","#000080").value<QColor>(),this);
 }
 
+
+/**
+  * Otevře dialog s nastavením barvy obtahové čáry
+  */
 void Settings::dashLineColorSettings()
 {
     myDashLineColor = QColorDialog::getColor(mySettings->value("dashLineColor","#000000").value<QColor>(),this);
 }
 
+/**
+  * Uloží nastavení do settings
+  */
 void Settings::saveSettings()
 {
     mySettings->setValue("lineColor",myLineColor);

@@ -83,7 +83,6 @@ QString XMLHandler::writeMessage()
     case Message::CLIST:
         break;
     case Message::SLIST:
-        writePetriNetList(&writer);
         break;
     case Message::SEND:
         writePetriNet(&writer);
@@ -530,12 +529,4 @@ int XMLHandler::readArc(QXmlStreamReader *reader)
     }
     return 0;
 }
-/**
-  * Vypíše všechny petriho sítě jednoho uživatele na serveru do xml
-  */
-void XMLHandler::writePetriNetList(QXmlStreamWriter *writer)
-{
-
-}
-
 

@@ -128,6 +128,8 @@ void MainWindow::createActions()
     actionDeleteItem->setShortcut(Qt::Key_Delete);
     connect(actionDeleteItem, SIGNAL(triggered()),
             this, SLOT(deleteItem()));
+    QWidget::addAction(actionDeleteItem);
+
 
     connect(socket,SIGNAL(connected()),SLOT(gotConnected()));
     connect(socket,SIGNAL(disconnected()),SLOT(gotDisconnected()));
@@ -326,8 +328,6 @@ void MainWindow::replaceTab(DiagramScene *scene, int tab)
   * Zavření tabu a uvolnění DiagramScene a QGraphicsView z paměti a seznamů
   * scenes a views.
   *
-  * /todo Otázka na uložení při změně obsahu scene
-  *
   * @param tab index mazaného tabu
   */
 void MainWindow::closeTab(int tab)
@@ -379,7 +379,8 @@ void MainWindow::selectTransition()
 }
 
 /**
-  * Nastavuje správné zaškrtnutí v toolbaru podle scene
+  * Nastavuje správné zaškrtnutí v toolbaru podle scene, taky nastavuje číslo
+  * aktivního tabu
   * @param  tab tab, který je aktivní
   */
 void MainWindow::updateToolBar(int tab)
@@ -917,6 +918,12 @@ void MainWindow::openRemote()
 
 }
 
+/**
+  * Pošle požadavek na server pro nahrátí vzdáleně uložené sítě
+  * @param  name jméno sítě
+  * @param  version verze sítě
+  * @param  author  autor sítě
+  */
 void MainWindow::sendLoadRequest(QString name, QString version, QString author)
 {
     Message message;
@@ -1025,6 +1032,9 @@ void MainWindow::simulateStep()
     }
 }
 
+/**
+  * Otevře okno s nastavením aplikace
+  */
 void MainWindow::settingsWindow()
 {
     Settings sett(mySettings);
@@ -1033,6 +1043,10 @@ void MainWindow::settingsWindow()
     scenes.at(activeTab)->update();
 }
 
+
+/**
+  * Nahraje nastavení aplikace ze souboru
+  */
 void MainWindow::loadSettings()
 {
     LINECOLOR = mySettings->value("lineColor","#000080").value<QColor>();
@@ -1041,13 +1055,14 @@ void MainWindow::loadSettings()
     OBJECTSIZE = mySettings->value("objectSize",100).toInt();
 }
 
+
+/**
+  * Zobrazí nápovědu
+  */
 void MainWindow::showHelp()
 {
     QString apppath =  QFileInfo(QCoreApplication::applicationFilePath()).path() + "/";
-//    qDebug() <<apppath + "../../doc/help.html";
-//    qDebug() << QApplication::applicationDirPath();
-    qDebug() << QDesktopServices::openUrl( QUrl(apppath + "../../doc/help.html", QUrl::TolerantMode));
-//TODO
+    QDesktopServices::openUrl( QUrl(apppath + "../../doc/help.html", QUrl::TolerantMode));
 }
 
 

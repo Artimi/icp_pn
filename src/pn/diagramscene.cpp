@@ -260,6 +260,10 @@ bool DiagramScene::hasArc(DiagramItem *item1, DiagramItem *item2)
     return false;
 }
 
+/**
+  * Vrátí ukazatel na item podle jména objektu
+  * @param  name    jméno hledaného objektu
+  */
 DiagramItem *DiagramScene::getDiagramItem(QString name)
 {
     foreach(QGraphicsItem * item, items())

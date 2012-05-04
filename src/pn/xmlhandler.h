@@ -54,7 +54,6 @@ private:
     QList<DiagramScene *> *myNetList;
 
     void writePetriNetInformation(QXmlStreamWriter * writer);
-    void writePetriNetList(QXmlStreamWriter *writer);
     void writePetriNet(QXmlStreamWriter *writer);
     void writePlace(QXmlStreamWriter * writer, Place * place);
     void writeTransition(QXmlStreamWriter * writer, Transition * transition);
