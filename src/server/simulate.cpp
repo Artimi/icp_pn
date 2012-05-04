@@ -66,9 +66,6 @@ bool Simulate::SimulateStep(PetriNet *petriNet)
         }
     }
     return true;
-    //petriNet->setAuthor("Uzivatel po simulaci");
-    //petriNet->setDescription("The end state of simulation");
-
 }
 
 /**
@@ -222,7 +219,16 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
                     qDebug() << "op1 prirazena hodnota" << op1;
                 }
 
-                if (keys.at(i)->getVariable() == op2Var)
+                bool b;
+                op2Var.toInt(&b);
+                if(b)
+                {
+                    /* Hodnota je ciselna, netreba hledat v promennych */
+                    op2 = op2Var.toInt();
+                    set2 = 1;
+
+                }
+                else if (keys.at(i)->getVariable() == op2Var)
                 {
                     /* Jsem na indexu, kde odpovida promena 2, takze vytahnu hodnotu */
                     op2 = map->value(keys.at(i));
