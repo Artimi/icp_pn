@@ -186,6 +186,11 @@ bool Simulate::checkCondition(QString oper, int op1, int op2)
     }
 }
 
+/**
+  * Vyhodnoti straz prechodu
+  * @param map Seznam dvojic promennych a jejich hodnot vstupujicich do prechodu
+  * @param guardGot Retezec straze
+  */
 bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot)
 {
     QList<QString> guards = guardGot.split("&");
@@ -194,7 +199,7 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
     {
         /* Projdu vsechny casti vyroku rozdelene podle & */
         guard = guards.at(x);
-        QRegExp rx("^//s*([^//s]+)//s*([^//s]+)//s*([^//s]+)//s*$");
+        QRegExp rx("^\\s*([a-zA-Z]+)\\s*([<>=!]+)\\s*([a-zA-Z0-9]+)\\s*$");
         if(rx.indexIn(guard) != -1)
         {
             /* Odpovida predpisu */
@@ -249,7 +254,7 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
     foreach(action, actions)
     {
         /* Pro kazdou akci rozdelene podle , */
-        QRegExp rx("^//s*([a-zA-Z]+)//s*=//s*(.*)$");
+        QRegExp rx("^\\s*([a-zA-Z]+)\\s*=\\s*(.*)$");
 
         if(rx.indexIn(action) >= 0 )
         {
