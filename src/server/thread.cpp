@@ -239,6 +239,7 @@ bool Thread::authenticate(QString username, QString passwd)
                 {
                     /* Heslo uzivatele odpovida */
                     this->username = username;
+                    writeLog("LOGGED\tSuccesfully logged");
                     qDebug() << socketDescriptor << "Logged as user" << username;
                     file.close();
                     return true;
@@ -246,6 +247,7 @@ bool Thread::authenticate(QString username, QString passwd)
                 else
                 {
                     /* Heslo uzivatele neodpovida */
+                    writeLog("WRONGLOGIN\tAttempt to unauthorized access! [" + name + "]");
                     return false;
                 }
             }
@@ -260,6 +262,25 @@ bool Thread::authenticate(QString username, QString passwd)
 
     file.close();
     return false;
+}
+
+/**
+  *
+  */
+void Thread::writeLog(QString event)
+{
+    QFile file(getPath() + "log/" + getUsername() + ".log");
+    mutex.lock();
+    if(!file.open(QIODevice::Append))
+    {
+        mutex.unlock();
+        qDebug() << "Error while opening file for logging";
+        return;
+    }
+    QByteArray msg = QTime::currentTime().toString().toUtf8() + "\t" + event.toUtf8();
+    file.write(msg);
+    file.close();
+    mutex.unlock();
 }
 
 
