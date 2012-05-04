@@ -298,7 +298,7 @@ int MainWindow::addTab(DiagramScene * scene)
     if (scene->getName() == "")
         result = ui->tabWidget->addTab(view, QString("Unnamed %1").arg(++tabCount));
     else
-        result = ui->tabWidget->addTab(view, scene->getName());
+        result = ui->tabWidget->addTab(view, scene->getName()+":"+scene->getVersion());
     return result;
 }
 
@@ -315,7 +315,7 @@ void MainWindow::replaceTab(DiagramScene *scene, int tab)
     delete deleteScene;
     scene->update();
     if(scene->getName() != "")
-        ui->tabWidget->setTabText(tab,scene->getName());
+        ui->tabWidget->setTabText(tab,scene->getName()+":"+scene->getVersion());
 }
 
 
@@ -465,7 +465,12 @@ void MainWindow::saveLocal()
   */
 void MainWindow::loadLocal()
 {
-    int tab = addTab();
+    int tab;
+    if (scenes.at(activeTab)->items().isEmpty())
+        tab = activeTab;
+    else
+        tab = addTab();
+
     DiagramScene * scene = scenes.at(tab);
     XMLHandler xmlhandler;
     xmlhandler.setScene(scene);
@@ -499,7 +504,7 @@ void MainWindow::loadLocal()
         if ((scene)->getName() == "")
             scene->setName(netName);
 
-        ui->tabWidget->setTabText(tab,netName);
+        ui->tabWidget->setTabText(tab,netName+":"+scene->getVersion());
 
         scene->update();
     }
@@ -767,6 +772,8 @@ void MainWindow::handleReply()
             // není žádná souhlasně pojmenovaná, vytvořím nový tab
             if((tab = findTab(scene->getName())) >= 0)
                 replaceTab(scene,tab);
+            else if (scenes.at(activeTab)->items().isEmpty())
+                replaceTab(scene,activeTab);
             else
                 addTab(scene);
             deleteScene = false;
@@ -781,6 +788,8 @@ void MainWindow::handleReply()
         case Message::SIMULATE:
             if((tab = findTab(scene->getName())) >= 0)
                 replaceTab(scene,tab);
+            else if (scenes.at(activeTab)->items().isEmpty())
+                replaceTab(scene,activeTab);
             else
                 addTab(scene);
             deleteScene = false;
