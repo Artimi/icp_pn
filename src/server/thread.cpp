@@ -172,11 +172,11 @@ void Thread::handleRequest()
             qDebug() << socketDescriptor << "Request for the simulation";
             if (message.simulationSteps == 0)
             {
-                simulate.SimulateAll(petriNet);
+                simulate.simulateAll(petriNet);
             }
             else
             {
-                simulate.SimulateStep(petriNet);
+                simulate.simulateStep(petriNet);
             }
 
             if (simulate.error)
