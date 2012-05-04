@@ -332,6 +332,7 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
             /* Ulozim do spravne mista vysledny item */
             for(int i = 0; i < keysOut.size(); i++)
             {
+                qDebug() << keysOut.at(i)->getVariable() << "a"<<target;
                 if(keysOut.at(i)->getVariable() == target)
                 {
                     qDebug() << "ukladam hodnotu" << result << "do promenne" << target;
