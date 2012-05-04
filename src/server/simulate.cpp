@@ -62,26 +62,30 @@ void Simulate::SimulateStep(PetriNet *petriNet)
   */
 void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow*,int>* pairs)
 {
-    pairs= new QMap<PetriNetArrow*,int>*;
-//    QMap<PetriNetArrow *,int>::const_iterator iter;
-    QList<PetriNetArrow *>::const_iterator iter;
+    pairs= new QMap<PetriNetArrow*,int>;
+    int arc;
+
+    //naplnění pairs key value
+    for(arc = 0; arc < inArrows.count(); arc++)
+    {
+        (*pairs)[inArrows[arc]]=0;
+    }
 
     int itemStates = getFactor(pairs,pairs->count());
-    int arc;
+
 
     for (int i = 0 ; i < itemStates; i++)
     {
         arc = 0;
-        iter = inArrows->begin();
-        while (iter != inArrows->end())
+        for(arc = 0; arc < inArrows.count(); arc++)
         {
-            PetriNetPlace * place = (PetriNetPlace *) iter.key()->startItem();
+            PetriNetPlace * place = (PetriNetPlace *) inArrows[arc]->startItem();
 
-            pairs[iter.key()] = place->getTokens().at((i/getFactor(pairs,arc))%place->getTokens().count());
+            (*pairs)[inArrows[arc]] = place->getTokens().at((i/getFactor(pairs,arc))%place->getTokens().count());
 
-//            pairs[iter] = iter.key()->startItem()->getTokens()[(i/getFactor(pairs,arc))%iter.key()->startItem()->getTokens().count()];
-//            i/getFactor(pairs,arc);
-            iter++;
+            if(transitionGuard(pairs,guard))
+                return; //nasel jsem v pairs je sprváná kombinace tokenů
+
             arc++;
         }
 
