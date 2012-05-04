@@ -54,18 +54,18 @@ void Thread::handleRequest()
     XMLHandler xmlhandler;
     QList<PetriNet *> netList;
 
-    qDebug() << "jedna";
+    //qDebug() << "jedna";
     xmlhandler.setMessage(&message);
     xmlhandler.setPetriNet(petriNet);
     xmlhandler.setNetList(&netList);
     xmlhandler.readMessage(QString(rawdata));
-    qDebug() << "dva";
+    //qDebug() << "dva";
     Message resultMsg;
     XMLHandler resultXml;
     QString out;
-    //PetriNet *resultNet = new PetriNet;
+    PetriNet *resultNet = new PetriNet;
     Simulate simulate;
-    qDebug() << "tri";
+    //qDebug() << "tri";
     switch (message.command)
     {
         case Message::SLOGIN:
@@ -172,11 +172,11 @@ void Thread::handleRequest()
             qDebug() << socketDescriptor << "Request for the simulation";
             if (message.simulationSteps == 0)
             {
-                simulate.SimulateAll();
+                simulate.SimulateAll(petriNet);
             }
             else
             {
-                simulate.SimulateStep();
+                simulate.SimulateStep(petriNet);
             }
 
             if (simulate.error)
@@ -201,7 +201,7 @@ void Thread::handleRequest()
             break;
     }
     delete petriNet; // maže se opravdu vždycky?
-    //delete resultNet;
+    delete resultNet;
 }
 
 /**

@@ -17,16 +17,19 @@ Simulate::Simulate()
 /**
   * Odsimuluje sit az do konce
   */
-void Simulate::SimulateAll()
+void Simulate::SimulateAll(PetriNet *petriNet)
 {
     qDebug() << "Cela simulace";
+    petriNet->setAuthor("Uzivatel po simulaci");
+    petriNet->setDescription("The end state of simulation");
+
 }
 
 
 /**
   * Odsimuluje jeden krok podle zvoleneho prechodu
   */
-void Simulate::SimulateStep()
+void Simulate::SimulateStep(PetriNet *petriNet)
 {
     qDebug() << "Jeden krok";
 }
