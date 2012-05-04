@@ -188,8 +188,28 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
     return true;
 }
 
-void Simulate::transitionAction(QMap<PetriNetArrow *, int> *map, QString action)
+void Simulate::transitionAction(QMap<PetriNetArrow *, int> *map, QString actionGot)
 {
+    QList<QString> actions = actionGot.split(",");
+
+    QString action;
+
+    foreach(action, actions)
+    {
+        QRegExp rx("^//s*([a-zA-Z]+)//s*=//s*(.*)$");
+
+        if(rx.indexIn(action) >= 0 )
+        {
+            QString target = rx.cap(1);
+            QString expression = rx.cap(2);
+
+        }
+        else
+        {
+
+            //chyba parsování action
+        }
+    }
 
 }
 
