@@ -22,10 +22,14 @@ public:
     {myY = y;}
 
     void addArrow(PetriNetArrow *arrow);
+    void addInArrow(PetriNetArrow *arrow);
+    void addOutArrow(PetriNetArrow * arrow);
 
 protected:
     qreal myX, myY;
     QList<PetriNetArrow *> arrows;
+    QList<PetriNetArrow *> inArrows;
+    QList<PetriNetArrow *> outArrows;
 };
 
 #endif // PETRINETOBJECT_H

@@ -49,6 +49,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete netListForm;
     delete socket;
+    delete mySettings;
 }
 
 

@@ -494,6 +494,9 @@ int XMLHandler::readArc(QXmlStreamReader *reader)
 
         startItem->addArrow(arrow);
         endItem->addArrow(arrow);
+        startItem->addOutArrow(arrow);
+        endItem->addInArrow(arrow);
+
         myPetriNet->addItem(arrow);
     }
     return 0;
