@@ -35,7 +35,7 @@ void Simulate::SimulateAll(PetriNet *petriNet)
                 /* Prechod, ktery me zajima */
                 inArrows = transition->getInArrows();
                 outArrows = transition->getOutArrows();
-                QMap<Arrow*,int> * pairs;
+                QMap<PetriNetArrow*,int> * pairs;
                 getPairs(inArrows,transition->getGuard(),pairs);
                 if(!this->error)
                 {
@@ -100,7 +100,38 @@ bool Simulate::checkCondition(QString oper, int op1, int op2)
 
 bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guard)
 {
+    QRegExp rx("^([^//s])//s*([^//s])//s*([^//s])$");
+    if(rx.indexIn(guard) != -1)
+    {
+        /* Odpovida predpisu */
+        QString op1Var,op2Var,oper;
+        oper = rx.cap(2);
+        op1Var = rx.cap(1);
+        op2Var = rx.cap(3);
+        int op1,op2;
+        QList<PetriNetArrow *> keys = map->keys();
+        for (int i = 0; i < keys.size(); i++)
+        {
+            /* Projdu vsechny prvky */
+            if (keys.at(i)->getVariable() == op1Var)
+            {
+                /* Jsem na indexu, kde odpovida promena 1, takze vytahnu hodnotu */
+                op1 = map->value(keys.at(i));
+            }
 
+            if (keys.at(i)->getVariable() == op2Var)
+            {
+                /* Jsem na indexu, kde odpovida promena 2, takze vytahnu hodnotu */
+                op2 = map->value(keys.at(i));
+            }
+        }
+        return checkCondition(oper,op1,op2);
+    }
+    else
+    {
+        /* Neodpovida predpisu */
+        return false;
+    }
 }
 
 
