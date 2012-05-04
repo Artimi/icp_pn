@@ -50,9 +50,12 @@ QRectF Arrow::boundingRect() const
   */
 QPainterPath Arrow::shape() const
 {
-    QPainterPath path = QGraphicsLineItem::shape();
-    path.addPolygon(arrowHead);
-    return path;
+    QPainterPath path;
+    QPainterPathStroker stroker;
+    stroker.setWidth(20);
+    path.moveTo(line().p1());
+    path.lineTo(line().p2());
+    return stroker.createStroke(path);
 }
 
 
