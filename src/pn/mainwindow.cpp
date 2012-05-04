@@ -1043,8 +1043,10 @@ void MainWindow::loadSettings()
 
 void MainWindow::showHelp()
 {
+    QString apppath =  QFileInfo(QCoreApplication::applicationFilePath()).path() + "/";
+//    qDebug() <<apppath + "../../doc/help.html";
 //    qDebug() << QApplication::applicationDirPath();
-//    qDebug() << QDesktopServices::openUrl( QUrl(QString("file//")+QApplication::applicationDirPath() +QString("../../doc/help.html"), QUrl::TolerantMode));
+    qDebug() << QDesktopServices::openUrl( QUrl(apppath + "../../doc/help.html", QUrl::TolerantMode));
 //TODO
 }
 
