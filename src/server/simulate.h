@@ -30,6 +30,8 @@ private:
     bool checkCondition(QString oper, int op1, int op2);
     bool transitionGuard(QMap<PetriNetArrow *,int> * map,QString guard);
 
+    void transitionAction(QMap<PetriNetArrow *,int> * map,QString action);
+
     int getFactor(QMap<PetriNetArrow *,int> *map, int count);
 
 };

@@ -188,6 +188,11 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
     return true;
 }
 
+void Simulate::transitionAction(QMap<PetriNetArrow *, int> *map, QString action)
+{
+
+}
+
 
 
 
