@@ -25,6 +25,11 @@ public:
     void addInArrow(PetriNetArrow *arrow);
     void addOutArrow(PetriNetArrow * arrow);
 
+    QList<PetriNetArrow *> getInArrows()
+    {return inArrows;}
+    QList<PetriNetArrow *> getOutArrows()
+    {return outArrows;}
+
 protected:
     qreal myX, myY;
     QList<PetriNetArrow *> arrows;
