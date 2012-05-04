@@ -46,7 +46,7 @@ void Thread::run()
 void Thread::handleRequest()
 {
     QByteArray rawdata = socket->readAll();
-    qDebug() << socketDescriptor << "Data in:" << rawdata;
+//    qDebug() << socketDescriptor << "Data in:" << rawdata;
 
     Message message;
     ManipulateNet tool;
