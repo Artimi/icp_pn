@@ -60,16 +60,19 @@ void Simulate::SimulateAll(PetriNet *petriNet)
 /**
   * Vrati QMap uspesneho prechodu
   */
-void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Arrow*,int>* pairs)
+void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow*,int>* pairs)
 {
     //tady by mohla byt nejaka kontrola
     QMap<Arrow*,int> workingPairs;
     for(int i = 0; i < inArrows; i++)
     {
-        /* Projdu vsechny vstupni
+        /* Projdu vsechny vstupni hrany */
     }
 
+
 }
+
+
 
 
 /**
@@ -79,3 +82,25 @@ void Simulate::SimulateStep(PetriNet *petriNet)
 {
     qDebug() << "Jeden krok";
 }
+
+
+bool Simulate::checkCondition(QString oper, int op1, int op2)
+{
+//    <, <=, >=, >, ==, !=
+    if (oper == "<")
+        return op1 < op2;
+    else if (oper == "<=")
+        return op1 <= op2;
+    else if (oper == ">=")
+        return op1 >= op2;
+    else if (oper == ">")
+        return op1 > op2;
+    else if (oper == "==")
+        return op1 == op2;
+    else if (oper == "!=")
+        return op1 != op2;
+    else
+        return false; // nějaká chyba
+
+}
+
