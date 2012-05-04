@@ -83,14 +83,16 @@ void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
 
             (*pairs)[inArrows[arc]] = place->getTokens().at((i/getFactor(pairs,arc))%place->getTokens().count());
 
-            if(transitionGuard(pairs,guard))
-                return; //nasel jsem v pairs je sprváná kombinace tokenů
-
             arc++;
         }
 
+        if(transitionGuard(pairs,guard))
+            break; //nasel jsem v pairs je sprváná kombinace tokenů
     }
-
+    if (i == itemStates)
+        error = true; //pokud jsem prošel všechny stavy a žádný nevyhovoval je chyba, nemám co navázat
+    else
+        return;
 }
 
 
@@ -121,8 +123,10 @@ bool Simulate::checkCondition(QString oper, int op1, int op2)
     else if (oper == "!=")
         return op1 != op2;
     else
+    {
+        error = true;
         return false; // nějaká chyba
-
+    }
 }
 
 bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot)
