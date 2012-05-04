@@ -174,7 +174,10 @@ int XMLHandler::readMessage(QString str)
                         if (reader.isStartElement() && reader.name() == "steps")
                             myMessage->simulationSteps = reader.readElementText().toInt();
                         else if(reader.isStartElement() && reader.name() == "petrinet")
+                        {
                             readPetriNet(&reader);
+                            break;
+                        }
                         reader.readNext();
                     }
                     break;
