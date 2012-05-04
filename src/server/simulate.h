@@ -22,7 +22,7 @@ public:
     bool error;
 
     void SimulateStep(PetriNet * petriNet);
-    void SimulateAll(PetriNet * petriNet);
+    bool SimulateAll(PetriNet * petriNet);
     void getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow *, int> *pairs);
 
 
@@ -33,6 +33,7 @@ private:
     void transitionAction(QMap<PetriNetArrow *,int> * input,QMap<PetriNetArrow *, int> *output, QString actionGot);
 
     int getFactor(QMap<PetriNetArrow *,int> *map, int count);
+    void removeTokens(QMap<PetriNetArrow *,int> *map);
 
 };
 
