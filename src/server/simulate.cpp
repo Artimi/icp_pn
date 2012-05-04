@@ -98,3 +98,8 @@ bool Simulate::checkCondition(QString oper, int op1, int op2)
 
 }
 
+bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guard)
+{
+
+}
+
