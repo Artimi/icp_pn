@@ -58,10 +58,16 @@ void Simulate::SimulateAll(PetriNet *petriNet)
 }
 
 /**
-  * Vrati QMap vsech moznych navazni prechodu
+  * Vrati QMap uspesneho prechodu
   */
-void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Arrow*,int>* pairs)
+void Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow*,int>* pairs)
 {
+    //tady by mohla byt nejaka kontrola
+    QMap<Arrow*,int> workingPairs;
+    for(int i = 0; i < inArrows; i++)
+    {
+        /* Projdu vsechny vstupni hrany */
+    }
 
 
 }
