@@ -58,7 +58,6 @@
      <string>&amp;Settings</string>
     </property>
     <addaction name="actionNetInformation"/>
-    <addaction name="actionUser_logs"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
@@ -75,6 +74,7 @@
     <addaction name="actionConnectToServer"/>
     <addaction name="actionDisconnectFromServer"/>
     <addaction name="actionLogin"/>
+    <addaction name="actionUser_logs"/>
    </widget>
    <addaction name="menuSoubor"/>
    <addaction name="menuNastaven"/>

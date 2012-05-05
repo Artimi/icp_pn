@@ -48,6 +48,10 @@ $ ./pn2012 <br />
 případně pro server ve složce src/server/ spustit příkaz <br />
 $ ./server2012 <br />
 
+\section prihlaseni_sec Přihlášení na server:
+Na server se lze přihlásit pod jménem <b>user</b> s heslem <b>pass</b> nebo být
+v roli hosta jako uživatel guest
+
 */
 
 #include <QtGui/QApplication>

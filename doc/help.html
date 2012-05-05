@@ -15,7 +15,7 @@
 
 <p>V nástrojovém panelu je možné si vybrat z nástrojů manipulující s plátnem. <b>Mouse</b> pro označování a posunování objektů a <b>Place</b>, <b>Transition</b>, <b>Arc</b> pro kreslení příslušných objektů. V druhé části jsou pak možnosti pro simulaci a simulaci krokem, ty jsou možné až po přihlášení k serveru.</p>
 
-<p>Hlavní plátno je opatřeno záložkami, které jsou pojmenovány podle sítí, které zobrazují. Pokud přijde síť ze strany serveru, přepíše se ta se stejným jménem nebo pokud taková žádná není otevře se nový panel. Objekty na plátně lze intuitivně posouvat při výběru nástroje <b>Mouse</b>. Při zaškrtnutí jiného objektu se po kliknutí do plátna tento objekt vloží. Hrana mezi místem a přechodem se vkládá stisknutím levého tlačítka myši na počátečním objektu a uvolněním na cílovém. Pokud klikneme pravým tlačítkem na některý z objektů, objeví se kontextové menu, které nám dovolí upravovat obsah předmětů (jako např. tokeny u místa). Označené objekty lze mazat at už z kontextového menu nebo stiskem klávesy delete.</p>
+<p>Hlavní plátno je opatřeno záložkami, které jsou pojmenovány podle sítí, které zobrazují. Pokud přijde síť ze strany serveru, přepíše se ta se stejným jménem nebo pokud taková žádná není otevře se nový panel. Objekty na plátně lze intuitivně posouvat a označovat při výběru nástroje <b>Mouse</b>. Při zaškrtnutí jiného objektu se po kliknutí do plátna tento objekt vloží. Hrana mezi místem a přechodem se vkládá stisknutím levého tlačítka myši na počátečním objektu a uvolněním na cílovém. Pokud klikneme pravým tlačítkem na některý z objektů, objeví se kontextové menu, které nám dovolí upravovat obsah předmětů (jako např. tokeny u místa). Označené objekty lze mazat at už z kontextového menu nebo stiskem klávesy delete.</p>
 
 <p>Na spodní liště se nachází status bar, ve kterém se zobrazují důležité prováděné události, hlavně komunikace se serverem, a chybové hlášení, které se zobrazí i ve vyskakovacím dialogu.</p>
 
@@ -33,6 +33,7 @@
 <tr><td>Ctrl+4</td><td>Vybere hranu z toolbaru</td> </tr>
 <tr><td>Ctrl+N</td><td>Otevře novou kartu</td> </tr>
 <tr><td>Ctrl+Q</td><td>Zavře celý editor</td> </tr>
+<tr><td>Ctrl+A</td><td>Označí všechny objekty na akutálním tabu</td> </tr>
 <tr><td>Delete</td><td>Smaže vybrané objekty</td> </tr>
 <tr><td>F1</td><td>Zobrazí tuto nápovědu</td> </tr>
 
@@ -40,6 +41,6 @@
 
 
 <h2>Server</h2>
-<p>Po spuštění serveru tento začne poslouchat na výchozím portu <b>22334</b>. Připojí-li se klient, zpracovává jeho požadavky a zasílá mu odpovědi. Je možno připojit se na server s více klienty najednou. Server běží v nekonečné smyčce a čeká na klienty a jejich žádosti až do ukončení. Pokud se na serveru vyskytne nějaká chyba související s komunikací s klientem dá mu zprávou vědět a klient tuto chybovou zprávu zobrazí uživateli.</p>
+<p>Po spuštění serveru tento začne poslouchat na výchozím portu <b>22334</b>. Připojí-li se klient, zpracovává jeho požadavky a zasílá mu odpovědi. Je možno připojit se na server s více klienty najednou. Na server se uživatel připojí automaticky jako host (guest). Po zadání loginu a hesla se připojí jako uživatel (funkční uživatel: jméno <b>user</b>, heslo <b>pass</b>). Přenos hesla po síti je kódovaný šifrou MD-5. Server běží v nekonečné smyčce a čeká na klienty a jejich žádosti až do ukončení. Pokud se na serveru vyskytne nějaká chyba související s komunikací s klientem dá mu zprávou vědět a klient tuto chybovou zprávu zobrazí uživateli.</p>
 </body>
 </html>

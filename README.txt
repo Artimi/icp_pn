@@ -42,6 +42,11 @@ $ ./pn2012
 případně pro server ve složce src/server/ spustit příkaz
 $ ./server2012
 
+Přihlášení na server:
+-------------------------
+Na server se lze přihlásit pod jménem user s heslem pass nebo být
+v roli hosta jako uživatel guest
+
 
 Poznámky:
 -------------------------
