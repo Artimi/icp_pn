@@ -36,7 +36,11 @@ $ make runserver
 pro server, nebo
 $ make run
 pro klient.
-Alternativní způsob spuštění je spustit ve složce src/pn/ příkaz
+
+Alternativní způsob spuštění klienta je spustit ve složce src/pn/ příkaz
+$ ./pn2012
+případně pro server ve složce src/server/ spustit příkaz
+$ ./server2012
 
 
 Poznámky:
