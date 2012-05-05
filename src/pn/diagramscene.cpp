@@ -26,10 +26,6 @@ DiagramScene::DiagramScene(QMenu *placeMenu, QMenu *transitionMenu, QMenu *arrow
     myArrowMenu = arrowMenu;
 }
 
-DiagramScene::~DiagramScene()
-{
-
-}
 
 /**
   * Nastaví mod práce ve scene

@@ -1,7 +1,11 @@
 /**
   * @file settings.cpp
   *
+<<<<<<< HEAD
   * @brief Slouží k nastavení aplikace
+=======
+  * @brief Třída manipulující s nastavením klienta
+>>>>>>> 16d51d74746a8cc1e8854c601db298d0ac7870a1
   * @author xsebek02, xsimon14
   */
 #include "settings.h"

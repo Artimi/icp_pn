@@ -1,5 +1,5 @@
 /**
-  * @file mainwindow.h
+  * @file diagramitem.h
   *
   * @author xsebek02 xsimon14
   *

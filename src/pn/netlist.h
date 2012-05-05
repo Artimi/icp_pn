@@ -1,14 +1,13 @@
 /**
   * @file netlist.h
   *
-  * @author xsebek02 xsimon14
+  * @author xsebek02, xsimon14
   */
 #ifndef NETLIST_H
 #define NETLIST_H
 
 #include <QDialog>
 #include "diagramscene.h"
-
 
 namespace Ui {
 class NetList;

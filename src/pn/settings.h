@@ -1,7 +1,11 @@
 /**
   * @file settings.h
   *
+<<<<<<< HEAD
   * @author xsebek02, xsimon14
+=======
+  * @author xsebek02,xsimon14
+>>>>>>> 16d51d74746a8cc1e8854c601db298d0ac7870a1
   */
 #ifndef SETTINGS_H
 #define SETTINGS_H
