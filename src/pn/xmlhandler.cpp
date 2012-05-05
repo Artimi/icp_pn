@@ -190,6 +190,9 @@ int XMLHandler::readMessage(QString str)
                         reader.readNext();
                     }
                     break;
+                case Message::LOG:
+                //TODO------------------------------------------------------------------
+                    break;
             }
         }
     }
