@@ -193,14 +193,14 @@ void Thread::handleRequest()
                 /* Nastala chyba pri simulaci */
                 resultMsg.command = Message::ERROR;
                 resultMsg.errorText = "Error while simulation, perhaps there aren't any possible steps";
-                writeLogSimulate(petriNet->getName(),"FAIL");
+                writeLogSimulate(petriNet->getName(),petriNet->getVersion(),"FAIL");
             }
             else
             {
                 /* Sit byla v poradku odsimulovana */
                 resultMsg.command = Message::SEND;
                 resultXml.setPetriNet(petriNet);
-                writeLogSimulate(petriNet->getName(),"PASS");
+                writeLogSimulate(petriNet->getName(),petriNet->getVersion(),"PASS");
             }
 
             /* Zprava bude odeslana */
@@ -297,7 +297,7 @@ void Thread::writeLog(QString event)
         qDebug() << "Error while opening file for logging";
         return;
     }
-    QByteArray msg = QTime::currentTime().toString().toUtf8() + "#" + event.toUtf8() + "\n";
+    QByteArray msg = QDateTime::currentDateTime().toString().toUtf8() + "#" + event.toUtf8() + "\n";
     file.write(msg);
     file.close();
     mutex.unlock();
@@ -344,9 +344,10 @@ void Thread::writeLogDisconnect()
 /**
   * Zapise do logu zaznam o uspesnem prihlaseni
   */
-void Thread::writeLogSimulate(QString netName, QString state)
+void Thread::writeLogSimulate(QString netName, QString version, QString state)
 {
-    QString msg = getUsername() + "#" + QString::number(Message::LOG_SIMULATE) + "#The net " + netName + " has been simulated. Result: " + state;
+    QString msg = getUsername() + "#" + QString::number(Message::LOG_SIMULATE) + "#The net \"" + netName\
+            + ":" + version + "\" has been simulated. Result: " + state;
     writeLog(msg);
 }
 

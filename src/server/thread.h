@@ -9,7 +9,7 @@
 #include "petrinet.h"
 #include <QCryptographicHash>
 #include <QMutex>
-#include <QTime>
+#include <QDateTime>
 
 class Thread : public QThread
 {
@@ -29,7 +29,7 @@ public:
 //    void writeLogServerStart();
     void writeLogConnect();
     void writeLogDisconnect();
-    void writeLogSimulate(QString netName, QString state);
+    void writeLogSimulate(QString netName, QString version, QString state);
     void writeLogSave(QString netName, QString state);
     void writeLogLoad(QString netName, QString state);
 signals:
