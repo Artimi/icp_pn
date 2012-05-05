@@ -1,3 +1,8 @@
+/**
+  * @file settings.h
+  *
+  * @author xsebek02,xsimon14
+  */
 #ifndef SETTINGS_H
 #define SETTINGS_H
 

@@ -1,3 +1,8 @@
+/**
+  * @file connect.h
+  *
+  * @author xsebek02, xsimon14
+  */
 #ifndef CONNECT_H
 #define CONNECT_H
 
