@@ -546,7 +546,7 @@ void MainWindow::editTokens()
                                          place->getTokenString(),
                                          &ok);
 
-    if (ok && !text.isEmpty())
+    if (ok)
     {
         if(!place->setTokenString(text))
         {
@@ -576,7 +576,7 @@ void MainWindow::editGuard()
                                          transition->getGuard(),
                                          &ok);
 
-    if (ok && !text.isEmpty())
+    if (ok)
     {
         if(!transition->setGuard(text))
         {
@@ -606,7 +606,7 @@ void MainWindow::editAction()
                                          transition->getAction(),
                                          &ok);
 
-    if (ok && !text.isEmpty())
+    if (ok)
     {
         if(!transition->setAction(text))
         {
@@ -636,7 +636,7 @@ void MainWindow::editVariable()
                                          arrow->getVariable(),
                                          &ok);
 
-    if (ok && !text.isEmpty())
+    if (ok)
     {
         if(!arrow->setVariable(text))
         {

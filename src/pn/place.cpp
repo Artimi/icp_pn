@@ -88,7 +88,12 @@ QString Place::getTokenString()
   */
 bool Place::setTokenString(QString str)
 {
-    QRegExp valid ("[\\d\\s,]*");
+    if (str.isEmpty())
+    {
+        tokens.clear();
+        return true;
+    }
+     QRegExp valid ("[\\d\\s,]*");
     if(!valid.exactMatch(str))
         return false;
 

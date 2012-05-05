@@ -109,7 +109,11 @@ void Arrow::updatePosition()
 
 bool Arrow::setVariable(QString str)
 {
-
+    if (str.isEmpty())
+    {
+        variable.clear();
+        return true;
+    }
     QRegExp valid ("[a-zA-Z0-9]+");
     if(!valid.exactMatch(str))
         return false;
