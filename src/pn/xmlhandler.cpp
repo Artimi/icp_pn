@@ -332,6 +332,7 @@ int XMLHandler::readPetriNetList(QXmlStreamReader *reader)
         }
         reader->readNext();
     }
+    return 0;
 }
 
 /**

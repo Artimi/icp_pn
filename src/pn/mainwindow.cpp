@@ -1087,6 +1087,14 @@ void MainWindow::selectAll()
     }
 }
 
+/**
+  * Zobrazí okno s informacemí o činnosti uživatele
+  */
+void MainWindow::userLogs()
+{
+
+}
+
 
 
 

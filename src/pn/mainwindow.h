@@ -152,6 +152,7 @@ public slots:
 
     void showHelp();
     void selectAll();
+    void userLogs();
 
 };
 
