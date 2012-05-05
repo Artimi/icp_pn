@@ -1,3 +1,8 @@
+/**
+  * @file petrinetitem.h
+  *
+  * @author xsebek02 xsimon14
+  */
 #ifndef PETRINETPLACE_H
 #define PETRINETPLACE_H
 

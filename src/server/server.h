@@ -1,3 +1,8 @@
+/**
+  * @file server.h
+  *
+  * @author xsebek02 xsimon14
+  */
 #ifndef SERVER_H
 #define SERVER_H
 

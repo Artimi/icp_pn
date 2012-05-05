@@ -1,3 +1,9 @@
+/**
+  * @file server.cpp
+  *
+  * @brief Implementuje celý server
+  * @author xsebek02 xsimon14
+  */
 #include "server.h"
 
 Server::Server(QObject *parent) :

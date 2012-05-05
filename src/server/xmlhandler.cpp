@@ -1,3 +1,9 @@
+/**
+  * @file xmlhandler.cpp
+  *
+  * @brief Stará se o vstup výstupní operace pomocí xml
+  * @author xsebek02 xsimon14
+  */
 #include "xmlhandler.h"
 
 XMLHandler::XMLHandler()

@@ -1,3 +1,9 @@
+/**
+  * @file petrinetobject.cpp
+  *
+  * @brief Rodičovská třída místa a přechodu
+  * @author xsebek02 xsimon14
+  */
 #include "petrinetobject.h"
 
 PetriNetObject::PetriNetObject()

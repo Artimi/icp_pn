@@ -10,6 +10,11 @@
 #include "../pn/message.h"
 #include "petrinet.h"
 #include "petrinetitem.h"
+/**
+  * @file xmlhandler.h
+  *
+  * @author xsebek02 xsimon14
+  */
 #include "petrinetobject.h"
 #include "petrinetarrow.h"
 #include "petrinetplace.h"

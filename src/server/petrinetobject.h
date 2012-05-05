@@ -1,3 +1,8 @@
+/**
+  * @file petrinetitem.h
+  *
+  * @author xsebek02 xsimon14
+  */
 #ifndef PETRINETOBJECT_H
 #define PETRINETOBJECT_H
 #include <QtCore>

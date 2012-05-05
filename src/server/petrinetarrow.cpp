@@ -1,3 +1,9 @@
+/**
+  * @file petrinetarrow.cpp
+  *
+  * @brief Implementace hrany petriho sítě
+  * @author xsebek02 xsimon14
+  */
 #include "petrinetarrow.h"
 
 PetriNetArrow::PetriNetArrow(PetriNetItem *startItem, PetriNetItem *endItem)

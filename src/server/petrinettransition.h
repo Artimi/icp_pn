@@ -1,3 +1,8 @@
+/**
+  * @file petrinettransition.h
+  *
+  * @author xsebek02 xsimon14
+  */
 #ifndef PETRINETTRANSITION_H
 #define PETRINETTRANSITION_H
 

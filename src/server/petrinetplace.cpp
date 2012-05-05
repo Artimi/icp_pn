@@ -1,3 +1,9 @@
+/**
+  * @file petrinetplace.cpp
+  *
+  * @brief Místo petriho sítě
+  * @author xsebek02 xsimon14
+  */
 #include "petrinetplace.h"
 
 PetriNetPlace::PetriNetPlace()

@@ -1,3 +1,9 @@
+/**
+  * @file petrinettransition.cpp
+  *
+  * @brief Přechod sítě
+  * @author xsebek02 xsimon14
+  */
 #include "petrinettransition.h"
 
 

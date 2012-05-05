@@ -1,5 +1,5 @@
 /**
-  * @file petrinet.cpp
+  * @file petrinet.h
   *
   * @brief Implementace petriho sítě
   * @author xsebek02 xsimon14

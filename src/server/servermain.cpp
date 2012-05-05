@@ -1,3 +1,9 @@
+/**
+  * @file servermain.cpp
+  *
+  * @brief Main soubor serveru
+  * @author xsebek02 xsimon14
+  */
 #include <QtCore/QCoreApplication>
 #include "server.h"
 

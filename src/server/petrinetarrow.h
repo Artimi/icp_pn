@@ -1,3 +1,8 @@
+/**
+  * @file petrinetarrow.h
+  *
+  * @author xsebek02 xsimon14
+  */
 #ifndef PETRINETARROW_H
 #define PETRINETARROW_H
 #include <QtCore>
