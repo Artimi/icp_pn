@@ -85,12 +85,19 @@ bool Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
     int i;
     int factor;
 
-    //naplnění pairs key value
+    /* Naplnění pairs key value */
     for(arc = 0; arc < inArrows.count(); arc++)
     {
         PetriNetPlace * place = (PetriNetPlace *) inArrows[arc]->startItem();
         if(place->getTokens().count() > 0)
-            (*pairs)[inArrows[arc]]=0;
+        {
+            (*pairs)[inArrows[arc]] = 0;
+        }
+        else
+        {
+            /* Pokud nektere misto nema zadne tokeny, prechod je neproveditelny */
+            return false;
+        }
     }
 
     int itemStates = getFactor(pairs,pairs->count());
@@ -101,8 +108,6 @@ bool Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
         for(arc = 0; arc < inArrows.count(); arc++)
         {
             PetriNetPlace * place = (PetriNetPlace *) inArrows[arc]->startItem();
-            if(place->getTokens().count() <= 0)
-                continue;
 
             factor = getFactor(pairs,arc);
 
