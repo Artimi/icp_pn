@@ -1,6 +1,16 @@
+/**
+  * @file userlogs.cpp
+  *
+  * @brief Třída manipulující s uživatelskými logy
+  * @author xsebek02, xsimon14
+  */
 #include "userlogs.h"
 #include "ui_userlogs.h"
 
+
+/**
+  * Konstruktor třídy UserLogs
+  */
 UserLogs::UserLogs(QList< QList<QString> > *logs, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UserLogs)
@@ -23,11 +33,18 @@ UserLogs::UserLogs(QList< QList<QString> > *logs, QWidget *parent) :
     connect(ui->PBUpdate,SIGNAL(clicked()),this,SIGNAL(updateUserLog()));
 }
 
+/**
+  * Destruktor třídy UserLogs
+  */
 UserLogs::~UserLogs()
 {
     delete ui;
 }
 
+
+/**
+  * Aktualizuje tabulku se zobrazenými logy
+  */
 void UserLogs::updateTable()
 {
     ui->tableWidget->setColumnCount(3);
@@ -56,6 +73,9 @@ void UserLogs::updateTable()
 
 }
 
+/**
+  * Vyhledá položky podle klíčkového slova
+  */
 void UserLogs::find()
 {
     for(int i = 0; i < ui->tableWidget->rowCount(); i++)
@@ -75,6 +95,9 @@ void UserLogs::find()
     }
 }
 
+/**
+  * Konverze z typu akce enum na QString
+  */
 QString UserLogs::getActionName(int action)
 {
     switch(action)

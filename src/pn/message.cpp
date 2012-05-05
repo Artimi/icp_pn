@@ -1,7 +1,7 @@
 /**
   * @file message.cpp
   *
-  * @brief Trida definujci struktury pro predavani a drzeni zprav v komunikaci se serverem
+  * @brief Třída definující struktury pro předávání a držení zpráv v komunikaci se serverem
   * @author xsebek02 xsimon14
   */
 #include "message.h"

@@ -1,3 +1,9 @@
+/**
+  * @file settings.cpp
+  *
+  * @brief Třída manipulující s nastavením klienta
+  * @author xsebek02, xsimon14
+  */
 #include "settings.h"
 #include "ui_settings.h"
 

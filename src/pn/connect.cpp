@@ -1,13 +1,13 @@
 /**
   * @file connect.cpp
   * @author xsebek02 xsimon14
-  * @brief Tento soubor udrzuje a manipuluje s prijenim k serveru
+  * @brief Tento soubor udržuje a manipuluje s připojením k serveru
   */
 #include "connect.h"
 #include "ui_connect.h"
 
 /**
-  * Konstruktor tridy Connect
+  * Konstruktor třídy Connect
   */
 Connect::Connect(QTcpSocket *socket,QWidget *parent) :
     QDialog(parent),
@@ -20,7 +20,7 @@ Connect::Connect(QTcpSocket *socket,QWidget *parent) :
 }
 
 /**
-  * Desktuktor tridy Connect
+  * Desktuktor třídy Connect
   */
 Connect::~Connect()
 {

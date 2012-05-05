@@ -8,7 +8,7 @@
 #include "ui_netinformation.h"
 
 /**
-  * Konstruktor tridy NetInformation
+  * Konstruktor třídy NetInformation
   */
 NetInformation::NetInformation(DiagramScene  *scene, QString author, QWidget *parent) :
     QDialog(parent),
@@ -28,7 +28,7 @@ NetInformation::NetInformation(DiagramScene  *scene, QString author, QWidget *pa
 }
 
 /**
-  * Destruktor tridy NetInformation
+  * Destruktor třídy NetInformation
   */
 NetInformation::~NetInformation()
 {
