@@ -191,14 +191,28 @@ int XMLHandler::readMessage(QString str)
                     }
                     break;
                 case Message::LOG:
+
                     while(!(reader.isEndElement() && reader.name() == "data"))
                     {
                         if (reader.isStartElement() && reader.name() == "record")
                         {
                             /* Jsem na novem zaznamu */
+                            QList<QString>* record = new QList<QString>;
+                            while(!(reader.isEndElement() && reader.name() == "record"))
+                            {
+                                if(reader.isStartElement() && reader.name() == "time")
+                                    record->append(reader.readElementText());
+                                else if(reader.isStartElement() && reader.name() == "event")
+                                    record->append(reader.readElementText());
+                                else if(reader.isStartElement() && reader.name() == "evenText")
+                                    record->append(reader.readElementText());
+                                reader.readNext();
+                            }
+                            myUsersLogsList->append(*record);
                         }
+
+                        reader.readNext();
                     }
-                //TODO------------------------------------------------------------------
                     break;
             }
         }
