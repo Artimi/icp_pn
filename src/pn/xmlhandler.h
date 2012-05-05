@@ -52,6 +52,7 @@ private:
     DiagramScene *myScene;
     Message *myMessage;
     QList<DiagramScene *> *myNetList;
+    QList<QVector <QString>*> *logs;
 
     void writePetriNetInformation(QXmlStreamWriter * writer);
     void writePetriNet(QXmlStreamWriter *writer);
