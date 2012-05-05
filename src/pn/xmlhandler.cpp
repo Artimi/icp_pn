@@ -563,7 +563,7 @@ int XMLHandler::readUserLogs(QXmlStreamReader *reader)
                     record << reader->readElementText();
                 }
             }
-            myUsersLogsList->append(record);
+            myUsersLogsList->prepend(record);
         }
         reader->readNext();
     }

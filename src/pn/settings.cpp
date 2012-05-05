@@ -61,3 +61,4 @@ void Settings::saveSettings()
     mySettings->setValue("font",myFont);
     mySettings->setValue("objectSize",ui->SBObjectSize->value());
 }
+

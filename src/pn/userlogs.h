@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QtCore>
+#include "message.h"
 
 namespace Ui {
 class UserLogs;
@@ -26,6 +27,9 @@ signals:
 private:
     Ui::UserLogs *ui;
     QList< QList<QString> > * myLogs;
+
+
+    QString getActionName(int action);
 };
 
 #endif // USERLOGS_H

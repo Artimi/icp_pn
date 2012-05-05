@@ -44,7 +44,7 @@ void UserLogs::updateTable()
         QTableWidgetItem *descriptionItem = prototype.clone();
 
         timeItem->setText(record.at(0));
-        actionItem->setText(record.at(1));
+        actionItem->setText(getActionName(record.at(1).toInt()));
         descriptionItem->setText(record.at(2));
 
         ui->tableWidget->setItem(i,0,timeItem);
@@ -72,6 +72,36 @@ void UserLogs::find()
     {
         if (!visibleRows.contains(i))
             ui->tableWidget->hideRow(i);
+    }
+}
+
+QString UserLogs::getActionName(int action)
+{
+    switch(action)
+    {
+    case Message::LOG_CONNECT:
+        return "connect";
+        break;
+    case Message::LOG_DISCONNECT:
+        return "disconnect";
+        break;
+    case Message::LOG_LOAD:
+        return "load";
+        break;
+    case Message::LOG_LOGGED:
+        return "logged";
+        break;
+    case Message::LOG_SAVE:
+        return "save";
+        break;
+    case Message::LOG_SIMULATE:
+        return "simulate";
+        break;
+    case Message::LOG_WRONGLOGIN:
+        return "wronglogin";
+        break;
+    default:
+        return "unknown";
     }
 }
 

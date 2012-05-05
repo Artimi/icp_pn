@@ -34,6 +34,7 @@ private:
     bool myMainWindowMaximized;
 
     QSettings *mySettings;
+
 };
 
 #endif // SETTINGS_H
