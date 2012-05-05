@@ -191,6 +191,13 @@ int XMLHandler::readMessage(QString str)
                     }
                     break;
                 case Message::LOG:
+                    while(!(reader.isEndElement() && reader.name() == "data"))
+                    {
+                        if (reader.isStartElement() && reader.name() == "record")
+                        {
+                            /* Jsem na novem zaznamu */
+                        }
+                    }
                 //TODO------------------------------------------------------------------
                     break;
             }

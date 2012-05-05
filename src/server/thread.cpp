@@ -302,7 +302,7 @@ void Thread::writeLog(QString event)
   */
 void Thread::writeLogLogin()
 {
-    QString msg = getUsername() + "#" + Message::LOG_LOGGED + "#Successfully logged";
+    QString msg = getUsername() + "#" + QString::number(Message::LOG_LOGGED) + "#Successfully logged";
     writeLog(msg);
 }
 
@@ -312,7 +312,7 @@ void Thread::writeLogLogin()
   */
 void Thread::writeLogWronglogin(QString name)
 {
-    QString msg = name + "#" + Message::LOG_WRONGLOGIN + "#Attempt to unauthorized access!";
+    QString msg = name + "#" + QString::number(Message::LOG_WRONGLOGIN) + "#Attempt to unauthorized access!";
     writeLog(msg);
 }
 
@@ -330,7 +330,7 @@ void Thread::writeLogWronglogin(QString name)
   */
 void Thread::writeLogConnect()
 {
-    QString msg = "##" + Message::LOG_CONNECT + "#" + socketDescriptor;
+    QString msg = "##" + QString::number(Message::LOG_CONNECT) + "#" + QString::number(socketDescriptor);
     writeLog(msg);
 }
 
@@ -339,7 +339,7 @@ void Thread::writeLogConnect()
   */
 void Thread::writeLogDisconnect()
 {
-    QString msg = "##" + Message::LOG_DISCONNECT + "#" + socketDescriptor;
+    QString msg = "##" + QString::number(Message::LOG_DISCONNECT) + "#" + QString::number(socketDescriptor);
     writeLog(msg);
 }
 
@@ -348,7 +348,7 @@ void Thread::writeLogDisconnect()
   */
 void Thread::writeLogSimulate(QString netName, QString state)
 {
-    QString msg = getUsername() + "#" + Message::LOG_SIMULATE + "#The net " + netName + " has been simulated. Result: " + state;
+    QString msg = getUsername() + "#" + QString::number(Message::LOG_SIMULATE) + "#The net " + netName + " has been simulated. Result: " + state;
     writeLog(msg);
 }
 
@@ -358,7 +358,7 @@ void Thread::writeLogSimulate(QString netName, QString state)
   */
 void Thread::writeLogSave(QString netName, QString state)
 {
-    QString msg = getUsername() + "#" + Message::LOG_SAVE + "#The net " + netName + " has been saved. Result: " + state;
+    QString msg = getUsername() + "#" + QString::number(Message::LOG_SAVE) + "#The net " + netName + " has been saved. Result: " + state;
     writeLog(msg);
 }
 
@@ -367,7 +367,7 @@ void Thread::writeLogSave(QString netName, QString state)
   */
 void Thread::writeLogLoad(QString netName, QString state)
 {
-    QString msg = getUsername() + "#" + Message::LOG_LOAD + "#The net " + netName + " has been loaded. Result: " + state;
+    QString msg = getUsername() + "#" + QString::number(Message::LOG_LOAD) + "#The net " + netName + " has been loaded. Result: " + state;
     writeLog(msg);
 }
 
