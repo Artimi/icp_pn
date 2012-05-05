@@ -487,7 +487,7 @@ void MainWindow::saveLocal()
 void MainWindow::loadLocal()
 {
     int tab;
-    if (scenes.at(activeTab)->items().isEmpty())
+    if(activeTab >= 0 && scenes.at(activeTab)->items().isEmpty())
         tab = activeTab;
     else
         tab = addTab();
@@ -537,7 +537,7 @@ void MainWindow::loadLocal()
   */
 void MainWindow::editTokens()
 {
-    if (scenes.at(activeTab)->selectedItems().isEmpty())
+    if (activeTab <0 ||  scenes.at(activeTab)->selectedItems().isEmpty())
         return;
 
     QGraphicsItem *item = scenes.at(activeTab)->selectedItems().first();
@@ -567,7 +567,7 @@ void MainWindow::editTokens()
   */
 void MainWindow::editGuard()
 {
-    if (scenes.at(activeTab)->selectedItems().isEmpty())
+    if (activeTab < 0 || scenes.at(activeTab)->selectedItems().isEmpty())
         return;
 
     QGraphicsItem *item = scenes.at(activeTab)->selectedItems().first();
@@ -597,7 +597,7 @@ void MainWindow::editGuard()
   */
 void MainWindow::editAction()
 {
-    if (scenes.at(activeTab)->selectedItems().isEmpty())
+    if (activeTab < 0 || scenes.at(activeTab)->selectedItems().isEmpty())
         return;
 
     QGraphicsItem *item = scenes.at(activeTab)->selectedItems().first();
@@ -627,7 +627,7 @@ void MainWindow::editAction()
   */
 void MainWindow::editVariable()
 {
-    if (scenes.at(activeTab)->selectedItems().isEmpty())
+    if (activeTab < 0 || scenes.at(activeTab)->selectedItems().isEmpty())
         return;
 
     QGraphicsItem *item = scenes.at(activeTab)->selectedItems().first();
@@ -656,6 +656,9 @@ void MainWindow::editVariable()
   */
 void MainWindow::deleteItem()
 {
+    if(activeTab<0)
+        return;
+
     foreach (QGraphicsItem *item, scenes.at(activeTab)->selectedItems()) {
         if (item->type() == Arrow::Type)
         {
@@ -1075,7 +1078,8 @@ void MainWindow::settingsWindow()
     Settings sett(mySettings);
     sett.exec();
     loadSettings();
-    scenes.at(activeTab)->update();
+    if(activeTab >= 0)
+        scenes.at(activeTab)->update();
 }
 
 
