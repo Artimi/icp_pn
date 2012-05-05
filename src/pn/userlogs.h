@@ -13,12 +13,19 @@ class UserLogs : public QDialog
     Q_OBJECT
     
 public:
-    explicit UserLogs(QList<QVector<QString>> *logs, QWidget *parent = 0);
+    UserLogs(QList< QList<QString> > *logs, QWidget *parent = 0);
     ~UserLogs();
+
+public slots:
+    void updateTable();
+    void find();
+
+signals:
+    void updateUserLog();
     
 private:
     Ui::UserLogs *ui;
-    QList<QVector<QString>> * myLogs;
+    QList< QList<QString> > * myLogs;
 };
 
 #endif // USERLOGS_H

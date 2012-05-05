@@ -31,6 +31,7 @@
 #include "ui_loginwindow.h"
 #include "netlist.h"
 #include "settings.h"
+#include "userlogs.h"
 
 class QActionGroup;
 class QGraphicsView;
@@ -94,6 +95,14 @@ private:
 
     NetList *netListForm;
 
+    QList< QList<QString> > userLogsList;
+
+
+
+
+    UserLogs *userLogsForm;
+
+
     QSettings *mySettings;
     QSettings::Format xmlFormat;
 //    QColor myLineColor;
@@ -108,6 +117,7 @@ private:
 
 signals:
     void netListArrived();
+    void userLogsListArrived();
 
 public slots:
     int addTab(DiagramScene *scene = 0);
@@ -142,6 +152,7 @@ public slots:
 
     void sendLoadRequest(QString name, QString version, QString author);
     void sendListRequest();
+    void sendLogsRequest();
 
     void simulate();
     void simulateStep();
