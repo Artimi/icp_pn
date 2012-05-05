@@ -43,6 +43,7 @@ public:
     {return myNetList;}
 
 
+
 private:
     PetriNet *myPetriNet;
     Message * myMessage;
@@ -54,6 +55,7 @@ private:
     void writePlace(QXmlStreamWriter * writer, PetriNetPlace * place);
     void writeTransition(QXmlStreamWriter * writer, PetriNetTransition * transition);
     void writeArc(QXmlStreamWriter * writer, PetriNetArrow * arrow);
+    void writeLog(QXmlStreamWriter *writer, QString user);
 
     int readPetriNet(QXmlStreamReader *reader);
     int readPlace(QXmlStreamReader * reader);

@@ -214,6 +214,12 @@ void Thread::handleRequest()
             break;
         case Message::LOG:
             /* Klient zada o log */
+            qDebug() << socketDescriptor << "Request for logs";
+            resultXml.setMessage(&message);
+            out = resultXml.writeMessage();
+            rawdata = out.toUtf8();
+            socket->write(rawdata);
+            socket->flush();
             break;
     }
     delete petriNet; // maže se opravdu vždycky?

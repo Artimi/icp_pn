@@ -93,6 +93,10 @@ QString XMLHandler::writeMessage()
         break;
     case Message::SIMULATE:
         writer.writeTextElement("steps",QString::number(myMessage->simulationSteps));
+        break;
+    case Message::LOG:
+        writeLog(&writer,myMessage->user);
+        break;
     }
 
     writer.writeEndElement(); //data
@@ -181,6 +185,15 @@ int XMLHandler::readMessage(QString str)
                         reader.readNext();
                     }
                     break;
+                case Message::LOG:
+                    /* Precteni zadosti o log */
+                    while(!(reader.isEndElement() && reader.name() == "data"))
+                    {
+                        if(reader.isStartElement() && reader.name() == "user")
+                            myMessage->user = reader.readElementText();
+                        reader.readNext();
+                    }
+                    break;
             }
         }
     }
@@ -192,6 +205,47 @@ int XMLHandler::readMessage(QString str)
     reader.clear();
     return 0;
 }
+
+
+/**
+  *
+  *
+  */
+void XMLHandler::writeLog(QXmlStreamWriter *writer, QString user)
+{
+    QString apppath = QFileInfo(QCoreApplication::applicationFilePath()).path() + "/";
+    QString filename = apppath + "serve.log";
+    QFile logfile(filename);
+
+    if(!logfile.open(QIODevice::ReadOnly))
+    {
+        /* Nepodarilo se otevrit logovaci soubor */
+        return;
+    }
+    QTextStream in(&logfile);
+    QString line = in.readLine();
+    QStringList lineObjects;
+    while (!line.isNull())
+    {
+        lineObjects = line.split("#");
+        if(lineObjects.at(1) != user)
+        {
+            /* Jiny uzivatel, preskocim */
+            line = in.readLine();
+            continue;
+        }
+
+        /* Zapisu spravne tagy pro vyhovujici radek */
+        writer->writeStartElement("record");
+        writer->writeTextElement("time",lineObjects.at(0));
+        writer->writeTextElement("event",lineObjects.at(2));
+        writer->writeTextElement("eventText",lineObjects.at(3));
+        writer->writeEndElement(); //record
+        line = in.readLine();
+    }
+    logfile.close();
+}
+
 
 /**
   * Zapíše informace o petriho síti(jméno, verze, autor)
