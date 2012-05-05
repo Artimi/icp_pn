@@ -40,6 +40,8 @@ public:
     {myMessage = message;}
     void setNetList(QList<DiagramScene *> * netList)
     {myNetList = netList;}
+    void setLogs(QList<QList<QString>*> *newlogs)
+    {logs = newlogs; }
 
     Message * getMessage()
     {return myMessage;}
@@ -47,12 +49,14 @@ public:
     {return myScene;}
     QList<DiagramScene *> * getNetList()
     {return myNetList;}
+    QList<Qlist<QString>*> *getLogs()
+    {return logs;}
 
 private:
     DiagramScene *myScene;
     Message *myMessage;
     QList<DiagramScene *> *myNetList;
-    QList<QVector <QString>*> *logs;
+    QList<QList<QString>*> *logs;
 
     void writePetriNetInformation(QXmlStreamWriter * writer);
     void writePetriNet(QXmlStreamWriter *writer);
