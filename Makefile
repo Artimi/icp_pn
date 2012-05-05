@@ -47,6 +47,9 @@ pack:
 	rm -f $(ARCHNAME)
 	tar -czf $(ARCHNAME) src/*/[^moc_]*.{cpp,h,pro,ui} Doxyfile examples/* README.txt Makefile src/pn/settings.xml doc/help.html
 	
+unpack:
+	tar -xzf $(ARCHNAME)
+
 testarchive:
 	rm -rf $(TESTDIR)
 	mkdir -p $(TESTDIR)
