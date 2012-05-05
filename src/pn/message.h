@@ -9,7 +9,7 @@ class Message
 public:
     Message();
     enum Commands {SLOGIN,CLOGIN,WRONGLOGIN,LOGGED,CLIST,SLIST, SEND, ERROR, SAVE, LOAD, SIMULATE, LOG};
-    enum LogCodes {LOGGED, WRONGLOGIN,CONNECT,DISCONNECT,SIMULATE,SAVE,LOAD};
+    enum LogCodes {LOG_LOGGED, LOG_WRONGLOGIN, LOG_CONNECT, LOG_DISCONNECT, LOG_SIMULATE, LOG_SAVE, LOG_LOAD};
 
     Commands command;
     LogCodes logcode;
