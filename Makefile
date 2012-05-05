@@ -43,7 +43,7 @@ clean:
 
 pack:
 	rm -f $(ARCHNAME)
-	tar -czf $(ARCHNAME) src/*/*.{cpp,h,pro,ui} Doxyfile examples/* README.txt Makefile $(SERVER_PATH)settings.xml doc/help.html $(SERVER_PATH)passwd
+	tar -czf $(ARCHNAME) src/*/*.{cpp,h,pro,ui} Doxyfile examples/* README.txt Makefile $(PN_PATH)settings.xml doc/help.html $(SERVER_PATH)passwd $(SERVER_PATH)nets/*
 	
 unpack:
 	tar -xzf $(ARCHNAME)
