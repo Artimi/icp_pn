@@ -14,6 +14,7 @@ DiagramScene::DiagramScene(QMenu *placeMenu, QMenu *transitionMenu, QMenu *arrow
 {
     myMode = MoveItem;
     line = 0;
+    selectionRect =  0;
     version = "1";
 
     myPlaceMenu = placeMenu;
@@ -99,22 +100,15 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         line->setPen(QPen(MainWindow::LINECOLOR));
         addItem(line);
         break;
-    case MoveItem:
-        QGraphicsItem * itemUnderMouse = itemAt(mouseEvent->scenePos().x(),
-                                                mouseEvent->scenePos().y());
 
-        if(itemUnderMouse &&
-           itemUnderMouse->isEnabled() &&
-           itemUnderMouse->flags() & QGraphicsItem::ItemIsSelectable)
+    case MoveItem:
+        if(this->itemAt(mouseEvent->scenePos()) == 0)
         {
-            itemUnderMouse->setSelected(!itemUnderMouse->isSelected());
-        }
-        else if (!itemUnderMouse)
-        {
-            clearSelection();
+            selectionRect = new QGraphicsRectItem(QRectF(mouseEvent->scenePos(),QSizeF(1,1)));
+            selectionRect->setPen(QPen(MainWindow::DASHLINECOLOR, 1, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+            addItem(selectionRect);
         }
         break;
-
 
     }
     update();
@@ -137,6 +131,11 @@ void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
     else if (myMode == MoveItem)
     {
+        if(selectionRect != 0)
+        {
+            QRectF newRect(selectionRect->rect().topLeft(),mouseEvent->scenePos());
+            selectionRect->setRect(newRect);
+        }
         QGraphicsScene::mouseMoveEvent(mouseEvent);
     }
     update();
@@ -200,6 +199,18 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
             }
             line = 0;
+
+    case MoveItem:
+        if(selectionRect != 0)
+        {
+            QPainterPath path;
+            path.addRect(selectionRect->rect());
+            setSelectionArea(path);
+            removeItem(selectionRect);
+            delete selectionRect;
+            selectionRect = 0;
+        }
+
     default: ;
     }
     update();

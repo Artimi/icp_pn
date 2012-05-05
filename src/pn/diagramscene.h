@@ -87,6 +87,7 @@ private:
     bool leftButtonDown;
     QPointF startPoint;
     QGraphicsLineItem *line;
+    QGraphicsRectItem *selectionRect;
 
     QString name;
     QString version;
