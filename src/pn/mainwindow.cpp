@@ -37,8 +37,9 @@ MainWindow::MainWindow(QWidget *parent) :
     tabCount = 0;
     activeTab = -1;
 
+    QString apppath =  QFileInfo(QCoreApplication::applicationFilePath()).path() + "/";
     xmlFormat = QSettings::registerFormat("xml",readXMLSettings,writeXMLSettings);
-    mySettings = new QSettings("settings.xml",xmlFormat,this);
+    mySettings = new QSettings(apppath+"settings.xml",xmlFormat,this);
     loadSettings();
 
     addTab();
