@@ -9,7 +9,7 @@ UserLogs::UserLogs(QList< QList<QString> > *logs, QWidget *parent) :
     myLogs = logs;
     ui->tableWidget->setColumnCount(3);
     QStringList headerList;
-    headerList << "Time" << "Action" << "Description";
+    headerList << "Date" << "Action" << "Description";
     ui->tableWidget->setHorizontalHeaderLabels(headerList);
 
     QHeaderView * headerView = ui->tableWidget->horizontalHeader();
