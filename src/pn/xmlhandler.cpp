@@ -99,6 +99,10 @@ QString XMLHandler::writeMessage()
     case Message::SIMULATE:
         writer.writeTextElement("steps",QString::number(myMessage->simulationSteps));
         writePetriNet(&writer);
+        break;
+    case Message::LOG:
+        writer.writeTextElement("log",myMessage->user);
+        break;
     }
 
     writer.writeEndElement(); //data
@@ -306,6 +310,7 @@ void XMLHandler::writeArc(QXmlStreamWriter *writer, Arrow *arrow)
     writer->writeTextElement("variable",arrow->getVariable());
     writer->writeEndElement(); //arc
 }
+
 
 /**
   * Přečte seznam petriho sítí a uloží je do QList<DiagramScene *> * myNetList
