@@ -330,7 +330,7 @@ void Thread::writeLogWronglogin(QString name)
   */
 void Thread::writeLogConnect()
 {
-    QString msg = "##" + Message::LOG_CONNECT + "#" + socketDescriptor;
+    QString msg = "##" + QString::number(Message::LOG_CONNECT) + "#" + QString::number(socketDescriptor);
     writeLog(msg);
 }
 
@@ -339,7 +339,7 @@ void Thread::writeLogConnect()
   */
 void Thread::writeLogDisconnect()
 {
-    QString msg = "##" + Message::LOG_DISCONNECT + "#" + socketDescriptor;
+    QString msg = "##" + QString::number(Message::LOG_DISCONNECT) + "#" + QString::number(socketDescriptor);
     writeLog(msg);
 }
 
