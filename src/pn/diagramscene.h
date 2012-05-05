@@ -64,6 +64,22 @@ public:
     QMenu * myTransitionMenu;
     QMenu * myArrowMenu;
 
+    void incPlaceCount()
+    {placeCount++;}
+    void incTransitionCount()
+    {transitionCount++;}
+
+    int getPlaceCount()
+    { return placeCount;}
+    int getTransitionCount()
+    {return transitionCount;}
+
+    void setPlaceCount(int count)
+    {placeCount = count;}
+    void setTransitionCount(int count)
+    {transitionCount = count;}
+
+
 public slots:
     void setMode(Mode mode);
     void setItemType(DiagramItem::DiagramType type);
@@ -93,6 +109,9 @@ private:
     QString version;
     QString author;
     QString description;
+
+    int placeCount;
+    int transitionCount;
 
 
 };

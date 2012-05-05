@@ -1,3 +1,8 @@
+/**
+  * @file userlogs.cpp
+  *
+  * @author xsebek02, xsimon14
+  */
 #ifndef USERLOGS_H
 #define USERLOGS_H
 

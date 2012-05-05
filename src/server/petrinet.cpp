@@ -1,3 +1,9 @@
+/**
+  * @file petrinet.cpp
+  *
+  * @brief Implementace petriho sítě
+  * @author xsebek02 xsimon14
+  */
 #include "petrinet.h"
 
 PetriNet::PetriNet()

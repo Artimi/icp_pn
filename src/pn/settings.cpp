@@ -1,3 +1,9 @@
+/**
+  * @file settings.cpp
+  *
+  * @brief Slouží k nastavení aplikace
+  * @author xsebek02, xsimon14
+  */
 #include "settings.h"
 #include "ui_settings.h"
 

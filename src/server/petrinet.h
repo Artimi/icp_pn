@@ -1,3 +1,9 @@
+/**
+  * @file petrinet.cpp
+  *
+  * @brief Implementace petriho sítě
+  * @author xsebek02 xsimon14
+  */
 #ifndef PETRINET_H
 #define PETRINET_H
 

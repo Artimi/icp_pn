@@ -67,7 +67,6 @@ private:
     QRectF actionRectangle;
 
     int size;
-    static int count;
 
     QString guard;
     QString action;

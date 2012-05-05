@@ -163,6 +163,8 @@ void MainWindow::createActions()
     connect(this,SIGNAL(userLogsListArrived()),userLogsForm,SLOT(updateTable()));
     connect(userLogsForm,SIGNAL(updateUserLog()),this,SLOT(sendLogsRequest()));
 
+    connect(ui->actionAbout_application,SIGNAL(triggered()),this,SLOT(showAbout()));
+
 
 
 }
@@ -1126,5 +1128,14 @@ void MainWindow::userLogs()
 {
     sendLogsRequest();
     userLogsForm->exec();
+}
+
+/**
+  * Zobrazí about aplikace
+  */
+void MainWindow::showAbout()
+{
+    About about;
+    about.exec();
 }
 

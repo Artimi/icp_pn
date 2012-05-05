@@ -1,3 +1,9 @@
+/**
+  * @file userlogs.cpp
+  *
+  * @brief Zobrazuje uživatelovy logy
+  * @author xsebek02, xsimon14
+  */
 #include "userlogs.h"
 #include "ui_userlogs.h"
 

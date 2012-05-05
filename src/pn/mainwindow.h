@@ -1,9 +1,7 @@
 /**
   * @file mainwindow.h
   *
-  * @brief Hlavičkový soubor pro mainwindow.cpp
   * @author xsebek02 xsimon14
-  *
   */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -32,6 +30,7 @@
 #include "netlist.h"
 #include "settings.h"
 #include "userlogs.h"
+#include "about.h"
 
 class QActionGroup;
 class QGraphicsView;
@@ -164,6 +163,7 @@ public slots:
     void showHelp();
     void selectAll();
     void userLogs();
+    void showAbout();
 
 };
 

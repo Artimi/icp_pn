@@ -409,7 +409,7 @@ int XMLHandler::readPlace(QXmlStreamReader *reader)
         qreal x, y;
         x = y = 0;
 
-        Place * place = new Place(myScene->myPlaceMenu);
+        Place * place = new Place(myScene->myPlaceMenu,0,myScene);
 
         place->setName(reader->attributes().value("name").toString());
         reader->readNext();
@@ -432,8 +432,12 @@ int XMLHandler::readPlace(QXmlStreamReader *reader)
             }
             reader->readNext();
         }
+        QRegExp rx("(\\d+)");
+        rx.indexIn(place->getName());
+        int placeNum = rx.cap(1).toInt();
+        if (placeNum > myScene->getPlaceCount())
+                myScene->setPlaceCount(placeNum);
 
-        myScene->addItem(place);
         place->setPos(QPointF(x,y));
     }
     return 0;
@@ -451,7 +455,7 @@ int XMLHandler::readTransition(QXmlStreamReader *reader)
         qreal x, y;
         x = y = 0;
 
-        Transition * transition = new Transition(myScene->myTransitionMenu);
+        Transition * transition = new Transition(myScene->myTransitionMenu,0,myScene);
 
         transition->setName(reader->attributes().value("name").toString());
         if(reader->attributes().value("chosen").toString() == "true")
@@ -480,8 +484,13 @@ int XMLHandler::readTransition(QXmlStreamReader *reader)
             }
             reader->readNext();
         }
+        QRegExp rx("(\\d+)");
+        rx.indexIn(transition->getName());
+        int transitionNum = rx.cap(1).toInt();
+        if (transitionNum > myScene->getTransitionCount())
+                myScene->setTransitionCount(transitionNum);
 
-        myScene->addItem(transition);
+
         transition->setPos(QPointF(x,y));
     }
     return 0;
@@ -533,8 +542,8 @@ int XMLHandler::readArc(QXmlStreamReader *reader)
 
         startItem->addArrow(arrow);
         endItem->addArrow(arrow);
-        myScene->addItem(arrow);
         arrow->updatePosition();
+        myScene->addItem(arrow);
     }
     return 0;
 }

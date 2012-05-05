@@ -8,7 +8,6 @@
 #include <QMessageBox>
 #include "mainwindow.h"
 
-int Place::count = 0;
 
 Place::Place(QMenu *menu, QGraphicsItem *parent, QGraphicsScene *scene) :
     DiagramItem(DiagramItem::Place,parent, scene)
@@ -17,10 +16,14 @@ Place::Place(QMenu *menu, QGraphicsItem *parent, QGraphicsScene *scene) :
     rectangle.setRect(0,0,size,size);
     textRectangle.setRect(size/4,size/4,3*size/4,3*size/4);
     myPolygon = QPolygonF(boundingRect());
-    name.setNum(++count);
-    name.prepend("p");
-
     myMenu = menu;
+
+    if (name.isEmpty())
+    {
+        DiagramScene * rootScene = (DiagramScene *) this->scene();
+        rootScene->incPlaceCount();
+        name = "p" + QString::number(rootScene->getPlaceCount());
+    }
 }
 
 /**
@@ -93,13 +96,13 @@ bool Place::setTokenString(QString str)
         tokens.clear();
         return true;
     }
-     QRegExp valid ("[\\d\\s,]*");
+     QRegExp valid ("[-\\d\\s,]*");
     if(!valid.exactMatch(str))
         return false;
 
     tokens.clear();
 
-    QRegExp rx("(\\d+)");
+    QRegExp rx("(-?\\d+)");
     int pos = 0;
 
     while ((pos = rx.indexIn(str,pos)) != -1)

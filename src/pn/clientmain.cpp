@@ -19,10 +19,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QTextCodec* unicode = QTextCodec::codecForName("UTF-8");
-    QTextCodec::setCodecForCStrings(unicode);
-    QTextCodec::setCodecForTr(unicode);
-
     MainWindow w;
     w.show();
     

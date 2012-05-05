@@ -18,6 +18,8 @@ DiagramScene::DiagramScene(QMenu *placeMenu, QMenu *transitionMenu, QMenu *arrow
     line = 0;
     selectionRect =  0;
     version = "1";
+    placeCount = 0;
+    transitionCount = 0;
 
     myPlaceMenu = placeMenu;
     myTransitionMenu = transitionMenu;
@@ -84,17 +86,16 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     case InsertItem:
         if(myItemType == DiagramItem::Place)
         {
-            item = new Place(myPlaceMenu);
+            item = new Place(myPlaceMenu,0,this);
         }
         else if (myItemType == DiagramItem::Transition)
         {
-            item = new Transition(myTransitionMenu);
+            item = new Transition(myTransitionMenu,0, this);
         }
         else
         {
             break;
         }
-        addItem(item);
         item->setPos(mouseEvent->scenePos());
         break;
 
@@ -191,7 +192,7 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         if (hasArc(startItem,endItem))
                                 break;
 
-                        Arrow *arrow = new Arrow(startItem, endItem, myArrowMenu);
+                        Arrow *arrow = new Arrow(startItem, endItem, myArrowMenu,0,this);
                         startItem->addArrow(arrow);
                         endItem->addArrow(arrow);
                         addItem(arrow);

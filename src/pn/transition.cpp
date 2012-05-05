@@ -7,7 +7,6 @@
 #include "transition.h"
 #include "mainwindow.h"
 
-int Transition::count = 0;
 
 Transition::Transition(QMenu *menu,QGraphicsItem *parent, QGraphicsScene *scene)
     :DiagramItem(DiagramItem::Transition,parent,scene)
@@ -18,13 +17,18 @@ Transition::Transition(QMenu *menu,QGraphicsItem *parent, QGraphicsScene *scene)
     guardRectangle.setRect(2,2,size-2,size/2 -2);
     actionRectangle.setRect(2,size/2 + 2 ,size - 2,size -2 );
     myPolygon = QPolygonF(boundingRect());
-    name.setNum(++count);
-    name.prepend("n");
 
     guard = "";
     action = "";
     myMenu = menu;
     chosen = false;
+
+    if (name.isEmpty())
+    {
+        DiagramScene * rootScene = (DiagramScene *) this->scene();
+        rootScene->incTransitionCount();
+        name = "t" + QString::number(rootScene->getTransitionCount());
+    }
 }
 
 /**

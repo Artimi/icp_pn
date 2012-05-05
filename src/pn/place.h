@@ -14,6 +14,7 @@
 #include <QtGui>
 #include <QMenu>
 #include "diagramitem.h"
+#include "diagramscene.h"
 #include <QRegExp>
 
 class MainWindow;
@@ -46,9 +47,6 @@ public:
     void addToken(int token);
 
     int size;
-
-    static int count;
-
 
     QString getTokenString();
     bool setTokenString(QString str);
