@@ -212,6 +212,9 @@ void Thread::handleRequest()
             socket->write(rawdata);
             socket->flush();
             break;
+        case Message::LOG:
+            /* Klient zada o log */
+            break;
     }
     delete petriNet; // maže se opravdu vždycky?
     delete resultNet;

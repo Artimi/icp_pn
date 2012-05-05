@@ -8,7 +8,7 @@ class Message
 {
 public:
     Message();
-    enum Commands {SLOGIN,CLOGIN,WRONGLOGIN,LOGGED,CLIST,SLIST, SEND, ERROR, SAVE, LOAD, SIMULATE};
+    enum Commands {SLOGIN,CLOGIN,WRONGLOGIN,LOGGED,CLIST,SLIST, SEND, ERROR, SAVE, LOAD, SIMULATE, LOG};
 
     Commands command;
     QString user;

@@ -807,6 +807,9 @@ void MainWindow::handleReply()
             deleteScene = false;
             ui->statusBar->showMessage(tr("Simulation succeded."));
             break;
+        case Message::LOG:
+            /* Server posila informace o logu */
+            break;
     }
     if(deleteScene)
         delete scene;

@@ -1,9 +1,9 @@
 #include "message.h"
 
+/**
+  * Konstruktor tridy Message
+  */
 Message::Message()
 {
     command = Message::ERROR;
-
-    int simulationSteps = 1;
 }
-
