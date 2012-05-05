@@ -3,19 +3,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Nápověda petriho sítě</title>
+<title>Nápověda Petriho sítě</title>
 </head>
 <body>
 
-<h1>Nápověda k editoru a emulátoru petriho sítí</h1>
-<p>Toto je nápověda pro školní projekt do předmětu Seminář C++ (ICP) na Vysokém učení technickém v Brně Fakultě informačních technologií. Aplikace se skládá z klientské a serverové části. Klientská část má na starosti editaci petriho sítí, jejich lokální uložení. Serverová část obsluhuje klienta při simulacích petriho sítí a ukládá je na vzdálené uložiště</p>
+<h1>Nápověda k editoru a emulátoru Petriho sítí</h1>
+<p>Toto je nápověda pro školní projekt do předmětu Seminář C++ (ICP) na Vysokém učení technickém v Brně, Fakultě informačních technologií. Aplikace se skládá z klientské a serverové části. Klientská část má na starosti editaci Petriho sítí a jejich lokální uložení. Serverová část obsluhuje klienta při simulacích Petriho sítí a ukládá je na vzdálené úložiště</p>
 
 <h2>Klient</h2>
-<p>Po spuštění klienta vidíme hlavní okno, ve kterém probíhá editace sítí. V hlavním menu v záložce File můžeme přidávat další záložku s plátnem, ukládat nebo nahrávat síť z místního uložiště, ukládat nebo nahrávat síť ze serverového uložiště. Záložka settings nám dovoluje zapisovat údaje o síti jako její jméno a popis (o autora a verzi se stará server). Volbou Configure se provádí nastavení aplikace jako barvy kreslených objektů a fonty popisků. Pod záložkou server se skrývají možnosti komunikace se serverem jako připojení, odpojení a login. </p>
+<p>Po spuštění klienta vidíme hlavní okno, ve kterém probíhá editace sítí. V hlavním menu v záložce <b>File</b> můžeme přidávat další záložku s plátnem, ukládat nebo nahrávat síť z místního úložiště, ukládat nebo nahrávat síť ze serverového úložiště. Záložka <b>Settings</b> nám dovoluje zapisovat údaje o síti, jako jsou její jméno a popis (o autora a verzi se stará server). Volbou <b>Configure</b> se provádí nastavení aplikace, jako jsou barvy kreslených objektů a fonty popisků. Pod záložkou <b>Server</b> se skrývají možnosti komunikace se serverem jako připojení, odpojení a login. </p>
 
-<p>V nástrojovém panelu si můžeme vybrat z nástrojů manipulující s plátnem. Mouse pro označování a posunování objektů a Place, Transition, Arc pro kreslení příslušných objektů. V druhé částí vidíme možnosti pro simulaci a simulaci krokem, ty jsou možné až po přihlášení k serveru.</p>
+<p>V nástrojovém panelu je možné si vybrat z nástrojů manipulující s plátnem. <b>Mouse</b> pro označování a posunování objektů a <b>Place</b>, <b>Transition</b>, <b>Arc</b> pro kreslení příslušných objektů. V druhé části jsou pak možnosti pro simulaci a simulaci krokem, ty jsou možné až po přihlášení k serveru.</p>
 
-<p>Hlavní plátno je opatřeno záložkami, které jsou pojmenovány podle sítí, které zobrazují. Pokud přijde síť ze strany serveru, přepíše se ta se stejným jménem nebo pokud taková žádná není otevře se nový panel. Objekty na plátně lze intuitivně posouvat při výběru nástroje Mouse. Při zaškrtnutí jiného objektu se po kliknutí do plátna tento objekt vloží. Hrana mezi místem a přechodem se vkládá stisknutím levého tlačítka myši na počátečním objektu a uvolněním na cílovém. Pokud klikneme pravým tlačítkem na některý z objektů, objeví se kontextové menu, které nám dovolí upravovat obsah předmětů (jako např. tokeny u místa). Označené objekty lze mazat at už z kontextového menu nebo stiskem klávesy delete.</p>
+<p>Hlavní plátno je opatřeno záložkami, které jsou pojmenovány podle sítí, které zobrazují. Pokud přijde síť ze strany serveru, přepíše se ta se stejným jménem nebo pokud taková žádná není otevře se nový panel. Objekty na plátně lze intuitivně posouvat při výběru nástroje <b>Mouse</b>. Při zaškrtnutí jiného objektu se po kliknutí do plátna tento objekt vloží. Hrana mezi místem a přechodem se vkládá stisknutím levého tlačítka myši na počátečním objektu a uvolněním na cílovém. Pokud klikneme pravým tlačítkem na některý z objektů, objeví se kontextové menu, které nám dovolí upravovat obsah předmětů (jako např. tokeny u místa). Označené objekty lze mazat at už z kontextového menu nebo stiskem klávesy delete.</p>
 
 <p>Na spodní liště se nachází status bar, ve kterém se zobrazují důležité prováděné události, hlavně komunikace se serverem, a chybové hlášení, které se zobrazí i ve vyskakovacím dialogu.</p>
 
@@ -40,7 +40,6 @@
 
 
 <h2>Server</h2>
-<p>Po spuštění serveru tento začne poslouchat na výchozím portu 22334. Připojí-li se klient zpracovává jeho požadavky a zasílá mu odpovědi. Je možno připojit se na server s více klienty najednou. Server běží v nekonečné smyčce a čeká na klienty a jejich žádosti až do ukončení. Pokud se na serveru vyskytne nějaká chyba související s komunikací s klientem dá mu zprávou vědět a klient tuto chybovou zprávu zobrazí uživateli.</p>
-
+<p>Po spuštění serveru tento začne poslouchat na výchozím portu <b>22334</b>. Připojí-li se klient, zpracovává jeho požadavky a zasílá mu odpovědi. Je možno připojit se na server s více klienty najednou. Server běží v nekonečné smyčce a čeká na klienty a jejich žádosti až do ukončení. Pokud se na serveru vyskytne nějaká chyba související s komunikací s klientem dá mu zprávou vědět a klient tuto chybovou zprávu zobrazí uživateli.</p>
 </body>
 </html>
