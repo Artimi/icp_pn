@@ -820,6 +820,7 @@ void MainWindow::handleReply()
             ui->statusBar->showMessage(tr("Simulation succeded."));
             break;
         case Message::LOG:
+        qDebug() <<rawdata;
             emit userLogsListArrived();
             /* Server posila informace o logu */
             break;
