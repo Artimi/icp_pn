@@ -20,13 +20,15 @@ HEADERS += arrow.h \
     message.h \
     connect.h \
     netlist.h \
-    settings.h
+    settings.h \
+    userlogs.h
 FORMS += mainwindow.ui \
     netinformation.ui \
     connect.ui \
     loginwindow.ui \
     netlist.ui \
-    settings.ui
+    settings.ui \
+    userlogs.ui
 SOURCES += arrow.cpp \
            diagramitem.cpp \
            diagramscene.cpp \
@@ -39,4 +41,5 @@ SOURCES += arrow.cpp \
     message.cpp \
     connect.cpp \
     netlist.cpp \
-    settings.cpp
+    settings.cpp \
+    userlogs.cpp

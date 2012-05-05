@@ -347,6 +347,7 @@ int XMLHandler::readPetriNetList(QXmlStreamReader *reader)
         }
         reader->readNext();
     }
+    return 0;
 }
 
 /**
@@ -541,6 +542,37 @@ int XMLHandler::readArc(QXmlStreamReader *reader)
         endItem->addArrow(arrow);
         myScene->addItem(arrow);
         arrow->updatePosition();
+    }
+    return 0;
+}
+
+int XMLHandler::readUserLogs(QXmlStreamReader *reader)
+{
+    myUsersLogsList->clear();
+    while(!reader->atEnd() && !reader->hasError())
+    {
+        if(reader->isStartElement() && reader->name() == "record")
+        {
+            QList<QString> record;
+            while(!(reader->isEndElement() && reader->name() == "record"))
+            {
+                reader->readNext();
+                if(reader->isStartElement() && reader->name() == "time")
+                {
+                    record << reader->readElementText();
+                }
+                else if(reader->isStartElement() && reader->name() == "event")
+                {
+                    record << reader->readElementText();
+                }
+                else if ( reader->isStartElement() && reader->name() == "eventText")
+                {
+                    record << reader->readElementText();
+                }
+            }
+            myUsersLogsList->append(record);
+        }
+        reader->readNext();
     }
     return 0;
 }

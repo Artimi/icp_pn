@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     socket = new QTcpSocket(this);
     netListForm = new NetList(&netList);
+    userLogsForm = new UserLogs(&userLogsList);
+
     ui->actionMouse->setChecked(true);
     ui->mainToolBar->setMovable(false);
     ui->tabWidget->setTabsClosable(true);
@@ -40,7 +42,6 @@ MainWindow::MainWindow(QWidget *parent) :
     loadSettings();
 
     addTab();
-
 
 }
 
@@ -152,6 +153,12 @@ void MainWindow::createActions()
     connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(disconnectFromServer()));
 
     connect(ui->actionHelp,SIGNAL(triggered()),this,SLOT(showHelp()));
+
+    connect(ui->actionUser_logs,SIGNAL(triggered()),this,SLOT(userLogs()));
+    connect(this,SIGNAL(userLogsListArrived()),userLogsForm,SLOT(updateTable()));
+    connect(userLogsForm,SIGNAL(updateUserLog()),this,SLOT(sendLogsRequest()));
+
+
 
 }
 /**
@@ -754,6 +761,7 @@ void MainWindow::handleReply()
     xmlhandler.setScene(scene);
     xmlhandler.setMessage(&message);
     xmlhandler.setNetList(&netList);
+    xmlhandler.setUserLogsList(&userLogsList);
     xmlhandler.readMessage(QString(rawdata));
 
     switch(message.command)
@@ -812,6 +820,7 @@ void MainWindow::handleReply()
             ui->statusBar->showMessage(tr("Simulation succeded."));
             break;
         case Message::LOG:
+            emit userLogsListArrived();
             /* Server posila informace o logu */
             break;
     }
@@ -963,6 +972,20 @@ void MainWindow::sendListRequest()
 }
 
 /**
+  * Pošle žádost o logy
+  */
+void MainWindow::sendLogsRequest()
+{
+    Message message;
+    message.command = Message::LOG;
+    XMLHandler xmlhandler;
+    xmlhandler.setMessage(&message);
+
+    socket->write(xmlhandler.writeMessage().toUtf8());
+    socket->flush();
+}
+
+/**
   * Pošle serveru žádost o simulaci aktivní scény až do konce
   */
 void MainWindow::simulate()
@@ -1085,6 +1108,15 @@ void MainWindow::selectAll()
             item->setSelected(true);
         }
     }
+}
+
+/**
+  * Zobrazí okno s informacemí o činnosti uživatele
+  */
+void MainWindow::userLogs()
+{
+    sendLogsRequest();
+    userLogsForm->exec();
 }
 
 
