@@ -7,9 +7,6 @@
 #define SIMULATE_H
 #include <QString>
 #include "xmlhandler.h"
-//#include <QXmlStreamReader>
-//#include <QXmlStreamWriter>
-//#include "manipulatenet.h"
 #include <QRegExp>
 #include "petrinet.h"
 

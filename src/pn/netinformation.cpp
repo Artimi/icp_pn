@@ -7,6 +7,9 @@
 #include "netinformation.h"
 #include "ui_netinformation.h"
 
+/**
+  * Konstruktor tridy NetInformation
+  */
 NetInformation::NetInformation(DiagramScene  *scene, QString author, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::netinformation)
@@ -24,6 +27,9 @@ NetInformation::NetInformation(DiagramScene  *scene, QString author, QWidget *pa
                                  this, SLOT(saveInformation()));
 }
 
+/**
+  * Destruktor tridy NetInformation
+  */
 NetInformation::~NetInformation()
 {
     delete ui;

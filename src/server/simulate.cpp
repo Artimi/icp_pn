@@ -16,10 +16,10 @@ Simulate::Simulate()
 
 /**
   * Odsimuluje jeden krok simulace
+  * @param petriNet ukazatel na petriho sit, se kterou pracuje
   */
 bool Simulate::simulateStep(PetriNet *petriNet)
 {
-    qDebug() << "Jeden krok simulace";
     PetriNetTransition * transition;
     QList<PetriNetArrow *> inArrows;
     QList<PetriNetArrow *> outArrows;
@@ -37,8 +37,7 @@ bool Simulate::simulateStep(PetriNet *petriNet)
                 outArrows = transition->getOutArrows();
                 QMap<PetriNetArrow*,int>  pairs;
                 QMap<PetriNetArrow *,int>  output;
-                //getPairs(inArrows,transition->getGuard(),&pairs);
-               //if(!this->error)
+
                 if(getPairs(inArrows,transition->getGuard(),&pairs))
                 {
                     /* Vsecko probehlo v poradku, navazano je, pokracuju */
@@ -78,6 +77,9 @@ bool Simulate::simulateStep(PetriNet *petriNet)
 
 /**
   * Vrati QMap uspesneho prechodu
+  * @param inArrows Seznam vstupnich hran
+  * @param guard Retezec podminky straze
+  * @param pairs QMap moznych paru, ktere se budou navazovat
   */
 bool Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<PetriNetArrow*,int>* pairs)
 {
@@ -111,12 +113,12 @@ bool Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
 
             factor = getFactor(pairs,arc);
 
-            if(factor == 0)
-            {
+            //if(factor == 0)
+            //{
                 /* Pokud nemá žádný token, smažu ho ze vstupních, stejně tam nemá co přijít */
-                pairs->remove(inArrows[arc]);
-            }
-            else
+            //    pairs->remove(inArrows[arc]);
+            //}
+            //else
                 (*pairs)[inArrows[arc]] = place->getTokens().at((i / getFactor(pairs,arc)) % place->getTokens().count());
         }
 
@@ -143,15 +145,13 @@ bool Simulate::getPairs(QList<PetriNetArrow *> inArrows,QString guard, QMap<Petr
 
 /**
   * Odsimuluje celou petriho síť
+  * @param petriNet ukazatel na petriho sit, se kterou pracuje
   */
 bool Simulate::simulateAll(PetriNet *petriNet)
 {
-    qDebug() << "Cela simulace";
-
     int stepsDone = 0;
     int maxSteps = 50;
     QList<PetriNetItem *> netItemList = petriNet->items();
-    //PetriNetTransition * transition;
 
     /* Simulaci provadim podle prechodu, udelam si jejich seznam */
     QList<PetriNetTransition *> transitionList;
@@ -170,7 +170,6 @@ bool Simulate::simulateAll(PetriNet *petriNet)
 
     while(!this->error)
     {
-        qDebug()<<"vstoupil jsem do smycky";
         changed = 0;
         for (int i = 0; i < transitionListCount; i++)
         {
@@ -178,11 +177,9 @@ bool Simulate::simulateAll(PetriNet *petriNet)
             transitionList.at(i)->chosen = true;
             if (!simulateStep(petriNet))
             {
-                qDebug()<<"neprobehl prechod";
                 if(this->error)
                 {
                     /* Semanticka chyba */
-                    qDebug() << "skoncil se semantickou chybou";
                     return false;
                 }
             }
@@ -193,7 +190,6 @@ bool Simulate::simulateAll(PetriNet *petriNet)
             }
             transitionList.at(i)->chosen = false;
         }
-        qDebug() << "changed na konci smycky" << changed;
 
         if (changed == 0 || stepsDone >= maxSteps)
         {
@@ -219,6 +215,12 @@ bool Simulate::simulateAll(PetriNet *petriNet)
 }
 
 
+/**
+  * Vyhodnoti podminku a vrati bool hodnotu vyrazu
+  * @param op1 Operand 1
+  * @param op2 Operand 2
+  * @param oper Operator
+  */
 bool Simulate::checkCondition(QString oper, int op1, int op2)
 {
 //    <, <=, >=, >, ==, !=
@@ -251,8 +253,6 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
     QList<QString> guards = guardGot.split("&");
     QString guard;
 
-        qDebug()<<map->keys();
-        qDebug()<<map->values();
     for(int x = 0; x < guards.size(); x++)
     {
         /* Projdu vsechny casti vyroku rozdelene podle & */
@@ -265,7 +265,6 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
             oper = rx.cap(2);
             op1Var = rx.cap(1);
             op2Var = rx.cap(3);
-            qDebug() << op1Var << oper << op2Var;
             int set1, set2, op1, op2;
             set1 = set2 = op1 = op2 = 0;
             QList<PetriNetArrow *> keys = map->keys();
@@ -277,7 +276,6 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
                     /* Jsem na indexu, kde odpovida promena 1, takze vytahnu hodnotu */
                     op1 = map->value(keys.at(i));
                     set1 = 1;
-                    qDebug() << "op1 prirazena hodnota" << op1;
                 }
 
                 bool b;
@@ -287,20 +285,17 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
                     /* Hodnota je ciselna, netreba hledat v promennych */
                     op2 = op2Var.toInt();
                     set2 = 1;
-
                 }
                 else if (keys.at(i)->getVariable() == op2Var)
                 {
                     /* Jsem na indexu, kde odpovida promena 2, takze vytahnu hodnotu */
                     op2 = map->value(keys.at(i));
-                    qDebug() << "op2 prirazena hodnota" << op2;
                     set2 = 1;
                 }
             }
             if (set1 == 0 || set2 == 0 || !checkCondition(oper,op1,op2))
             {
                 /* Jestli neplati byt jen jedno pravidlo, vracim chybu */
-                qDebug() << "nevyhovuje pravidlo";
                 return false;
             }
         }
@@ -312,21 +307,24 @@ bool Simulate::transitionGuard(QMap<PetriNetArrow *, int> *map, QString guardGot
     }
 
     /* Jestli jsem se dostal az sem, je vsechno v poradku */
-    qDebug() << "nasel jsem spravnou kombinaci";
     return true;
 }
 
-
+/**
+  * Vyhodnoti akci prechodu
+  * @param input QMap vstupnich tokenu
+  * @param output Qmap vystupnich tokenu
+  * @param actionGot QString akce
+  */
 void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNetArrow*,int> *output, QString actionGot)
 {
-    QList<QString> actions = actionGot.split(",");
+    QStringList actions = actionGot.split(",");
     QString action;
 
     foreach(action, actions)
     {
         /* Pro kazdou akci rozdelene podle , */
-        QRegExp rx("^\\s*([a-zA-Z]+)\\s*=\\s*(.*)$");
-
+        QRegExp rx("^\\s*([a-zA-Z][a-zA-Z0-9]*)\\s*=\\s*(.*)$");
         if(rx.indexIn(action) >= 0 )
         {
             /* Jestlize vyhovuje akce predpisu */
@@ -337,13 +335,13 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
 
             /* Projdu akce prechodu a navazu vysledky */
             int result = 0;
-            QList<QString> scitance = expression.split("+");
+            QStringList scitance = expression.split("+");
             int var = 0;
             for (int i = 0; i < scitance.size(); i++)
             {
                 int partialResult = 0;
                 /* Tady jsou jen pole, mezi kteryma je + */
-                QList<QString> odcitance = scitance.at(i).split("-");
+                QStringList odcitance = scitance.at(i).split("-");
                 if(odcitance.size() > 1)
                 {
                     /* Kdyz jsou tam jeste nejake - */
@@ -359,7 +357,6 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
                             if (b)
                             {
                                 /* Konstanta, netreba hledat hodnotu */
-                                qDebug() << "prirazena konstanta1" << symbol.toInt();
                                 var = symbol.toInt();
                                 test = true;
                                 break;
@@ -367,7 +364,6 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
                             else if (keysIn.at(n)->getVariable() == symbol)
                             {
                                 /* Jsem na indexu, kde odpovida promenne, takze vytahnu hodnotu */
-                                qDebug() << "prirazena promenne1"<<symbol<<"hodnota"<<input->value(keysIn.at(i));
                                 var = input->value(keysIn.at(n));
                                 test = true;
                                 break;
@@ -377,7 +373,6 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
                         if(!test)
                         {
                             /* Do symbolu neni co navazat */
-                            qDebug() << "nedefinovana promenna1"<<symbol;
                             error = true;
                             return;
                         }
@@ -395,7 +390,6 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
                 {
                     QString symbol = odcitance.at(0).trimmed();
                     bool test = false;
-                    qDebug() << "hledam promennou"<<symbol;
                     for(int n = 0; n < keysIn.size(); n++)
                     {
                         bool b;
@@ -403,7 +397,6 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
                         if (b)
                         {
                             /* Konstanta, netreba hledat hodnotu */
-                            qDebug() << "prirazena konstanta2" << symbol.toInt();
                             var = symbol.toInt();
                             test = true;
                             break;
@@ -411,7 +404,6 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
                         else if (keysIn.at(n)->getVariable() == symbol)
                         {
                             /* Jsem na indexu, kde odpovida promenne, takze vytahnu hodnotu */
-                            qDebug() << "prirazena promenne1"<<symbol<<"hodnota"<<input->value(keysIn.at(n));
                             var = input->value(keysIn.at(n));
                             test = true;
                         }
@@ -420,7 +412,6 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
                     if(!test)
                     {
                         /* Promenna neni drive definovana -> chyba*/
-                        qDebug() << "nedefinovana promenna";
                         error = true;
                         return;
                     }
@@ -433,29 +424,26 @@ void Simulate::transitionAction(QMap<PetriNetArrow *, int> *input, QMap<PetriNet
             /* Ulozim do spravne mista vysledny item */
             for(int i = 0; i < keysOut.size(); i++)
             {
-                qDebug() << keysOut.at(i)->getVariable() << "a"<<target;
                 if(keysOut.at(i)->getVariable() == target)
                 {
-                    qDebug() << "ukladam hodnotu" << result << "do promenne" << target;
                     ((PetriNetPlace *)(keysOut.at(i)->endItem()))->addToken(result);
                 }
             }
         }
         else
         {
-            qDebug() << "chyba parsovani pravidel";
+            /* Chyba parsovani action */
             error = true;
             return;
-            //chyba parsování action
         }
     }
-
 }
 
 
 
-
-
+/**
+  * Vrati pocet
+  */
 int Simulate::getFactor(QMap<PetriNetArrow *, int> *map,int count)
 {
     int factor = 1;
@@ -471,10 +459,13 @@ int Simulate::getFactor(QMap<PetriNetArrow *, int> *map,int count)
         i++;
         iter++;
     }
-//    qDebug() << "count"<<count << "factor" << factor;
     return factor;
 }
 
+/**
+  * Odstrani tokeny
+  * @param map QMap tokenu s misty, odkud tokeny maze
+  */
 void Simulate::removeTokens(QMap<PetriNetArrow *, int> *map)
 {
     QList<PetriNetArrow *> arrows = map->keys();

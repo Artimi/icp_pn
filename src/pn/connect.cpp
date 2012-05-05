@@ -1,6 +1,14 @@
+/**
+  * @file connect.cpp
+  * @author xsebek02 xsimon14
+  * @brief Tento soubor udrzuje a manipuluje s prijenim k serveru
+  */
 #include "connect.h"
 #include "ui_connect.h"
 
+/**
+  * Konstruktor tridy Connect
+  */
 Connect::Connect(QTcpSocket *socket,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Connect)
@@ -11,6 +19,9 @@ Connect::Connect(QTcpSocket *socket,QWidget *parent) :
     connect(ui->PBconnect,SIGNAL(clicked()),this,SLOT(connectToServer()));
 }
 
+/**
+  * Desktuktor tridy Connect
+  */
 Connect::~Connect()
 {
     delete ui;

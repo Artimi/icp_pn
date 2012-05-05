@@ -86,7 +86,7 @@ bool Transition::setAction(QString str)
         action.clear();
         return true;
     }
-    QRegExp valid("^\\s*(\\s*[a-zA-Z]+\\s*=(\\s*[a-zA-Z0-9]+\\s*(\\+|\\-)\\s*)*\\s*[a-zA-Z0-9]+\\s*,)*\\s*[a-zA-Z]+\\s*=(\\s*[a-zA-Z0-9]+\\s*(\\+|\\-)\\s*)*\\s*[a-zA-Z0-9]+\\s*$");
+    QRegExp valid("^\\s*(\\s*[a-zA-Z][a-zA-Z0-9]*\\s*=(\\s*[a-zA-Z0-9]+\\s*(\\+|\\-)\\s*)*\\s*[a-zA-Z0-9]+\\s*,)*\\s*[a-zA-Z]+\\s*=(\\s*[a-zA-Z0-9]+\\s*(\\+|\\-)\\s*)*\\s*[a-zA-Z0-9]+\\s*$");
     if(!valid.exactMatch(str))
         return false;
 

@@ -16,7 +16,9 @@ QFont MainWindow::FONT = QFont("times",10);
 QColor MainWindow::LINECOLOR = Qt::black;
 QColor MainWindow::DASHLINECOLOR= Qt::darkBlue;
 
-
+/**
+  * Konstruktor tridy MainWindow
+  */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -43,9 +45,11 @@ MainWindow::MainWindow(QWidget *parent) :
     loadSettings();
 
     addTab();
-
 }
 
+/**
+  * Destruktor tridy MainWindow
+  */
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -162,6 +166,7 @@ void MainWindow::createActions()
 
 
 }
+
 /**
   * Vytiskne chybovou hlášku do status baru a vyhodí warning okno
   * @param errorText    chybová hláška, která se má vypsat
@@ -1118,19 +1123,4 @@ void MainWindow::userLogs()
     sendLogsRequest();
     userLogsForm->exec();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

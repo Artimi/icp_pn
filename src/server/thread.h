@@ -1,3 +1,8 @@
+/**
+  * @file thread.h
+  *
+  * @author xsebek02, xsimon14
+  */
 #ifndef THREAD_H
 #define THREAD_H
 

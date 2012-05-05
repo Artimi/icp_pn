@@ -3,12 +3,14 @@
   *
   * @brief Scena obsahujicí všechny grafické objekty
   * @author xsebek02 xsimon14
-  *
   */
 
 #include "diagramscene.h"
 #include "mainwindow.h"
 
+/**
+  * Konstruktor tridy DiagramScene
+  */
 DiagramScene::DiagramScene(QMenu *placeMenu, QMenu *transitionMenu, QMenu *arrowMenu, QObject *parent)
     :   QGraphicsScene(parent)
 {
@@ -37,6 +39,7 @@ void DiagramScene::setMode(Mode mode)
 }
 
 /**
+  * Navrati soucasnou scenu
   * @return Mode současný mod scene
   */
 
@@ -55,13 +58,13 @@ void DiagramScene::setItemType(DiagramItem::DiagramType type)
 }
 
 /**
+  * Navrati aktualni typ vkladaneho objektu
   * @return DiagramType současný vkládaný objekt
   */
 DiagramItem::DiagramType DiagramScene::getItemType()
 {
     return myItemType;
 }
-
 
 
 /**
@@ -118,10 +121,8 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 /**
   * Vyvoláno při pohnutí myší
-  *
   * @param mouseEvent událost myši
   */
-
 void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(myMode == InsertLine && line != 0)
@@ -144,7 +145,6 @@ void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 /**
   * Vyvoláno při uvolnění myši
-  *
   * @param  mouseEvent  událost myši
   */
 void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -216,7 +216,6 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     update();
 
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
-
 }
 
 /**
@@ -294,5 +293,3 @@ DiagramItem *DiagramScene::getDiagramItem(QString name)
     }
     return NULL;
 }
-
-

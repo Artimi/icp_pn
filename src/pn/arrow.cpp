@@ -107,6 +107,10 @@ void Arrow::updatePosition()
     }
 }
 
+/**
+  * Akce, ktera prida promenou ke hrane
+  * @param str promenna
+  */
 bool Arrow::setVariable(QString str)
 {
     if (str.isEmpty())

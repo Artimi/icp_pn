@@ -1,3 +1,9 @@
+/**
+  * @file netlist.cpp
+  *
+  * @brief Trida manipulujici se seznamem siti na vzdalenem ulozisti
+  * @author xsebek02 xsimon14
+  */
 #include "netlist.h"
 #include "ui_netlist.h"
 

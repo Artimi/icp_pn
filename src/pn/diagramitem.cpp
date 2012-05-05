@@ -8,6 +8,9 @@
 #include "diagramitem.h"
 #include "arrow.h"
 
+/**
+  * Konstruktor tridy DiagramItem
+  */
 DiagramItem::DiagramItem(DiagramType diagramType, QGraphicsItem *parent, QGraphicsScene *scene)
     :QGraphicsItem(parent,scene)
 {
@@ -15,6 +18,7 @@ DiagramItem::DiagramItem(DiagramType diagramType, QGraphicsItem *parent, QGraphi
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges,true);
 }
+
 /**
   * Vymaže ze seznamu napojených hran hranu arrow
   * @param  arrow   mazaná hrana

@@ -1,3 +1,9 @@
+/**
+  * @file message.h
+  *
+  * @brief Trida definujci struktury pro predavani a drzeni zprav v komunikaci se serverem
+  * @author xsebek02 xsimon14
+  */
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
