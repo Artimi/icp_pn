@@ -58,6 +58,7 @@
      <string>&amp;Settings</string>
     </property>
     <addaction name="actionNetInformation"/>
+    <addaction name="actionUser_logs"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
@@ -264,6 +265,11 @@
    </property>
    <property name="shortcut">
     <string>F1</string>
+   </property>
+  </action>
+  <action name="actionUser_logs">
+   <property name="text">
+    <string>User logs</string>
    </property>
   </action>
  </widget>
