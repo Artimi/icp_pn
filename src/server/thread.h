@@ -24,6 +24,14 @@ public:
     {   return username; }
     bool authenticate(QString username, QString passwd);
     void writeLog(QString event);
+    void writeLogLogin();
+    void writeLogWronglogin(QString name);
+//    void writeLogServerStart();
+    void writeLogConnect();
+    void writeLogDisconnect();
+    void writeLogSimulate(QString netName, QString state);
+    void writeLogSave(QString netName, QString state);
+    void writeLogLoad(QString netName, QString state);
 signals:
     void error(QTcpSocket::SocketError socketError);
 

@@ -23,7 +23,7 @@ Thread::Thread(int socketDescriptor, QObject *parent) :
   */
 void Thread::run()
 {
-    qDebug() <<  socketDescriptor <<"Starting thread";
+//    qDebug() <<  socketDescriptor <<"Starting thread";
     socket = new QTcpSocket();
     if (!socket->setSocketDescriptor(socketDescriptor))
     {
@@ -36,6 +36,7 @@ void Thread::run()
 
     qDebug() << socketDescriptor << "Client connected";
 
+    writeLogConnect();
     exec();
 }
 
@@ -134,11 +135,16 @@ void Thread::handleRequest()
                 /* Nastala chyba pri ukladani */
                 resultMsg.command = Message::ERROR;
                 resultMsg.errorText = "Error while saving";
+                writeLogSave(petriNet->getName(), "FAIL");
                 resultXml.setMessage(&resultMsg);
                 out = resultXml.writeMessage();
                 rawdata = out.toUtf8();
                 socket->write(rawdata);
                 socket->flush();
+            }
+            else
+            {
+                writeLogSave(petriNet->getName(), "PASS");
             }
 
             break;
@@ -152,12 +158,14 @@ void Thread::handleRequest()
                 /* Nastala chyba pri cteni, sit neexistuje? */
                 resultMsg.command = Message::ERROR;
                 resultMsg.errorText = "Error while loading, perhaps the net does not exist";
+                writeLogLoad(petriNet->getName(), "FAIL");
             }
             else
             {
                 /* Sit byla uspesne otevrena */
                 resultMsg.command = Message::SEND;
                 resultXml.setPetriNet(petriNet);
+                writeLogLoad(petriNet->getName(), "PASS");
             }
 
             /* At uz se stala chyba nebo ne, vse je treba zabalit a odeslat */
@@ -187,12 +195,14 @@ void Thread::handleRequest()
                 /* Nastala chyba pri simulaci */
                 resultMsg.command = Message::ERROR;
                 resultMsg.errorText = "Error while simulation, perhaps there aren't any possible steps";
+                writeLogSimulate(petriNet->getName(),"FAIL");
             }
             else
             {
                 /* Sit byla v poradku odsimulovana */
                 resultMsg.command = Message::SEND;
                 resultXml.setPetriNet(petriNet);
+                writeLogSimulate(petriNet->getName(),"PASS");
             }
 
             /* Zprava bude odeslana */
@@ -239,7 +249,7 @@ bool Thread::authenticate(QString username, QString passwd)
                 {
                     /* Heslo uzivatele odpovida */
                     this->username = username;
-                    writeLog("LOGGED\tSuccesfully logged");
+                    writeLogLogin();
                     qDebug() << socketDescriptor << "Logged as user" << username;
                     file.close();
                     return true;
@@ -247,7 +257,7 @@ bool Thread::authenticate(QString username, QString passwd)
                 else
                 {
                     /* Heslo uzivatele neodpovida */
-                    writeLog("WRONGLOGIN\tAttempt to unauthorized access! [" + name + "]");
+                    writeLogWronglogin(name);
                     return false;
                 }
             }
@@ -265,11 +275,12 @@ bool Thread::authenticate(QString username, QString passwd)
 }
 
 /**
-  *
+  * Zapise do logu libovolny zaznam
+  * @param event Udalost, ktera se ma do logu zapsat
   */
 void Thread::writeLog(QString event)
 {
-    QFile file(getPath() + "log/" + getUsername() + ".log");
+    QFile file(getPath() + "server.log");
     mutex.lock();
     if(!file.open(QIODevice::Append))
     {
@@ -277,12 +288,85 @@ void Thread::writeLog(QString event)
         qDebug() << "Error while opening file for logging";
         return;
     }
-    QByteArray msg = QTime::currentTime().toString().toUtf8() + "\t" + event.toUtf8();
+    QByteArray msg = QTime::currentTime().toString().toUtf8() + "#" + event.toUtf8() + "\n";
     file.write(msg);
     file.close();
     mutex.unlock();
 }
 
+/**
+  * Zapise do logu zaznam o uspesnem prihlaseni
+  */
+void Thread::writeLogLogin()
+{
+    QString msg = getUsername() + "#LOGGED#Successfully logged";
+    writeLog(msg);
+}
+
+/**
+  * Zapise do logu zapis o neuspesnem prihlaseni
+  * @param name Prihlasovaci jmeno, ke kteremu se neuspesne prihlaseni vaze
+  */
+void Thread::writeLogWronglogin(QString name)
+{
+    QString msg = name + "#WRONGLOGIN#Attempt to unauthorized access!";
+    writeLog(msg);
+}
+
+/**
+  * Zapise do logu zaznam o nastartovani serveru
+  */
+//void Thread::writeLogServerStart()
+//{
+//    QString msg = "##SERVER_UP#";
+//    writeLog(msg);
+//}
+
+/**
+  * Zapise do logu zaznam o pripojeni klienta
+  */
+void Thread::writeLogConnect()
+{
+    QString msg = "##CONNECT#" + socketDescriptor;
+    writeLog(msg);
+}
+
+/**
+  * Zapise do logu zaznam o odpojeni klienta
+  */
+void Thread::writeLogDisconnect()
+{
+    QString msg = "##DISCONNECT#" + socketDescriptor;
+    writeLog(msg);
+}
+
+/**
+  * Zapise do logu zaznam o uspesnem prihlaseni
+  */
+void Thread::writeLogSimulate(QString netName, QString state)
+{
+    QString msg = getUsername() + "#SIMULATE#The net " + netName + " has been simulated. Result: " + state;
+    writeLog(msg);
+}
+
+
+/**
+  * Zapise do logu zaznam o uspesnem prihlaseni
+  */
+void Thread::writeLogSave(QString netName, QString state)
+{
+    QString msg = getUsername() + "#SAVE#The net " + netName + " has been saved. Result: " + state;
+    writeLog(msg);
+}
+
+/**
+  * Zapise do logu zaznam o uspesnem prihlaseni
+  */
+void Thread::writeLogLoad(QString netName, QString state)
+{
+    QString msg = getUsername() + "#LOAD#The net " + netName + " has been loaded. Result: " + state;
+    writeLog(msg);
+}
 
 /**
   * Volá se při odhlášení klienta
@@ -290,6 +374,7 @@ void Thread::writeLog(QString event)
 void Thread::disconnected()
 {
     qDebug() << socketDescriptor << "Disconected";
+    writeLogDisconnect();
     socket->deleteLater();
     exit(0);
 }

@@ -26,7 +26,7 @@ void Server::startServer()
   */
 void Server::incomingConnection(int socketDescriptor)
 {
-    qDebug() << socketDescriptor << "Connecting...";
+//    qDebug() << socketDescriptor << "Connecting...";
     Thread *thread = new Thread(socketDescriptor, this);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     thread->start();
