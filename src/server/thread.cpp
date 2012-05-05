@@ -47,7 +47,7 @@ void Thread::run()
 void Thread::handleRequest()
 {
     QByteArray rawdata = socket->readAll();
-//    qDebug() << socketDescriptor << "Data in:" << rawdata;
+    //qDebug() << socketDescriptor << "Data in:" << rawdata;
 
     Message message;
     ManipulateNet tool;
@@ -55,18 +55,16 @@ void Thread::handleRequest()
     XMLHandler xmlhandler;
     QList<PetriNet *> netList;
 
-    //qDebug() << "jedna";
     xmlhandler.setMessage(&message);
     xmlhandler.setPetriNet(petriNet);
     xmlhandler.setNetList(&netList);
     xmlhandler.readMessage(QString(rawdata));
-    //qDebug() << "dva";
     Message resultMsg;
     XMLHandler resultXml;
     QString out;
     PetriNet *resultNet = new PetriNet;
     Simulate simulate;
-    //qDebug() << "tri";
+
     switch (message.command)
     {
         case Message::SLOGIN:
@@ -215,7 +213,9 @@ void Thread::handleRequest()
         case Message::LOG:
             /* Klient zada o log */
             qDebug() << socketDescriptor << "Request for logs";
-            resultXml.setMessage(&message);
+            resultMsg.user = getUsername();
+            resultMsg.command = message.command;
+            resultXml.setMessage(&resultMsg);
             out = resultXml.writeMessage();
             rawdata = out.toUtf8();
             socket->write(rawdata);
@@ -322,21 +322,13 @@ void Thread::writeLogWronglogin(QString name)
     writeLog(msg);
 }
 
-/**
-  * Zapise do logu zaznam o nastartovani serveru
-  */
-//void Thread::writeLogServerStart()
-//{
-//    QString msg = "##SERVER_UP#";
-//    writeLog(msg);
-//}
 
 /**
   * Zapise do logu zaznam o pripojeni klienta
   */
 void Thread::writeLogConnect()
 {
-    QString msg = "##" + QString::number(Message::LOG_CONNECT) + "#" + QString::number(socketDescriptor);
+    QString msg = "#" + QString::number(Message::LOG_CONNECT) + "#" + QString::number(socketDescriptor);
     writeLog(msg);
 }
 
@@ -345,7 +337,7 @@ void Thread::writeLogConnect()
   */
 void Thread::writeLogDisconnect()
 {
-    QString msg = "##" + QString::number(Message::LOG_DISCONNECT) + "#" + QString::number(socketDescriptor);
+    QString msg = "#" + QString::number(Message::LOG_DISCONNECT) + "#" + QString::number(socketDescriptor);
     writeLog(msg);
 }
 

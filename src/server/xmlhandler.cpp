@@ -186,13 +186,7 @@ int XMLHandler::readMessage(QString str)
                     }
                     break;
                 case Message::LOG:
-                    /* Precteni zadosti o log */
-                    while(!(reader.isEndElement() && reader.name() == "data"))
-                    {
-                        if(reader.isStartElement() && reader.name() == "user")
-                            myMessage->user = reader.readElementText();
-                        reader.readNext();
-                    }
+                    /* Zadosti o log */
                     break;
             }
         }
@@ -214,12 +208,13 @@ int XMLHandler::readMessage(QString str)
 void XMLHandler::writeLog(QXmlStreamWriter *writer, QString user)
 {
     QString apppath = QFileInfo(QCoreApplication::applicationFilePath()).path() + "/";
-    QString filename = apppath + "serve.log";
+    QString filename = apppath + "server.log";
     QFile logfile(filename);
 
     if(!logfile.open(QIODevice::ReadOnly))
     {
         /* Nepodarilo se otevrit logovaci soubor */
+        qDebug() << "Error while openning the log file";
         return;
     }
     QTextStream in(&logfile);
@@ -244,6 +239,7 @@ void XMLHandler::writeLog(QXmlStreamWriter *writer, QString user)
         line = in.readLine();
     }
     logfile.close();
+    return;
 }
 
 
