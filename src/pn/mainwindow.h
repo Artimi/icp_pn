@@ -18,6 +18,7 @@
 #include <QtNetwork/QTcpSocket>
 #include <QRegExp>
 #include <QSettings>
+#include <QGraphicsItem>
 #include "diagramscene.h"
 #include "diagramitem.h"
 #include "arrow.h"
@@ -85,6 +86,7 @@ private:
     QAction * actionEditVariable;
     QAction * actionEditAction;
     QAction * actionDeleteItem;
+    QAction * actionSelectAll;
 
     QTcpSocket *socket;
 
@@ -149,6 +151,7 @@ public slots:
     void loadSettings();
 
     void showHelp();
+    void selectAll();
 
 };
 

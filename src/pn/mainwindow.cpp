@@ -130,6 +130,10 @@ void MainWindow::createActions()
             this, SLOT(deleteItem()));
     QWidget::addAction(actionDeleteItem);
 
+    actionSelectAll = new QAction(tr("Select all"),this);
+    actionSelectAll->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_A));
+    connect(actionSelectAll,SIGNAL(triggered()),this, SLOT(selectAll()));
+    QWidget::addAction(actionSelectAll);
 
     connect(socket,SIGNAL(connected()),SLOT(gotConnected()));
     connect(socket,SIGNAL(disconnected()),SLOT(gotDisconnected()));
@@ -1066,6 +1070,21 @@ void MainWindow::showHelp()
 {
     QString apppath =  QFileInfo(QCoreApplication::applicationFilePath()).path() + "/";
     QDesktopServices::openUrl( QUrl(apppath + "../../doc/help.html", QUrl::TolerantMode));
+}
+
+
+/**
+  * Označí všechny itemy na ploše
+  */
+void MainWindow::selectAll()
+{
+    if(activeTab >=0)
+    {
+        foreach(QGraphicsItem *item, scenes.at(activeTab)->items())
+        {
+            item->setSelected(true);
+        }
+    }
 }
 
 
