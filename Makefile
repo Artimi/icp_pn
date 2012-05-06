@@ -37,7 +37,7 @@ clean:
 	make -C $(PN_PATH) clean
 	make -C $(SERVER_PATH) clean
 	rm -f $(PN_PATH)$(CLIENTBIN) $(SERVER_PATH)$(SERVERBIN) $(SERVER_PATH)Makefile $(PN_PATH)Makefile
-	rm -rf $(SERVER_PATH)nets
+	rm -f $(PN_PATH)moc* $(SERVER_PATH)moc_* $(PN_PATH)*.o $(SERVER_PATH)*.o
 
 pack:
 	rm -f $(ARCHNAME)
