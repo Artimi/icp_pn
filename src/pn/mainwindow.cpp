@@ -728,6 +728,7 @@ void MainWindow::gotConnected()
 
     ui->actionSimulate->setEnabled(true);
     ui->actionSimulate_Step->setEnabled(true);
+    ui->actionUser_logs->setEnabled(true);
 }
 
 /**
@@ -745,6 +746,7 @@ void MainWindow::gotDisconnected()
 
     ui->actionSimulate->setEnabled(false);
     ui->actionSimulate_Step->setEnabled(false);
+    ui->actionUser_logs->setEnabled(false);
 }
 
 /**
@@ -804,7 +806,7 @@ void MainWindow::handleReply()
                 else if (scenes.at(activeTab)->items().isEmpty())
                     replaceTab(scene,activeTab);
                 else
-                    addTab();
+                    addTab(scene);
             }
             else
             {
