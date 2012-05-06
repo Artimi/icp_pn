@@ -4,9 +4,7 @@ SERVERBIN=server2012
 CLIENTBIN=pn2012
 ARCHNAME=xsebek02.tar.gz
 QMAKE=qmake-qt4
-ifeq ($(shell hostname),merlin.fit.vutbr.cz)
-	QMAKE=/usr/local/share/Qt/bin/qmake
-endif
+ROOT_DIR=../xsebek02/
 
 all:
 	$(QMAKE) -o $(PN_PATH)Makefile $(PN_PATH)pn2012.pro
@@ -43,7 +41,7 @@ clean:
 
 pack:
 	rm -f $(ARCHNAME)
-	tar -czf $(ARCHNAME) src/*/*.{cpp,h,pro,ui} Doxyfile examples/* README.txt Makefile $(PN_PATH)settings.xml doc/help.html $(SERVER_PATH)passwd $(SERVER_PATH)nets/*
-	
+	tar -czf $(ARCHNAME) $(ROOT_DIR)src/*/*.{cpp,h,pro,ui} $(ROOT_DIR)Doxyfile $(ROOT_DIR)examples/* $(ROOT_DIR)README.txt $(ROOT_DIR)Makefile $(ROOT_DIR)$(PN_PATH)settings.xml $(ROOT_DIR)doc/help.html $(ROOT_DIR)$(SERVER_PATH)passwd $(ROOT_DIR)$(SERVER_PATH)nets/*
+
 unpack:
 	tar -xzf $(ARCHNAME)

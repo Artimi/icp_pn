@@ -47,7 +47,6 @@ void Thread::run()
 void Thread::handleRequest()
 {
     QByteArray rawdata = socket->readAll();
-    qDebug() << rawdata;
 
     Message message;
     ManipulateNet tool;
@@ -207,7 +206,6 @@ void Thread::handleRequest()
             resultXml.setMessage(&resultMsg);
             out = resultXml.writeMessage();
             rawdata = out.toUtf8();
-            qDebug() << rawdata;
             socket->write(rawdata);
             socket->flush();
             break;
