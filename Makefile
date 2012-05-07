@@ -3,7 +3,7 @@ SERVER_PATH= src/server/
 SERVERBIN=server2012
 CLIENTBIN=pn2012
 ARCHNAME=xsebek02.tar.gz
-QMAKE=qmake-qt4
+QMAKE=qmake
 ROOT_DIR=../xsebek02/
 
 all:
